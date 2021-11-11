@@ -12,18 +12,15 @@ jobs:
       - image: cimg/node:16.13.0
     steps:
       - checkout
-      - node/install-packages:
-          app-dir: ~/project
+      - node/install-packages
       - run:
           name: Build Next.js app
           command: npm run build
-          working_directory: ~/project
       - gcp-cli/install
       - gcp-cli/initialize
       - run:
           name: Deploy to Google App Engine with glcoud
           command: gcloud app deploy
-          working_directory: ~/project
 
 workflows:
   standard:
