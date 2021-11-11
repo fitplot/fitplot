@@ -3,6 +3,6 @@ runtime: nodejs16
 service: default
 
 handlers:
-  - url: /.*
+  url: /.*
   secure: always
   script: auto
