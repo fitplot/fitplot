@@ -11,32 +11,27 @@ workflows:
     jobs:
       - node/test:
           version: "16.13.0"
-      - gcp-cli/install_and_initialize_cli:
-          executor: gcp-cli/google
-          filters:
-            branches:
-              only:
-                main
       - build-and-deploy:
-          executor: gcp-cli/google
           filters:
             branches:
               only:
                 main
           requires:
-            - gcp-cli/install_and_initialize_cli
+            - node/test
 
 jobs:
-  build-and-deploy:
+  deploy:
+    docker:
+      image: cimg/node:16.13.0
     steps:
       - node/run:
           npm-run: build
-      - run:
-          name: Output GAE details
-          command: |
-              gcloud app describe
-      - run:
-          name: Deploy to GAE with glcoud
-          command: |
-              gcloud app deploy
+      # - run:
+      #     name: Output GAE details
+      #     command: |
+      #         gcloud app describe
+      # - run:
+      #     name: Deploy to GAE with glcoud
+      #     command: |
+      #         gcloud app deploy
       
