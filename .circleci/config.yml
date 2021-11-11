@@ -19,9 +19,7 @@ jobs:
           command: npm run build
           working_directory: ~/project
       - gcp-cli/install
-          working_directory: ~/project
       - gcp-cli/initialize
-          working_directory: ~/project
       - run:
           name: Deploy to Google App Engine with glcoud
           command: gcloud app deploy
