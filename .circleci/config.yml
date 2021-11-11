@@ -12,10 +12,46 @@ jobs:
       - image: cimg/node:16.13.0
     steps:
       - checkout
-      - node/install-packages
+      - run:
+          name: Checking for package.json
+          command: |
+            if [ -f "package.json" ]; then
+                echo "Found package.json file."
+            else
+                echo "Unable to find package.json file."
+                exit 1
+            fi
+      -run:
+          name: Prepare for caching
+          command: |
+            if [ -f "package-lock.json" ]; then
+                echo "Found package-lock.json file."
+                ln package-lock.json /tmp/cache-package-lock.json
+            fi
+            ln package.json /tmp/cache-package.json
+      - restore_cache: # See: https://circleci.com/docs/2.0/caching/
+          keys:
+            - v1-dependency-cache-{{ arch }}-{ .Branch }}-{{ checksum "/tmp/cache-package.json" }}-{{ checksum "/tmp/cache-package-lock.json" }}
+            - v1-dependency-cache-{{ arch }}-{ .Branch }}-{{ checksum "/tmp/cache-package.json" }}
+            - v1-dependency-cache-{{ arch }}-{ .Branch }}
+      - run:
+          name: Installing NPM packages
+          command: npm ci
+      - save_cache: 
+          key: v1-dependency-cache-{{ arch }}-{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          paths: 
+            - ~/.npm
+      - restore_cache:
+          keys:
+            - v1-next-cache-{{ arch }}-{ .Branch }}
+            - v1-next-cache
       - run:
           name: Build Next.js app
           command: npm run build
+      - save_cache: 
+          key: v1-next-cache-{{ arch }}-{ .Branch }}
+          paths: 
+            - ~/.next/cache
       - gcp-cli/install
       - gcp-cli/initialize
       - run:
@@ -23,7 +59,7 @@ jobs:
           command: gcloud app deploy
 
 workflows:
-  standard:
+  Nexus:
     jobs:
       - node/test:
           name: Test & Verify
@@ -33,7 +69,7 @@ workflows:
           filters:
             branches:
               only:
-                main
+                dev
           requires:
             - Test & Verify
       
