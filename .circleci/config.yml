@@ -15,18 +15,15 @@ jobs:
       - node/install-packages:
           app-dir: ~/project
       - run:
-          name: Build Next.js App
+          name: Build Next.js app
           command: npm run build
           working_directory: ~/project
       - gcp-cli/install
+      - gcp-cli/initialize
       - run:
-          name: Verify gcloud CLI
-          command: |
-              gcloud
-      # - run:
-      #     name: Deploy to GAE with glcoud
-      #     command: |
-      #         gcloud app deploy
+          name: Deploy to Google App Engine with glcoud
+          command: gcloud app deploy
+          working_directory: ~/project
 
 workflows:
   standard:
