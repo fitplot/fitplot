@@ -29,12 +29,14 @@ workflows:
   standard:
     jobs:
       - node/test:
+          name: Test & Verify
           version: "16.13.0"
       - build-and-deploy:
+          name: Build & Deploy
           filters:
             branches:
               only:
                 main
           requires:
-            - node/test
+            - Test & Verify
       
