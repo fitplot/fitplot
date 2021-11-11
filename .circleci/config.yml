@@ -73,8 +73,11 @@ jobs:
               gcloud --quiet config set compute/region $GOOGLE_COMPUTE_REGION
             fi
       - run:
-          name: Deploy to Google App Engine with glcoud
-          command: gcloud app deploy
+          name: Describe GAE project
+          command: gcloud app describe
+      - run:
+          name: Deploy to GAE with gcloud
+          command: gcloud --quiet app deploy
 
 workflows:
   Nexus:
