@@ -4,5 +4,5 @@ service: default
 
 handlers:
   - url: /.*
-  secure: always
-  script: auto
+    secure: always
+    script: auto
