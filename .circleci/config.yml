@@ -52,13 +52,13 @@ jobs:
       - node/install-packages
       - restore_cache:
           keys:
-            - v1-next-cache-{{ arch }}-{{ .Branch }}
+            - v1-next-cache-{{ arch }}-{{ checksum "package-lock.json" }
             - v1-next-cache
       - run:
           name: Next.js build
           command: npm run build
       - save_cache: 
-          key: v1-next-cache-{{ arch }}-{{ .Branch }}
+          key: v1-next-cache-{{ arch }}-{{ checksum "package-lock.json" }
           paths: 
             - .next/cache
       - run:
