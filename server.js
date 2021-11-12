@@ -22,8 +22,9 @@ app.prepare().then(() => {
     await next();
   });
 
-  app.listen(port, (err) => {
-    if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
+  server.use(router.routes())
+  server.listen(port, (err) => {
+    if (err) console.error(err);
+    console.log(`> Ready on port ${port}`);
   })
 });
