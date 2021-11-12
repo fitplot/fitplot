@@ -121,4 +121,4 @@ jobs:
           command: gcloud app describe
       - run:
           name: Deploy to Google App Engine
-          command: gcloud --quiet app deploy app.yaml
+          command: gcloud --quiet app deploy app.yaml --no-promote

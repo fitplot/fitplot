@@ -1,6 +1,6 @@
 // server.js
 const Koa = require('koa');
-const Router = require('@koa/router');
+const Router = require('koa-router');
 const Next = require('next');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
