@@ -122,3 +122,48 @@ jobs:
       - run:
           name: Deploy to Google App Engine
           command: gcloud --quiet app deploy app.yaml --no-promote
+      - discord-notify
+
+commands:
+  # Sourced from a community discord orb
+  # See: https://circleci.com/developer/orbs/orb/tkyshm/discord-orb
+  discord-notify:
+    parameters:
+      webhook_url:
+        description: "discord channel webhook url"
+        type: string
+        default: ${DISCORD_WEBHOOK_URL}
+      success_message:
+        default: ":green_circle: [${CIRCLE_BRANCH}] ${CIRCLE_JOB} build and deploy has succeeded. The new service version is not yet accepting traffic will need to be activated. ${CIRCLE_BUILD_URL}"
+        type: string
+        description: success message
+      failure_message:
+        description: failure message
+        type: string
+        default: ":red_circle: [${CIRCLE_BRANCH}] ${CIRCLE_JOB} build and deploy has failed. ${CIRCLE_BUILD_URL}"
+    steps:
+      - run:
+          command: |
+            echo 'export DISCORD_BUILD_STATUS="success"' >> $BASH_ENV
+          name: set failure condition
+          when: on_success
+      - run:
+          command: |
+            echo 'export DISCORD_BUILD_STATUS="fail"' >> $BASH_ENV
+          name: set failure condition
+          when: on_fail
+      - run: 
+          name: "Notify to Discord"
+          command: |
+            if [ -z "$DISCORD_WEBHOOK_URL"] ; then
+              echo "No discrod webhook url set"
+              echo "Please input your DISCORD_WEBHOOK_URL value"
+              exit 1
+            fi
+
+            if [ "$DISCORD_BUILD_STATUS" = "success" ]; then
+              curl -H 'Content-type: application/json' -XPOST -d "{\"embeds\": [{ \"color\": 1363733, \"title\": \"Circle CI\", \"description\": \"<< parameters.success_message >>\"}]}" "<< parameters.webhook_url >>";
+            else
+              curl -H 'Content-type: application/json' -XPOST -d "{\"embeds\": [{ \"color\": 16081506, \"title\": \"Circle CI\", \"description\": \"<< parameters.failure_message >>\"}]}" "<< parameters.webhook_url >>";
+            fi
+          when: always
