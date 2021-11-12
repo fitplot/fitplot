@@ -30,7 +30,7 @@ workflows:
           filters:
             branches:
               only:
-                dev
+                main
           requires:
             - Test
       - deploy:
@@ -38,7 +38,7 @@ workflows:
           filters:
             branches:
               only:
-                dev
+                main
           requires:
             - Build
 
