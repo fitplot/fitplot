@@ -15,7 +15,8 @@ references:
   workspace_root: &workspace_root
     /tmp/workspace
   attach_workspace: &attach_workspace
-    at: *workspace_root
+    attach_workspace:
+      at: *workspace_root
 
 workflows:
   Nexus:
@@ -38,7 +39,7 @@ workflows:
               only:
                 dev
           requires:
-            - Deploy
+            - Build
 
 jobs:
   build:
