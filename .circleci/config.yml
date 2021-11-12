@@ -6,6 +6,7 @@ version: 2.1
 # Learn more about orbs: https://circleci.com/orbs/
 orbs:
   node: circleci/node@4.7
+  gcp-cli: circleci/gcp-cli@2.4.0
 
 # Yaml References enable us to DRY out our config by sharing variables across multiple jobs.
 # In this case, we are commonly using the "workspaces" feature to share
@@ -91,13 +92,13 @@ jobs:
             - server.js
 
   deploy:
-    docker:
-      - image: google/cloud-sdk:latest
+    executor: gcp-cli/default
     working_directory: *workspace_root
     steps:
       - *attach_workspace
+      - gcp-cli/install
       - run:
-          name: Check Google Cloud SDK version
+          name: Check gcloud CLI version
           command: gcloud version
       - run:
           name: Configure and authorize Google Cloud SDK configuration
