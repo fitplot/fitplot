@@ -60,8 +60,8 @@ jobs:
           paths: 
             - .next/cache
       - run:
-          - name: Persist artifacts for deployment
-          - command: |
+          name: Move built files to workspace
+          command: |
               set -exu
               mkdir -p /tmp/workspace/.next
               mkdir -p /tmp/workspace/public
@@ -72,34 +72,38 @@ jobs:
               mv package-lock.json /tmp/workspace/package-lock.json
               mv server.js /tmp/workspace/server.js
               mv next.config.js /tmp/workspace/next.config.js
+      - run:
+          name: Compress workspace to build artifact
+          command: |
+            tar -zcvf nexus.${CIRCLE_BRANCH}.${CIRCLE_SHA1}.tar.gz /tmp/workspace
+      - store_artifacts:
+            path: nexus.${CIRCLE_BRANCH}.${CIRCLE_SHA1}.tar.gz
+            destination: /tmp/workspace
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - .next
-            - public
-            - app.yaml
-            - package.json
-            - package-lock.json
-            - server.js
-            - next.config.js
+            - /tmp/workspace/*
+
   deploy:
     docker:
       - image: google/cloud-sdk:alpine
+    working_directory: *workspace_root
     steps:
       - *attach_workspace
       - run:
           name: Check Google Cloud SDK version
+          command: gcloud version
       - run:
           name: Configure and authorize Google Cloud SDK configuration
           command: |
             # Create service account key file
             set -exu
-            echo $GCLOUD_SERVICE_KEY | base64 --decode > /tmp/gcloud-service-key.json
+            echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
 
             # Initialize gcloud CLI
             gcloud --quiet config set component_manager/disable_update_check true
             gcloud --quiet config set core/disable_usage_reporting true
-            gcloud auth activate-service-account --key-file=/tmp/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
             gcloud --quiet config set project $GOOGLE_PROJECT_ID
 
             if [[ -n $GOOGLE_COMPUTE_ZONE ]]; then
@@ -114,4 +118,4 @@ jobs:
           command: gcloud app describe
       - run:
           name: Deploy to Google App Engine
-          command: gcloud --quiet app deploy /tmp/workspace/app.yaml
+          command: gcloud --quiet app deploy app.yaml
