@@ -76,10 +76,9 @@ jobs:
       - run:
           name: Compress workspace to build artifact
           command: |
-            tar -zcvf nexus.${CIRCLE_BRANCH}.${CIRCLE_SHA1}.tar.gz /tmp/workspace
+            tar -zcvf nexus.build.tar.gz /tmp/workspace
       - store_artifacts:
-            path: nexus.${CIRCLE_BRANCH}.${CIRCLE_SHA1}.tar.gz
-            destination: /tmp/workspace
+            path: nexus.build.tar.gz
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -105,7 +104,7 @@ jobs:
           command: |
             # Create service account key file
             set -exu
-            echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
+            echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
 
             # Initialize gcloud CLI
             gcloud --quiet config set component_manager/disable_update_check true
