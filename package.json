@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "rm -rf ./.next && NODE_ENV=production next build",
+    "start": "node server.js",
     "test": "echo \"TODO\" && exit 0",
     "lint": "next lint"
   },
