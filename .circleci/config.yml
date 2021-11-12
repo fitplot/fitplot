@@ -69,10 +69,10 @@ jobs:
               mv .next/* /tmp/workspace/.next/
               mv public/* /tmp/workspace/public/
               mv app.yaml /tmp/workspace/app.yaml
+              mv next.config.js /tmp/workspace/next.config.js
               mv package.json /tmp/workspace/package.json
               mv package-lock.json /tmp/workspace/package-lock.json
               mv server.js /tmp/workspace/server.js
-              mv next.config.js /tmp/workspace/next.config.js
       - run:
           name: Compress workspace to build artifact
           command: |
@@ -83,7 +83,13 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - /tmp/workspace/*
+            - .next
+            - public
+            - app.yaml
+            - next.config.js
+            - package.json
+            - package-lock.json
+            - server.js
 
   deploy:
     docker:
