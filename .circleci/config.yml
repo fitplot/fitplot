@@ -1,57 +1,169 @@
 version: 2.1
 
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/2.0/orb-intro/
+# Orbs are reusable packages of CircleCI configuration that you may share across projects,
+# enabling you to create encapsulated, parameterized commands, jobs, and executors that can
+# be used across multiple projects.
+# Learn more about orbs: https://circleci.com/orbs/
 orbs:
   node: circleci/node@4.7
   gcp-cli: circleci/gcp-cli@2.4.0
 
-jobs:
-  build-and-deploy:
-    docker:
-      - image: cimg/node:16.13.0
-    steps:
-      - checkout
-      - node/install-packages
-      - run:
-          name: Build Next.js app
-          command: npm run build
-      - gcp-cli/install
-      - run:
-          name: Initialize gcloud CLI to connect to Google Cloud
-          command: |
-              # Store service account
-              echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
-
-              # Initialize gcloud CLI
-              gcloud --quiet config set component_manager/disable_update_check true
-              gcloud --quiet config set core/disable_usage_reporting true
-              gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-              gcloud --quiet config set project $GOOGLE_PROJECT_ID
-
-              if [[ -n $GOOGLE_COMPUTE_ZONE ]]; then
-                gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
-              fi
-
-              if [[ -n $GOOGLE_COMPUTE_REGION ]]; then
-                gcloud --quiet config set compute/region $GOOGLE_COMPUTE_REGION
-              fi
-      - run:
-          name: Deploy to Google App Engine with glcoud
-          command: gcloud app deploy
+# Yaml References enable us to DRY out our config by sharing variables across multiple jobs.
+# In this case, we are commonly using the "workspaces" feature to share
+# build artifacts and files across jobs. For example, we build the Next.js app
+# is persisted to a workspace to be made available when App Engine deploys.
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
 
 workflows:
-  standard:
+  Nexus:
     jobs:
       - node/test:
-          name: Test & Verify
+          name: Test
           version: "16.13.0"
-      - build-and-deploy:
-          name: Build & Deploy
+      - build:
+          name: Build
           filters:
             branches:
               only:
                 main
           requires:
-            - Test & Verify
-      
+            - Test
+      - deploy:
+          name: Deploy
+          filters:
+            branches:
+              only:
+                main
+          requires:
+            - Build
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.13.0
+    steps:
+      - *attach_workspace
+      - checkout
+      - node/install-packages
+      - restore_cache:
+          keys:
+            - v1-next-cache-{{ arch }}-{{ checksum "package-lock.json" }}
+            - v1-next-cache
+      - run:
+          name: Next.js build
+          command: npm run build
+      - save_cache: 
+          key: v1-next-cache-{{ arch }}-{{ checksum "package-lock.json" }}
+          paths: 
+            - .next/cache
+      - run:
+          name: Move built files to workspace
+          command: |
+              set -exu
+              mkdir -p /tmp/workspace/.next
+              mkdir -p /tmp/workspace/public
+              mv .next/* /tmp/workspace/.next/
+              mv public/* /tmp/workspace/public/
+              mv app.yaml /tmp/workspace/app.yaml
+              mv next.config.js /tmp/workspace/next.config.js
+              mv package.json /tmp/workspace/package.json
+              mv package-lock.json /tmp/workspace/package-lock.json
+              mv server.js /tmp/workspace/server.js
+      - run:
+          name: Compress workspace to build artifact
+          command: |
+            tar -zcvf nexus.build.tar.gz /tmp/workspace
+      - store_artifacts:
+            path: nexus.build.tar.gz
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .next
+            - public
+            - app.yaml
+            - next.config.js
+            - package.json
+            - package-lock.json
+            - server.js
+
+  deploy:
+    executor: gcp-cli/default
+    working_directory: *workspace_root
+    steps:
+      - *attach_workspace
+      - gcp-cli/install
+      - run:
+          name: Check gcloud CLI version
+          command: gcloud version
+      - run:
+          name: Configure and authorize Google Cloud SDK configuration
+          command: |
+            # Create service account key file
+            set -exu
+            echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
+
+            # Initialize gcloud CLI
+            gcloud --quiet config set component_manager/disable_update_check true
+            gcloud --quiet config set core/disable_usage_reporting true
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud --quiet config set project $GOOGLE_PROJECT_ID
+
+            if [[ -n $GOOGLE_COMPUTE_REGION ]]; then
+              gcloud --quiet config set compute/region $GOOGLE_COMPUTE_REGION
+            fi
+      - run:
+          name: Describe Google App Engine project
+          command: gcloud app describe
+      - run:
+          name: Deploy to Google App Engine
+          command: gcloud --quiet app deploy app.yaml --no-promote
+      - discord-notify
+
+commands:
+  # Sourced from a community discord orb
+  # See: https://circleci.com/developer/orbs/orb/tkyshm/discord-orb
+  discord-notify:
+    parameters:
+      webhook_url:
+        description: "discord channel webhook url"
+        type: string
+        default: ${DISCORD_WEBHOOK_URL}
+      success_message:
+        default: ":green_circle: [${CIRCLE_BRANCH}] ${CIRCLE_JOB} build and deploy has succeeded. The new service version is not yet accepting traffic will need to be activated. ${CIRCLE_BUILD_URL}"
+        type: string
+        description: success message
+      failure_message:
+        description: failure message
+        type: string
+        default: ":red_circle: [${CIRCLE_BRANCH}] ${CIRCLE_JOB} build and deploy has failed. ${CIRCLE_BUILD_URL}"
+    steps:
+      - run:
+          command: |
+            echo 'export DISCORD_BUILD_STATUS="success"' >> $BASH_ENV
+          name: set failure condition
+          when: on_success
+      - run:
+          command: |
+            echo 'export DISCORD_BUILD_STATUS="fail"' >> $BASH_ENV
+          name: set failure condition
+          when: on_fail
+      - run: 
+          name: "Notify to Discord"
+          command: |
+            if [ -z "$DISCORD_WEBHOOK_URL"] ; then
+              echo "No discrod webhook url set"
+              echo "Please input your DISCORD_WEBHOOK_URL value"
+              exit 1
+            fi
+
+            if [ "$DISCORD_BUILD_STATUS" = "success" ]; then
+              curl -H 'Content-type: application/json' -XPOST -d "{\"embeds\": [{ \"color\": 1363733, \"title\": \"Circle CI\", \"description\": \"<< parameters.success_message >>\"}]}" "<< parameters.webhook_url >>";
+            else
+              curl -H 'Content-type: application/json' -XPOST -d "{\"embeds\": [{ \"color\": 16081506, \"title\": \"Circle CI\", \"description\": \"<< parameters.failure_message >>\"}]}" "<< parameters.webhook_url >>";
+            fi
+          when: always
