@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -18,55 +19,61 @@ export default function Home() {
         </p>
 
         <div className="grid grid-cols-2 max-w-md gap-2">
-          <a
+          <Link
             href="/profile"
-            className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600"
           >
-            <h2 className="text-lg">My Profile</h2>
-            <p>View my wellness profile.</p>
-          </a>
+            <a className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600">
+              <h2 className="text-lg">My Profile</h2>
+              <p>View my wellness profile.</p>
+            </a>
+          </Link>
 
-          <a
+          <Link
             href="/"
-            className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600"
           >
-            <h2 className="text-lg">Lorum Ipsum</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </a>
+            <a className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600">
+              <h2 className="text-lg">Lorum Ipsum</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+            </a>
+          </Link>
 
-          <a
+          <Link
             href="/"
-            className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600"
           >
-            <h2 className="text-lg">Lorum Ipsum</h2>
-            <p>A pellentesque sit amet porttitor eget dolor.</p>
-          </a>
+            <a className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600">
+              <h2 className="text-lg">Lorum Ipsum</h2>
+              <p>A pellentesque sit amet porttitor eget dolor.</p>
+            </a>
+          </Link>
 
-          <a
+          <Link
             href="/"
-            className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600"
           >
-            <h2 className="text-lg">Lorum Ipsum</h2>
-            <p>Nunc pulvinar sapien et ligula ullamcorper malesuada.</p>
-          </a>
+            <a className="shadow m-4 p-4 text-left border rounded hover:text-blue-600 hover:border-blue-600">
+              <h2 className="text-lg">Lorum Ipsum</h2>
+              <p>Nunc pulvinar sapien et ligula ullamcorper malesuada.</p>
+            </a>
+          </Link>
         </div>
       </main>
 
       <footer className="flex flex-1 px-1 border-t justify-center items-center">
-        <a
+        <Link
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
           className="flex justify-center items-center flex-grow"
         >
-          Powered by{" "}
-          <span className="h-4 ml-2">
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+          <a className="flex justify-center items-center flex-grow">
+            Powered by{" "}
+            <span className="h-4 ml-2">
+              <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            </span>
+          </a>
+        </Link>
       </footer>
     </div>
   );
