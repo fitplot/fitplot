@@ -1,32 +1,44 @@
 import { useUser } from "@auth0/nextjs-auth0";
+import Link from 'next/link';
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 export default function Profile() {
-  const { user, error, isLoading } = useUser();
+  const { user, error: userError, isLoading: isLoadingUser } = useUser();
 
-  const createCheckin = () => {
-    fetch("/api/checkin?id=" + user.sub, {
-      method: "POST"
-    })
-      .then(response => response.text())
-      .then(response => console.log(response));
-  };
+  const queryClient = useQueryClient();
 
-  const getCheckins = () => {
-    fetch("/api/checkin?id=" + user.sub)
-      .then(response => response.json())
-      .then(response => console.log(response));
-  };
+  const {
+    data: checkins,
+    error: checkinsError,
+    isLoading: isLoadingCheckins,
+  } = useQuery(
+    "checkins",
+    () =>
+      fetch("/api/checkin?id=" + user.sub)
+        .then((response) => response.json()),
+    { enabled: !!user && !!user.sub }
+  );
 
-  if (isLoading) return <div>Loading...</div>;
+  const mutation = useMutation(() =>
+    fetch("/api/checkin?id=" + user.sub, { method: 'POST' }),
+    {
+      onSuccess: () => { 
+        queryClient.invalidateQueries("checkins");
+      }
+    }
+  );
 
-  if (error) return <div>{error.message}</div>;
+  if (isLoadingUser) return <div>Loading user profile...</div>;
+
+  if (userError) return <div>{error.message}</div>;
 
   if (user) {
     return (
       <div>
-        Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
+        Welcome {user.name}! <Link href="/api/auth/logout"><a>Logout</a></Link>
         <p>
-          <img src={user.picture} alt={user.name} />
+          {/* Upgrade to next/image */}
+          {/* <img src={user.picture} alt={user.name} /> */}
           <table>
             <tr>
               <td>Name</td>
@@ -45,16 +57,29 @@ export default function Profile() {
               <td>{user.sub}</td>
             </tr>
           </table>
+          <hr />
+          <h2>My Gym</h2>
           <p>
-            <button onClick={createCheckin}>Check In!</button>
+            <button onClick={() => mutation.mutate()}>
+              {mutation.isLoading ? 'Loading...' : 'Check In!'}
+            </button>
           </p>
+          <h3>History</h3>
           <p>
-            <button onClick={getCheckins}>See my gym visits.</button>
+            {isLoadingCheckins && "Loading history..."}
+            {checkins && (
+              <ul>
+                {checkins.checkins.map(
+                  ({ id, timestamp }) => (<li key={id}>{id + " : " + timestamp}</li>)
+                )}
+              </ul>
+            )}
+            {checkinsError && 'Error loading gym history.'}
           </p>
         </p>
       </div>
     );
   }
 
-  return <a href="/api/auth/login">Login</a>;
+  return <Link href="/api/auth/login"><a>Login</a></Link>;
 }

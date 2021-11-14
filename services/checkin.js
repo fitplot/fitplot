@@ -1,10 +1,4 @@
-const data = [
-  {
-    id: 1,
-    user_id: 12345,
-    timestamp: new Date()
-  }
-];
+const data = [];
 
 export function getAllCheckinsForUser(userId) {
   if (!userId) return null;
