@@ -1,5 +1,4 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import Image from 'next/image';
 import Link from 'next/link';
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
@@ -38,7 +37,8 @@ export default function Profile() {
       <div>
         Welcome {user.name}! <Link href="/api/auth/logout"><a>Logout</a></Link>
         <p>
-          <img src={user.picture} alt={user.name} />
+          {/* Upgrade to next/image */}
+          {/* <img src={user.picture} alt={user.name} /> */}
           <table>
             <tr>
               <td>Name</td>
@@ -70,7 +70,7 @@ export default function Profile() {
             {checkins && (
               <ul>
                 {checkins.checkins.map(
-                  ({ id, timestamp }) => (<li>{id + " : " + timestamp}</li>)
+                  ({ id, timestamp }) => (<li key={id}>{id + " : " + timestamp}</li>)
                 )}
               </ul>
             )}
