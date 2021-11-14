@@ -3,22 +3,18 @@ import { useUser } from "@auth0/nextjs-auth0";
 export default function Profile() {
   const { user, error, isLoading } = useUser();
 
-  const handleCheckin = () => {
+  const createCheckin = () => {
     fetch("/api/checkin?id=" + user.sub, {
       method: "POST"
     })
       .then(response => response.text())
-      .then(response => {
-        console.log(response);
-      });
+      .then(response => console.log(response));
   };
 
-  const getHandleCheckins = () => {
+  const getCheckins = () => {
     fetch("/api/checkin?id=" + user.sub)
       .then(response => response.json())
-      .then(response => {
-        console.log(response);
-      });
+      .then(response => console.log(response));
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -49,8 +45,12 @@ export default function Profile() {
               <td>{user.sub}</td>
             </tr>
           </table>
-          <button onClick={handleCheckin}>Check In!</button>
-          <button onClick={getHandleCheckins}>See your current checkins</button>
+          <p>
+            <button onClick={createCheckin}>Check In!</button>
+          </p>
+          <p>
+            <button onClick={getCheckins}>See my gym visits.</button>
+          </p>
         </p>
       </div>
     );

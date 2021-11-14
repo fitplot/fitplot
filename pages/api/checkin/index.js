@@ -1,20 +1,19 @@
-import { getCheckInForUser, createCheckIn } from "../../../services/checkin";
-import { useUser } from "@auth0/nextjs-auth0";
+import { getAllCheckinsForUser, createCheckin } from "../../../services/checkin";
 
 export default function handler(req, res) {
   const { method } = req;
 
   if (method === "GET") {
-    const checkIns = getCheckInForUser(req.query.id);
+    const checkins = getAllCheckinsForUser(req.query.id);
 
-    if (checkIns) {
-      res.status(200).json({ Checkins: checkIns });
+    if (checkins) {
+      res.status(200).json({ checkins });
     } else {
       res.status(404).send();
     }
   } else if (method === "POST") {
-    // auth0 libray to grab users id {sub}
-    const id = createCheckIn(req.query.id);
+
+    const id = createCheckin(req.query.id);
 
     if (id) {
       res.status(200).send(id.toString());

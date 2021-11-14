@@ -6,23 +6,23 @@ const data = [
   }
 ];
 
-export function getCheckInForUser(user_id) {
-  if (!user_id) return null;
+export function getAllCheckinsForUser(userId) {
+  if (!userId) return null;
 
-  return data.filter(function(checkIn) {
-    return checkIn.user_id === user_id;
-  });
+  return data.filter(
+    (checkin) => checkin.user_id === userId
+  );
 }
 
 let count = 2;
-export function createCheckIn(user_id) {
-  if (!user_id) return null;
+export function createCheckin(userId) {
+  if (!userId) return null;
 
   const id = count++;
 
   data.push({
     id,
-    user_id,
+    user_id: userId,
     timestamp: new Date()
   });
 
