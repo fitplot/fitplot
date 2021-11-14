@@ -1,22 +1,19 @@
-import { getUser, createUser } from '../../services/user';
+import { getAllCheckinsForUser, createCheckin } from "../../../services/checkin";
 
 export default function handler(req, res) {
   const { method } = req;
 
   if (method === "GET") {
-    const { query: { id } } = req;
+    const checkins = getAllCheckinsForUser(req.query.id);
 
-    const user = getUser(parseInt(id, 10));
-
-    if (user) {
-      res.status(200).json(user);
+    if (checkins) {
+      res.status(200).json({ checkins });
     } else {
       res.status(404).send();
     }
   } else if (method === "POST") {
-    const user = req.body;
 
-    const id = createUser(user)
+    const id = createCheckin(req.query.id);
 
     if (id) {
       res.status(200).send(id.toString());
@@ -26,4 +23,4 @@ export default function handler(req, res) {
   } else {
     res.status(405).send();
   }
-};
+}
