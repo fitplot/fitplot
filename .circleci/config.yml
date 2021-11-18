@@ -73,7 +73,6 @@ jobs:
               mv next.config.js /tmp/workspace/next.config.js
               mv package.json /tmp/workspace/package.json
               mv package-lock.json /tmp/workspace/package-lock.json
-              mv server.js /tmp/workspace/server.js
       - run:
           name: Compress workspace to build artifact
           command: |
@@ -89,7 +88,6 @@ jobs:
             - next.config.js
             - package.json
             - package-lock.json
-            - server.js
 
   deploy:
     executor: gcp-cli/default
