@@ -1,4 +1,7 @@
-import { getAllCheckinsForUser, createCheckin } from "../../../services/checkin";
+import {
+  getAllCheckinsForUser,
+  createCheckin
+} from "../../../services/checkin";
 
 export default function handler(req, res) {
   const { method } = req;
@@ -12,7 +15,6 @@ export default function handler(req, res) {
       res.status(404).send();
     }
   } else if (method === "POST") {
-
     const id = createCheckin(req.query.id);
 
     if (id) {

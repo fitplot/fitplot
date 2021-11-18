@@ -1,5 +1,5 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import Link from 'next/link';
+import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 
 export default function Profile() {
@@ -14,17 +14,16 @@ export default function Profile() {
   } = useQuery(
     "checkins",
     () =>
-      fetch("/api/checkin?id=" + user.sub)
-        .then((response) => response.json()),
+      fetch("/api/checkin?id=" + user.sub).then((response) => response.json()),
     { enabled: !!user && !!user.sub }
   );
 
-  const mutation = useMutation(() =>
-    fetch("/api/checkin?id=" + user.sub, { method: 'POST' }),
+  const mutation = useMutation(
+    () => fetch("/api/checkin?id=" + user.sub, { method: "POST" }),
     {
-      onSuccess: () => { 
+      onSuccess: () => {
         queryClient.invalidateQueries("checkins");
-      }
+      },
     }
   );
 
@@ -35,7 +34,10 @@ export default function Profile() {
   if (user) {
     return (
       <div>
-        Welcome {user.name}! <Link href="/api/auth/logout"><a>Logout</a></Link>
+        Welcome {user.name}!{" "}
+        <Link href="/api/auth/logout">
+          <a>Logout</a>
+        </Link>
         <p>
           {/* Upgrade to next/image */}
           {/* <img src={user.picture} alt={user.name} /> */}
@@ -61,7 +63,7 @@ export default function Profile() {
           <h2>My Gym</h2>
           <p>
             <button onClick={() => mutation.mutate()}>
-              {mutation.isLoading ? 'Loading...' : 'Check In!'}
+              {mutation.isLoading ? "Loading..." : "Check In!"}
             </button>
           </p>
           <h3>History</h3>
@@ -69,17 +71,21 @@ export default function Profile() {
             {isLoadingCheckins && "Loading history..."}
             {checkins && (
               <ul>
-                {checkins.checkins.map(
-                  ({ id, timestamp }) => (<li key={id}>{id + " : " + timestamp}</li>)
-                )}
+                {checkins.checkins.map(({ id, timestamp }) => (
+                  <li key={id}>{id + " : " + timestamp}</li>
+                ))}
               </ul>
             )}
-            {checkinsError && 'Error loading gym history.'}
+            {checkinsError && "Error loading gym history."}
           </p>
         </p>
       </div>
     );
   }
 
-  return <Link href="/api/auth/login"><a>Login</a></Link>;
+  return (
+    <Link href="/api/auth/login">
+      <a>Login</a>
+    </Link>
+  );
 }
