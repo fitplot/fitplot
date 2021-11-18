@@ -23,8 +23,8 @@ export default function Nav() {
   return (
     <div className="flex bg-blue-600 text-white">
       {links.map(({ title, href }, i) => (
-        <div className="flex flex-1">
-          <Link href={href} key={i}>
+        <div className="flex flex-1" key={i}>
+          <Link href={href}>
             <a className="flex flex-1 shadow m-4 p-4 text-left border rounded justify-center items-center transition-all hover:text-blue-600 hover:bg-white">
               <h2>{title}</h2>
             </a>
