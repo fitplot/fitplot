@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.6.1",
+    "lodash": "^4.17.21",
+    "lowdb": "^3.0.0",
+    "nanoid": "^3.1.30",
     "next": "12.0.3",
+    "pino": "^7.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-query": "^3.32.3"
