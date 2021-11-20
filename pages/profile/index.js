@@ -1,30 +1,19 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 export default function Profile() {
   const { user, error: userError, isLoading: isLoadingUser } = useUser();
 
-  const queryClient = useQueryClient();
-
   const {
     data: checkins,
     error: checkinsError,
-    isLoading: isLoadingCheckins,
+    isLoading: isLoadingCheckins
   } = useQuery(
     "checkins",
     () =>
-      fetch("/api/checkin?id=" + user.sub).then((response) => response.json()),
+      fetch("/api/checkin?id=" + user.sub).then(response => response.json()),
     { enabled: !!user && !!user.sub }
-  );
-
-  const mutation = useMutation(
-    () => fetch("/api/checkin?id=" + user.sub, { method: "POST" }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("checkins");
-      },
-    }
   );
 
   if (isLoadingUser) return <div>Loading user profile...</div>;
@@ -61,12 +50,7 @@ export default function Profile() {
           </table>
           <hr />
           <h2>My Gym</h2>
-          <p>
-            <button onClick={() => mutation.mutate()}>
-              {mutation.isLoading ? "Loading..." : "Check In!"}
-            </button>
-          </p>
-          <h3>History</h3>
+          <h3 className="font-bold text-base mt-8">Checkin History</h3>
           <p>
             {isLoadingCheckins && "Loading history..."}
             {checkins && (
