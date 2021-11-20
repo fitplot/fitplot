@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import { useMutation, useQueryClient } from "react-query";
 import { useRouter } from "next/router";
