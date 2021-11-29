@@ -1,6 +1,7 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { useMutation, useQueryClient } from "react-query";
 import { useRouter } from "next/router";
+import logger from '../../lib/logger';
 
 export default function Nav() {
   const router = useRouter();
@@ -13,7 +14,7 @@ export default function Nav() {
       onSuccess: response => {
         response.status === 200
           ? router.push("/profile")
-          : console.log(response.status);
+          : logger.info(response.status)
         queryClient.invalidateQueries("checkins");
       }
     }
