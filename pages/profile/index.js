@@ -1,8 +1,11 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
+import Button from "../../components/button";
 
 export default function Profile() {
+  const router = useRouter();
   const { user, error: userError, isLoading: isLoadingUser } = useUser();
 
   const {
@@ -16,6 +19,10 @@ export default function Profile() {
     { enabled: !!user && !!user.sub }
   );
 
+  const handleClick = () => {
+    router.push("/api/auth/logout");
+  };
+
   if (isLoadingUser) return <div>Loading user profile...</div>;
 
   if (userError) return <div>{error.message}</div>;
@@ -23,10 +30,8 @@ export default function Profile() {
   if (user) {
     return (
       <div>
-        Welcome {user.name}!{" "}
-        <Link href="/api/auth/logout">
-          <a>Logout</a>
-        </Link>
+        Welcome {user.name}!
+        <Button handleClick={handleClick} buttonName="Logout" />
         <p>
           {/* Upgrade to next/image */}
           {/* <img src={user.picture} alt={user.name} /> */}
