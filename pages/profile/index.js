@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import Button from "../../components/button";
+import Nav from "../../components/nav";
 
 export default function Profile() {
   const router = useRouter();
@@ -20,10 +21,6 @@ export default function Profile() {
     { enabled: !!user && !!user.sub }
   );
 
-  const handleClick = () => {
-    router.push("/api/auth/logout");
-  };
-
   if (isLoadingUser) return <div>Loading user profile...</div>;
 
   if (userError) return <div>{error.message}</div>;
@@ -31,8 +28,12 @@ export default function Profile() {
   if (user) {
     return (
       <div>
+        <Nav />
         Welcome {user.name}!
-        <Button handleClick={handleClick} buttonName="Logout" />
+        <Button
+          handleClick={() => router.push("/api/auth/logout")}
+          buttonName="Logout"
+        />
         <p>
           <Image
             alt={user.name}
@@ -79,8 +80,9 @@ export default function Profile() {
   }
 
   return (
-    <Link href="/api/auth/login">
-      <a>Login</a>
-    </Link>
+    <Button
+      handleClick={() => router.push("/api/auth/login")}
+      buttonName="Login"
+    />
   );
 }
