@@ -1,5 +1,6 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
+import Image from "next/image";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import Button from "../../components/button";
@@ -33,8 +34,13 @@ export default function Profile() {
         Welcome {user.name}!
         <Button handleClick={handleClick} buttonName="Logout" />
         <p>
-          {/* Upgrade to next/image */}
-          {/* <img src={user.picture} alt={user.name} /> */}
+          <Image
+            alt={user.name}
+            src={user.picture}
+            width={75}
+            height={75}
+            className="rounded-full"
+          />
           <table>
             <tr>
               <td>Name</td>
