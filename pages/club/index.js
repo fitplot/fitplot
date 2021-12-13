@@ -1,3 +1,10 @@
+import Nav from "../../components/nav";
+
 export default function ClubWellness() {
-  return <div>Basic wellness screen</div>;
+  return (
+    <div>
+      <Nav />
+      Basic workout screen
+    </div>
+  );
 }
