@@ -1,6 +1,8 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import Link from "next/link";
+import Image from "next/image";
 import { useQuery } from "react-query";
+import Nav from "../../components/nav";
 
 export default function Profile() {
   const { user, error: userError, isLoading: isLoadingUser } = useUser();
@@ -23,13 +25,19 @@ export default function Profile() {
   if (user) {
     return (
       <div>
+        <Nav />
         Welcome {user.name}!{" "}
         <Link href="/api/auth/logout">
           <a>Logout</a>
         </Link>
         <p>
-          {/* Upgrade to next/image */}
-          {/* <img src={user.picture} alt={user.name} /> */}
+          <Image
+            alt={user.name}
+            src={user.picture}
+            width={75}
+            height={75}
+            className="rounded-full"
+          />
           <table>
             <tr>
               <td>Name</td>
