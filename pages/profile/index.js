@@ -29,10 +29,7 @@ export default function Profile() {
       <div>
         <Nav />
         Welcome {user.name}!
-        <Button
-          handleClick={() => router.push("/api/auth/logout")}
-          buttonName="Logout"
-        />
+        <Button onClick={() => router.push("/api/auth/logout")} text="Logout" />
         <p>
           <Image
             alt={user.name}
@@ -78,10 +75,5 @@ export default function Profile() {
     );
   }
 
-  return (
-    <Button
-      handleClick={() => router.push("/api/auth/login")}
-      buttonName="Login"
-    />
-  );
+  return <Button onClick={() => router.push("/api/auth/login")} text="Login" />;
 }

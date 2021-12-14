@@ -1,10 +1,7 @@
-export default function Button(props) {
+export default function Button({ text, ...props }) {
   return (
-    <button
-      className="bg-black text-white p-2 border rounded"
-      onClick={props.handleClick}
-    >
-      {props.buttonName}
+    <button className="bg-black text-white p-2 border rounded" {...props}>
+      {text}
     </button>
   );
 }
