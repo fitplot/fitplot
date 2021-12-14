@@ -48,7 +48,7 @@ export default function Nav() {
       {links.map(({ title, href }, i) => (
         <div className="flex flex-1" key={i}>
           <button
-            className="flex flex-1 shadow m-4 p-4 text-left border rounded justify-center items-center transition-all hover:text-black hover:bg-white font-mono"
+            className="flex flex-1 shadow m-4 p-4 text-left border rounded justify-center items-center transition-all hover:text-black hover:bg-white"
             onClick={() => {
               validateRoute(title, href);
             }}
