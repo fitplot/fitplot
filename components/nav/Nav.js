@@ -1,7 +1,7 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { useMutation, useQueryClient } from "react-query";
 import { useRouter } from "next/router";
-import logger from '../../lib/logger';
+import logger from "../../lib/logger";
 
 export default function Nav() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function Nav() {
       onSuccess: response => {
         response.status === 200
           ? router.push("/profile")
-          : logger.info(response.status)
+          : logger.info(response.status);
         queryClient.invalidateQueries("checkins");
       }
     }
@@ -44,11 +44,11 @@ export default function Nav() {
   }
 
   return (
-    <div className="flex bg-blue-600 text-white">
+    <div className="flex bg-black text-white">
       {links.map(({ title, href }, i) => (
         <div className="flex flex-1" key={i}>
           <button
-            className="flex flex-1 shadow m-4 p-4 text-left border rounded justify-center items-center transition-all hover:text-blue-600 hover:bg-white"
+            className="flex flex-1 shadow m-4 p-4 text-left border rounded justify-center items-center transition-all hover:text-black hover:bg-white"
             onClick={() => {
               validateRoute(title, href);
             }}

@@ -1,10 +1,12 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import Link from "next/link";
 import Image from "next/image";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
+import Button from "../../components/button";
 import Nav from "../../components/nav";
 
 export default function Profile() {
+  const router = useRouter();
   const { user, error: userError, isLoading: isLoadingUser } = useUser();
 
   const {
@@ -26,10 +28,8 @@ export default function Profile() {
     return (
       <div>
         <Nav />
-        Welcome {user.name}!{" "}
-        <Link href="/api/auth/logout">
-          <a>Logout</a>
-        </Link>
+        Welcome {user.name}!
+        <Button onClick={() => router.push("/api/auth/logout")} text="Logout" />
         <p>
           <Image
             alt={user.name}
@@ -75,9 +75,5 @@ export default function Profile() {
     );
   }
 
-  return (
-    <Link href="/api/auth/login">
-      <a>Login</a>
-    </Link>
-  );
+  return <Button onClick={() => router.push("/api/auth/login")} text="Login" />;
 }
