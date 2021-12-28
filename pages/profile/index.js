@@ -1,13 +1,12 @@
-import { useUser } from "@auth0/nextjs-auth0";
-import Image from "next/image";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import Button from "../../components/button";
 import Nav from "../../components/nav";
+import { useUser } from "../../components/auth";
 
 export default function Profile() {
   const router = useRouter();
-  const { user, error: userError, isLoading: isLoadingUser } = useUser();
+  const user = useUser();
 
   const {
     data: checkins,
@@ -16,13 +15,9 @@ export default function Profile() {
   } = useQuery(
     "checkins",
     () =>
-      fetch("/api/checkin?id=" + user.sub).then(response => response.json()),
-    { enabled: !!user && !!user.sub }
+      fetch("/api/checkin?id=" + user.id).then(response => response.json()),
+    { enabled: !!user && !!user.id }
   );
-
-  if (isLoadingUser) return <div>Loading user profile...</div>;
-
-  if (userError) return <div>{error.message}</div>;
 
   if (user) {
     return (
@@ -31,13 +26,6 @@ export default function Profile() {
         Welcome {user.name}!
         <Button onClick={() => router.push("/api/auth/logout")} text="Logout" />
         <p>
-          <Image
-            alt={user.name}
-            src={user.picture}
-            width={75}
-            height={75}
-            className="rounded-full"
-          />
           <table>
             <tr>
               <td>Name</td>
@@ -48,12 +36,8 @@ export default function Profile() {
               <td>{user.email}</td>
             </tr>
             <tr>
-              <td>Nickname</td>
-              <td>{user.nickname}</td>
-            </tr>
-            <tr>
               <td>User Id</td>
-              <td>{user.sub}</td>
+              <td>{user.id}</td>
             </tr>
           </table>
           <hr />

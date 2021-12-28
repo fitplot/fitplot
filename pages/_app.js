@@ -1,6 +1,6 @@
-import { UserProvider } from "@auth0/nextjs-auth0";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { UserProvider } from '../components/auth';
 
 const queryClient = new QueryClient();
 
