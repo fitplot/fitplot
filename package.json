@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^1.6.1",
     "@prisma/client": "^3.7.0",
     "lodash": "^4.17.21",
     "lowdb": "^3.0.0",

@@ -1,11 +1,11 @@
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "../auth";
 import { useMutation, useQueryClient } from "react-query";
 import { useRouter } from "next/router";
 import logger from "../../lib/logger";
 
 export default function Nav() {
   const router = useRouter();
-  const { user } = useUser();
+  const user = useUser();
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
