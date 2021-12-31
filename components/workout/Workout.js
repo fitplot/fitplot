@@ -4,6 +4,7 @@ import { Input } from "../forms";
 import Nav from "../nav";
 import { fitcode } from "../../lib/fitcode";
 
+
 export default function Workout() {
   const inputRef = React.useRef(null);
 
