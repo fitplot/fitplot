@@ -19,21 +19,6 @@ export default function Workout() {
 
     const result = [];
 
-    const isMultiSet = input.includes(MULTI_SET_DELIM);
-
-    if (isMultiSet) {
-      const setSplit = input.split(MULTI_SET_DELIM);
-      const numberOfSets = setSplit[0];
-      const remainder = setSplit[1];
-      const [numberOfReps, weight] = remainder.split(WEIGHT_DELIM);
-
-      const isMultiWeight = weight?.includes(MULTI_WEIGHT_DELIM);
-
-      let weights = [];
-      if (isMultiWeight) {
-        weights = weight.split(MULTI_WEIGHT_DELIM);
-      }
-
       let count = 0;
       while (count < numberOfSets) {
         result.push({
