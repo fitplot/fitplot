@@ -1,10 +1,5 @@
-import Nav from "../../components/nav";
+import Workout from '../../components/workout';
 
-export default function Workout() {
-  return (
-    <div>
-      <Nav />
-      Basic workout screen
-    </div>
-  );
+export default function WorkoutPage() {
+  return <Workout />;
 }
