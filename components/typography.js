@@ -19,7 +19,7 @@ function Title({
   size,
   as,
   className,
-  ...props,
+  ...props
 }) {
   const Tag = as ?? size;
   return (
@@ -59,12 +59,12 @@ function Paragraph({
   prose = true,
   as = 'p',
   textColorClassName = 'text-secondary',
-  ...props,
+  ...props
 }) {
   const proseClassName = prose ? 'prose prose-light dark:prose-dark' : '';
   return React.createElement(as, {
     className: `max-w-full text-lg ${textColorClassName} ${className} ${proseClassName}`,
-    ...props,
+    ...props
   })
 }
 
