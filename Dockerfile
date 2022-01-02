@@ -9,14 +9,14 @@ FROM base as deps
 
 ENV HUSKY_SKIP_INSTALL=1
 
-ADD package.json package-lock.json .npmrc .
+ADD package.json package-lock.json .
 RUN npm install --production=false
 
 # setup production node_modules
 FROM base as production-deps
 
 COPY --from=deps /node_modules /node_modules
-ADD package.json package-lock.json .npmrc .
+ADD package.json package-lock.json .
 RUN npm prune --production
 
 # build app
