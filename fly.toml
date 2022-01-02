@@ -2,10 +2,6 @@ app = "misty-lake-3835"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = []
-
-[build]
-  image = "flyio/hellofly:latest"
 
 [env]
   PORT = "8080"
@@ -18,9 +14,7 @@ processes = []
   auto_rollback = true
 
 [[services]]
-  http_checks = []
   internal_port = 8080
-  processes = ["app"]
   protocol = "tcp"
   script_checks = []
 
