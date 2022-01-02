@@ -15,19 +15,19 @@ model exercise {
 }
 
 model workout {
-  id        String @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  createdAt String
-  updatedAt String
+  id        String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userId    String
 }
 
 model workoutset {
-  id         String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
   amount     String
-  createdAt  String
+  createdAt  DateTime @default(now())
   exerciseId String
   unit       String
-  updatedAt  String
+  updatedAt  DateTime @updatedAt
   userId     String
   volume     String
   workoutId  String
