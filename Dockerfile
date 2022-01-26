@@ -9,14 +9,20 @@ FROM base as deps
 
 ENV HUSKY_SKIP_INSTALL=1
 
-ADD package.json package-lock.json .
+RUN mkdir /app/
+WORKDIR /app/
+
+ADD package.json package-lock.json ./
 RUN npm install --production=false
 
 # setup production node_modules
 FROM base as production-deps
 
-COPY --from=deps /node_modules /node_modules
-ADD package.json package-lock.json .
+RUN mkdir /app/
+WORKDIR /app/
+
+COPY --from=deps /app/node_modules /app/node_modules
+ADD package.json package-lock.json /app/
 RUN npm prune --production
 
 # build app
@@ -24,6 +30,9 @@ FROM base as build
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
+
+RUN mkdir /app/
+WORKDIR /app/
 
 COPY --from=deps /node_modules /node_modules
 
@@ -40,13 +49,16 @@ FROM base
 
 ENV NODE_ENV=production
 
-COPY --from=production-deps ./node_modules ./node_modules
-COPY --from=build ./node_modules/.prisma ./node_modules/.prisma
-COPY --from=build ./.next ./.next
-COPY --from=build ./public ./public
-COPY --from=build ./next.config.js ./next.config.js
-COPY --from=build ./package.json ./package.json
-COPY --from=build ./package-lock.json ./package-lock.json
+RUN mkdir /app/
+WORKDIR /app/
+
+COPY --from=production-deps /app/node_modules /app/node_modules
+COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
+COPY --from=build /app/.next /app/.next
+COPY --from=build /app/public /app/public
+COPY --from=build /app/next.config.js /app/next.config.js
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/package-lock.json /app/package-lock.json
 ADD . .
 
 EXPOSE 3000
