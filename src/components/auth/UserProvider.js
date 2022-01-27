@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
 const FAKE_USERS = [
   {
-    username: 'justin',
-    id: '123',
+    username: "justin",
+    id: "123"
   },
   {
-    username: 'eric',
-    id: '456',
+    username: "eric",
+    id: "456"
   }
 ];
 
@@ -19,10 +19,10 @@ const UserContext = React.createContext({
 export const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
 
-  const login = useCallback((username) => {
+  const login = React.useCallback(username => {
     if (!username) return;
-    
-    const user = FAKE_USERS.find((u) => u.username === username);
+
+    const user = FAKE_USERS.find(u => u.username === username);
 
     if (user) {
       setUser(user);
@@ -31,13 +31,11 @@ export const UserProvider = ({ children }) => {
 
   const context = {
     user,
-    login,
+    login
   };
 
   return (
-    <UserContext.Provider value={context}>
-      { children }
-    </UserContext.Provider>
+    <UserContext.Provider value={context}>{children}</UserContext.Provider>
   );
 };
 

@@ -1,3 +1,4 @@
+import React from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import queryClient from "../lib/query-client";
@@ -13,7 +14,7 @@ function App({ Component, pageProps }) {
         <Component {...pageProps} />
         <ReactQueryDevtools
           toggleButtonProps={{
-            style: { bottom: "3rem" },
+            style: { bottom: "3rem" }
           }}
           initialIsOpen={false}
         />
