@@ -1,19 +1,41 @@
-import { nanoid } from 'nanoid';
 import React from 'react';
 
-const UserContext = React.createContext(null);
+const FAKE_USERS = [
+  {
+    username: 'justin',
+    id: '123',
+  },
+  {
+    username: 'eric',
+    id: '456',
+  }
+];
+
+const UserContext = React.createContext({
+  user: null,
+  login: null
+});
 
 export const UserProvider = ({ children }) => {
-  const dummy = {
-    id: nanoid(),
-    name: 'Rick Sanchez',
-    email: 'rick.sanchez@nexus.com',
+  const [user, setUser] = React.useState(null);
+
+  const login = useCallback((username) => {
+    if (!username) return;
+    
+    const user = FAKE_USERS.find((u) => u.username === username);
+
+    if (user) {
+      setUser(user);
+    }
+  });
+
+  const context = {
+    user,
+    login,
   };
 
-  const [user] = React.useState(dummy);
-
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={context}>
       { children }
     </UserContext.Provider>
   );
