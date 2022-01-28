@@ -16,7 +16,7 @@ export default function MyWorkouts() {
   const { user } = useUser();
   const mutation = useCreateWorkout();
 
-  const submit = async () => {
+  const newWorkout = async () => {
     await mutation.mutateAsync({ userId: user.id });
   };
 
@@ -25,7 +25,7 @@ export default function MyWorkouts() {
       <div className="flex-1 flex flex-col space-y-4">
         <Button
           className="inline-flex justify-center items-center"
-          onClick={submit}
+          onClick={newWorkout}
         >
           <FireIcon className="w-6 h-6" />
           Workout Now
