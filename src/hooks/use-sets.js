@@ -11,19 +11,16 @@ export function useSets(workoutId) {
 
 export function useCreateSet() {
   return useMutation(
-    (set, workoutId, userId) =>
-      fetch(`/api/workout/${workoutId}/sets`, {
+    set =>
+      fetch(`/api/workout/${set.workoutId}/sets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          ...set,
-          userId: userId
-        })
+        body: JSON.stringify(set)
       }).then(res => res.json()),
     {
-      onSuccess: () => {
+      onSuccess: workoutId => {
         queryClient.invalidateQueries(["sets", workoutId]);
       }
     }
