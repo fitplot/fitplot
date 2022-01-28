@@ -4,20 +4,29 @@ import Button from "../button";
 import Card from "../card";
 import Layout from "../layout";
 import LoadingIcon from "../loading-icon";
-import { useWorkouts } from "../../hooks/use-workouts";
+import { useWorkouts, useCreateWorkout } from "../../hooks/use-workouts";
 import { useRouter } from "next/router";
 import { ChevronRightIcon, FireIcon } from "@heroicons/react/solid";
 import dayjs from "dayjs";
+import { useUser } from "../auth/UserProvider";
 
 export default function MyWorkouts() {
   const router = useRouter();
-
   const { data: workouts, error, isLoading } = useWorkouts();
+  const { user } = useUser();
+  const mutation = useCreateWorkout();
+
+  const submit = async () => {
+    await mutation.mutateAsync({ userId: user.id });
+  };
 
   return (
     <Layout>
       <div className="flex-1 flex flex-col space-y-4">
-        <Button className="inline-flex justify-center items-center">
+        <Button
+          className="inline-flex justify-center items-center"
+          onClick={submit}
+        >
           <FireIcon className="w-6 h-6" />
           Workout Now
         </Button>
