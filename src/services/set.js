@@ -1,4 +1,4 @@
-import prisma from '../lib/prisma-server';
+import prisma from "../lib/prisma-server";
 
 export async function getSetByWorkoutId(workoutId) {
   return await prisma.workoutset.findMany({ where: { workoutId } });
