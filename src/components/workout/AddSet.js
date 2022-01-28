@@ -23,7 +23,10 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
   const submit = async () => {
     await Promise.all(
       sets.reduce(
-        (all, set) => [...all, mutation.mutateAsync(set, workoutId, user.id)],
+        (all, set) => [
+          ...all,
+          mutation.mutateAsync({ ...set, userId: user.user.id })
+        ],
         []
       )
     );
