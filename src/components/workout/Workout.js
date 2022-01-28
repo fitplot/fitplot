@@ -88,19 +88,16 @@ export default function Workout() {
                 </div>
                 <SetsView sets={setsForExercise} />
                 <div className="mt-4 flex flex-row-reverse">
-                  <Button
-                    text="Add Set"
-                    onClick={() => addSetToExercise(exerciseId)}
-                  />
+                  <Button onClick={() => addSetToExercise(exerciseId)}>
+                    Add Set
+                  </Button>
                 </div>
               </Card>
             )
           )}
-        <Button
-          type="submit"
-          text="Add Exercise"
-          onClick={openExerciseDialog}
-        />
+        <Button type="submit" onClick={openExerciseDialog}>
+          Add Exercise
+        </Button>
       </div>
       <AddExercise isOpen={showExerciseDialog} close={closeExerciseDialog} />
       <AddSet
