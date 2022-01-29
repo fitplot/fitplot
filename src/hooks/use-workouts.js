@@ -39,7 +39,7 @@ export function useDeleteWorkout() {
         body: JSON.stringify(workout)
       }).then(res => res.json()),
     {
-      onSuccess: res => {
+      onSuccess: () => {
         queryClient.invalidateQueries("workouts");
       }
     }
