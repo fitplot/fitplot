@@ -11,7 +11,7 @@ export async function getWorkoutById(workoutId) {
 export async function getWorkoutsByUserId(userId) {
   return await prisma.workout.findMany({
     where: {
-      userId: userId
+      userId
     }
   });
 }
