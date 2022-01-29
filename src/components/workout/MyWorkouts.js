@@ -1,14 +1,15 @@
 import React from "react";
-import { H1, Paragraph } from "../typography";
+import dayjs from "dayjs";
+import AddWorkout from "./AddWorkout";
 import Button from "../button";
 import Card from "../card";
 import Layout from "../layout";
 import LoadingIcon from "../loading-icon";
+import { H1, Paragraph } from "../typography";
 import { useWorkouts, useDeleteWorkout } from "../../hooks/use-workouts";
 import { useRouter } from "next/router";
 import { ChevronRightIcon, FireIcon, TrashIcon } from "@heroicons/react/solid";
-import dayjs from "dayjs";
-import AddWorkout from "./AddWorkout";
+
 
 export default function MyWorkouts() {
   const router = useRouter();
