@@ -22,8 +22,8 @@ export default function MyWorkouts() {
     setShowExerciseDialog(false);
   };
 
-  const deleteWorkout = async (workoutId) => {
-    await mutation.mutateAsync({ id: workoutId });
+  const deleteWorkout = async (id) => {
+    await mutation.mutateAsync({ id });
   }
 
   return (
