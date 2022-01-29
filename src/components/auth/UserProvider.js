@@ -2,7 +2,7 @@ import React from "react";
 
 const FAKE_USERS = [
   {
-    username: "justin",
+    username: "jj",
     id: "123"
   },
   {
