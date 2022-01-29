@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "react-query";
 import queryClient from "../lib/query-client";
+import { useRouter } from "next/router";
 
 export function useWorkouts() {
   return useQuery("workouts", () =>
@@ -8,6 +9,7 @@ export function useWorkouts() {
 }
 
 export function useCreateWorkout() {
+  const router = useRouter();
   return useMutation(
     workout =>
       fetch("/api/workouts", {
@@ -20,7 +22,7 @@ export function useCreateWorkout() {
     {
       onSuccess: res => {
         queryClient.invalidateQueries("workouts");
-        window.location.assign(`/workout/${res.id}`);
+        router.push(`/workout/${res.id}`);
       }
     }
   );
