@@ -4,28 +4,25 @@ import queryClient from "../lib/query-client";
 export function useSets(workoutId) {
   return useQuery(
     ["sets", workoutId],
-    () => fetch(`/api/workout/${workoutId}/sets`).then((res) => res.json()),
+    () => fetch(`/api/workout/${workoutId}/sets`).then(res => res.json()),
     { enabled: !!workoutId }
   );
 }
 
 export function useCreateSet() {
   return useMutation(
-    (set) =>
-      fetch(`/api/workout/${workoutId}/sets`, {
+    set =>
+      fetch(`/api/workout/${set.workoutId}/sets`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          ...set,
-          userId: "",
-        }),
-      }).then((res) => res.json()),
+        body: JSON.stringify(set)
+      }).then(res => res.json()),
     {
-      onSuccess: () => {
+      onSuccess: workoutId => {
         queryClient.invalidateQueries(["sets", workoutId]);
-      },
+      }
     }
   );
 }

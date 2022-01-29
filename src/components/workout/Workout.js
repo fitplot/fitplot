@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import { H1 } from "../typography";
 import Button from "../button";
 import Card from "../card";
-import Nav from "../nav";
 import SetsView from "./SetsView";
 import AddExercise from "./AddExercise";
 import AddSet from "./AddSet";
-import useWorkout from '../../hooks/use-workout';
-import useSets from '../../hooks/use-sets';
-import useExercises from '../../hooks/use-exercises';
+import { useWorkout } from "../../hooks/use-workout";
+import { useSets } from "../../hooks/use-sets";
+import { useExercises } from "../../hooks/use-exercises";
+import Layout from "../layout";
 
 export default function Workout() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function Workout() {
 
   const [showExerciseDialog, setShowExerciseDialog] = React.useState(false);
   const openExerciseDialog = () => setShowExerciseDialog(true);
-  const closeExerciseDialog = (exerciseId) => {
+  const closeExerciseDialog = exerciseId => {
     setShowExerciseDialog(false);
     setActiveExerciseId(exerciseId || null);
     if (exerciseId) {
@@ -36,7 +36,7 @@ export default function Workout() {
     setActiveExerciseId(null);
   };
 
-  const addSetToExercise = (exerciseId) => {
+  const addSetToExercise = exerciseId => {
     setActiveExerciseId(exerciseId);
     openSetsDialog();
   };
@@ -47,10 +47,12 @@ export default function Workout() {
 
   React.useEffect(() => {
     if (exercises) {
-      setExercisesById(exercises.reduce((acc, exercise) => { 
-        acc[exercise.id] = exercise;
-        return acc;
-      }, {}));
+      setExercisesById(
+        exercises.reduce((acc, exercise) => {
+          acc[exercise.id] = exercise;
+          return acc;
+        }, {})
+      );
     } else {
       setExercisesById({});
     }
@@ -64,8 +66,7 @@ export default function Workout() {
   }
 
   return (
-    <div>
-      <Nav />
+    <Layout>
       <div className="flex flex-col p-6">
         {isLoading && "Loading workout..."}
         {!isLoading && workout && <H1>{workout.name || workout.id}</H1>}
@@ -81,31 +82,30 @@ export default function Workout() {
                 className="mb-4 px-6 py-4 border border-gray-200"
               >
                 <div className="mb-4 text-sm font-medium text-gray-900">
-                  {exercisesById[exerciseId] ? exercisesById[exerciseId].name : 'Unknown Exercise'}
+                  {exercisesById[exerciseId]
+                    ? exercisesById[exerciseId].name
+                    : "Unknown Exercise"}
                 </div>
                 <SetsView sets={setsForExercise} />
                 <div className="mt-4 flex flex-row-reverse">
-                  <Button
-                    text="Add Set"
-                    onClick={() => addSetToExercise(exerciseId)}
-                  />
+                  <Button onClick={() => addSetToExercise(exerciseId)}>
+                    Add Set
+                  </Button>
                 </div>
               </Card>
             )
           )}
-        <Button
-          type="submit"
-          text="Add Exercise"
-          onClick={openExerciseDialog}
-        />
+        <Button type="submit" onClick={openExerciseDialog}>
+          Add Exercise
+        </Button>
       </div>
-      <AddExercise isOpen={showExerciseDialog} close={closeExerciseDialog}/>
+      <AddExercise isOpen={showExerciseDialog} close={closeExerciseDialog} />
       <AddSet
         isOpen={showSetsDialog}
         close={closeSetsDialog}
         workoutId={workoutId}
         exerciseId={activeExerciseId}
       />
-    </div>
+    </Layout>
   );
 }

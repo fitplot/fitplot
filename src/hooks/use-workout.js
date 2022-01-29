@@ -1,9 +1,9 @@
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
 
-export default function useWorkout(workoutId) {
+export function useWorkout(workoutId) {
   return useQuery(
     ["workout", workoutId],
-    () => fetch(`/api/workout/${workoutId}`).then((res) => res.json()),
+    () => fetch(`/api/workout/${workoutId}`).then(res => res.json()),
     { enabled: !!workoutId }
   );
 }
