@@ -7,15 +7,14 @@ import { useUser } from "../auth";
 export default function Layout({ children }) {
   const { login, user } = useUser();
 
-  const [username, setUsername] = React.useState("");
-
   const signIn = () => {
     return (
       <div className="flex m-8 mt-52 justify-center">
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={() => {
-            login(username.toLowerCase());
+          onSubmit={event => {
+            const form = event.currentTarget;
+            login(form.username.value);
             event.preventDefault();
           }}
         >
@@ -28,11 +27,10 @@ export default function Layout({ children }) {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
               type="text"
               placeholder="Username"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
+              id="user-name"
+              name="username"
             />
           </div>
           <div className="flex items-center justify-between">
