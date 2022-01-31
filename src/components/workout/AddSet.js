@@ -1,6 +1,7 @@
 import React from "react";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 import { Input, Label } from "../forms";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 import SetsView from "./SetsView";
 import Button from "../button";
 import { H2 } from "../typography";
@@ -51,13 +52,18 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
             <div className="flex flex-wrap items-baseline justify-between mb-4">
               <Label htmlFor="exercise-name">Type your FitCode™</Label>
             </div>
-            <Input
-              autoFocus
+            <div className="flex">
+              <Input
+                autoFocus
               autoComplete="off"
-              type="text"
-              name="fitcode"
-              placeholder="5@185, 4@195, 2@205"
-            />
+                type="text"
+                name="fitcode"
+                placeholder="5@185, 4@195"
+              />
+              <Button className="p-1">
+                <ChevronRightIcon className="w-6 h-6" />
+              </Button>
+            </div>
           </div>
         </form>
         <div className="flex-1">
