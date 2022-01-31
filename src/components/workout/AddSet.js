@@ -8,7 +8,7 @@ import { H2 } from "../typography";
 import { fitcode } from "../../lib/fitcode";
 import { useCreateSet } from "../../hooks/use-sets";
 import { useUser } from "../auth";
-import { PlusIcon } from "@heroicons/react/solid";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
   const [sets, updateSets] = React.useState(null);
@@ -16,7 +16,7 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
   const mutation = useCreateSet();
   const user = useUser();
 
-  const handleInput = rawInput => {
+  const handleInput = (rawInput) => {
     updateSets(fitcode(rawInput, { workoutId, exerciseId }));
   };
 
@@ -25,7 +25,7 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
       sets.reduce(
         (all, set) => [
           ...all,
-          mutation.mutateAsync({ ...set, userId: user.user.id })
+          mutation.mutateAsync({ ...set, userId: user.user.id }),
         ],
         []
       )
@@ -37,20 +37,28 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
   return (
     <DialogOverlay isOpen={isOpen} onDismiss={close} aria-label="Add Sets">
       <DialogContent className="!w-screen md:!w-half-screen">
-      <div className="flex flex-col space-y-4">
-        <form
-          className="flex-none flex flex-col space-y-4"
-          onSubmit={event => {
-            const form = event.currentTarget;
-            handleInput(form.fitcode.value);
-            event.preventDefault();
-          }}
-          autoComplete="off"
-        >
-          <H2>Add Sets</H2>
-          <div>
-            <div className="flex flex-wrap items-baseline justify-between mb-4">
-              <Label htmlFor="exercise-name">Type your FitCode™</Label>
+        <div className="flex flex-col space-y-4">
+          <form
+            className="flex-none flex flex-col space-y-4"
+            onSubmit={(event) => {
+              const form = event.currentTarget;
+              handleInput(form.fitcode.value);
+              event.preventDefault();
+            }}
+            autoComplete="off"
+          >
+            <H2>Add Sets</H2>
+            <div>
+              <div className="flex flex-wrap items-baseline justify-between mb-4">
+                <Label htmlFor="exercise-name">Type your FitCode™</Label>
+              </div>
+              <Input
+                autoFocus
+                autoComplete="off"
+                type="text"
+                name="fitcode"
+                placeholder="5@185, 4@195, 2@205"
+              />
             </div>
             <div className="flex">
               <Input
@@ -64,15 +72,19 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
                 <ChevronRightIcon className="w-6 h-6" />
               </Button>
             </div>
+          </form>
+          <div className="flex-1">
+            <SetsView sets={sets} />
           </div>
-        </form>
-        <div className="flex-1">
-          <SetsView sets={sets} />
+          <div className="flex space-x-4">
+            <Button className="flex-1" onClick={() => close()}>
+              <XIcon className="w-6 h-6 inline-block" />
+            </Button>
+            <Button disabled={!(sets && sets.length)} onClick={commit}>
+              <CheckIcon className="w-6 h-6 inline-block" />
+            </Button>
+          </div>
         </div>
-        <Button disabled={!(sets && sets.length)} onClick={commit}>
-          <PlusIcon className="w-6 h-6 inline-block" />
-        </Button>
-      </div>
       </DialogContent>
     </DialogOverlay>
   );
