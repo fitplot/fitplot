@@ -19,7 +19,7 @@ const UserContext = React.createContext({
 export const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
 
-  const login = React.useCallback(username => {
+  const login = (username) => {
     if (!username) return;
 
     const user = FAKE_USERS.find(u => u.username === username);
@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
     if (user) {
       setUser(user);
     }
-  });
+  };
 
   const context = {
     user,
