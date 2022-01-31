@@ -34,7 +34,7 @@ ENV COMMIT_SHA=$COMMIT_SHA
 RUN mkdir /app/
 WORKDIR /app/
 
-COPY --from=deps /node_modules /node_modules
+COPY --from=deps /app/node_modules /app/node_modules
 
 # schema doesn't change much so these will stay cached
 ADD prisma .
