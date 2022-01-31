@@ -16,10 +16,10 @@ export default function MyWorkouts() {
   const { data: workouts, error, isLoading } = useWorkouts();
   const mutation = useDeleteWorkout();
 
-  const [showExerciseDialog, setShowExerciseDialog] = React.useState(false);
-  const openExerciseDialog = () => setShowExerciseDialog(true);
-  const closeExerciseDialog = () => {
-    setShowExerciseDialog(false);
+  const [showWorkoutDialog, setShowWorkoutDialog] = React.useState(false);
+  const openWorkoutDialog = () => setShowWorkoutDialog(true);
+  const closeWorkoutDialog = () => {
+    setShowWorkoutDialog(false);
   };
 
   const deleteWorkout = async (id) => {
@@ -29,12 +29,12 @@ export default function MyWorkouts() {
   return (
     <Layout>
       <div className="flex flex-col space-y-4">
-        <Button className="inline-flex justify-center items-center" type="submit" onClick={openExerciseDialog}>
+        <Button className="inline-flex justify-center items-center" type="submit" onClick={openWorkoutDialog}>
           <FireIcon className="w-6 h-6" />
           Workout Now
         </Button>
       </div>
-      <AddWorkout isOpen={showExerciseDialog} close={closeExerciseDialog} />
+      <AddWorkout isOpen={showWorkoutDialog} close={closeWorkoutDialog} />
       <H1>My Workouts</H1>
       <div className="flex-1 flex flex-col justify-center">
         {isLoading && <LoadingIcon className="w-12 h-12 self-center" />}

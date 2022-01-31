@@ -1,10 +1,12 @@
 import { useQuery, useMutation } from "react-query";
 import queryClient from "../lib/query-client";
 import { useRouter } from "next/router";
+import { useUser } from "../components/auth/UserProvider";
 
 export function useWorkouts() {
+  const { user } = useUser();
   return useQuery("workouts", () =>
-    fetch("/api/workouts").then(res => res.json())
+    fetch(`/api/workouts/${user.id}`).then(res => res.json())
   );
 }
 
