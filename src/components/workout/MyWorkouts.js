@@ -1,24 +1,30 @@
 import React from "react";
-import { H1, Paragraph } from "../typography";
+import dayjs from "dayjs";
+import AddWorkout from "./AddWorkout";
 import Button from "../button";
 import Card from "../card";
 import Layout from "../layout";
 import LoadingIcon from "../loading-icon";
-import { useWorkouts } from "../../hooks/use-workouts";
+import { H1, Paragraph } from "../typography";
+import { useWorkouts, useDeleteWorkout } from "../../hooks/use-workouts";
 import { useRouter } from "next/router";
-import { ChevronRightIcon, FireIcon } from "@heroicons/react/solid";
-import dayjs from "dayjs";
-import AddWorkout from "./AddWorkout";
+import { ChevronRightIcon, FireIcon, TrashIcon } from "@heroicons/react/solid";
+
 
 export default function MyWorkouts() {
   const router = useRouter();
   const { data: workouts, error, isLoading } = useWorkouts();
+  const mutation = useDeleteWorkout();
 
   const [showWorkoutDialog, setShowWorkoutDialog] = React.useState(false);
   const openWorkoutDialog = () => setShowWorkoutDialog(true);
   const closeWorkoutDialog = () => {
     setShowWorkoutDialog(false);
   };
+
+  const deleteWorkout = async (id) => {
+    await mutation.mutateAsync({ id });
+  }
 
   return (
     <Layout>
@@ -37,7 +43,8 @@ export default function MyWorkouts() {
           (workouts ? (
             workouts.map(({ id, name, createdAt }) => (
               <Card key={id} className="flex mb-4 border border-slate-200">
-                <div className="flex-1 p-4">
+                <TrashIcon onClick={() => deleteWorkout(id)} className="mt-auto mb-auto pl-2 w-10 h-10" />
+                <div className="flex-1 pt-4 pr-4 pb-4 pl-2">
                   <div className="text-sm font-medium text-slate-900">
                     {name}
                   </div>

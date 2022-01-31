@@ -29,3 +29,21 @@ export function useCreateWorkout() {
     }
   );
 }
+
+export function useDeleteWorkout() {
+  return useMutation(
+    workout =>
+      fetch("/api/workouts", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(workout)
+      }).then(res => res.json()),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("workouts");
+      }
+    }
+  );
+}
