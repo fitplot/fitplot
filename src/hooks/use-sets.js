@@ -20,8 +20,8 @@ export function useCreateSet() {
         body: JSON.stringify(set)
       }).then(res => res.json()),
     {
-      onSuccess: workoutId => {
-        queryClient.invalidateQueries(["sets", workoutId]);
+      onSuccess: res => {
+        queryClient.invalidateQueries(["sets", res.workoutId]);
       }
     }
   );
