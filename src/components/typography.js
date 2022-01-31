@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 const FONT_SIZES = {
   h1: 'leading-tight text-4xl md:text-5xl',
@@ -24,7 +25,7 @@ function Title({
   const Tag = as ?? size;
   return (
     <Tag
-      className={`${FONT_SIZES[size]} ${TITLE_COLORS[variant]} ${className}`}
+      className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)}
       {...props}
     />
   );
@@ -63,7 +64,12 @@ function Paragraph({
 }) {
   const proseClassName = prose ? 'prose prose-light' : '';
   return React.createElement(as, {
-    className: `max-w-full text-lg ${textColorClassName} ${className} ${proseClassName}`,
+    className: clsx(
+      "max-w-full text-lg",
+      textColorClassName,
+      className,
+      proseClassName
+    ),
     ...props
   })
 }

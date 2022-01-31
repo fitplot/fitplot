@@ -8,8 +8,6 @@ export default function Home() {
     <Layout>
       <Head>
         <title>Home</title>
-        <meta name="description" content="Nexus Fitness" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex-1 flex flex-col items-center justify-center">
         <FireIcon className="text-red-800 w-36 h-36 animate-pulse" />
