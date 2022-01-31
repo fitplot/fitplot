@@ -10,7 +10,6 @@ import { useWorkouts, useDeleteWorkout } from "../../hooks/use-workouts";
 import { useRouter } from "next/router";
 import { ChevronRightIcon, FireIcon, TrashIcon } from "@heroicons/react/solid";
 
-
 export default function MyWorkouts() {
   const router = useRouter();
   const { data: workouts, error, isLoading } = useWorkouts();
@@ -24,43 +23,59 @@ export default function MyWorkouts() {
 
   const deleteWorkout = async (id) => {
     await mutation.mutateAsync({ id });
-  }
+  };
 
   return (
-    <Layout>
-      <div className="flex flex-col space-y-4">
-        <Button className="inline-flex justify-center items-center" type="submit" onClick={openWorkoutDialog}>
-          <FireIcon className="w-6 h-6" />
-          Workout Now
-        </Button>
-      </div>
-      <AddWorkout isOpen={showWorkoutDialog} close={closeWorkoutDialog} />
-      <H1>My Workouts</H1>
-      <div className="flex-1 flex flex-col justify-center">
-        {isLoading && <LoadingIcon className="w-12 h-12 self-center" />}
-        {!isLoading &&
-          !error &&
-          (workouts ? (
-            workouts.map(({ id, name, createdAt }) => (
-              <Card key={id} className="flex mb-4 border border-slate-200">
-                <TrashIcon onClick={() => deleteWorkout(id)} className="mt-auto mb-auto pl-2 w-10 h-10" />
-                <div className="flex-1 pt-4 pr-4 pb-4 pl-2">
-                  <div className="text-sm font-medium text-slate-900">
-                    {name}
-                  </div>
-                  <div className="text-sm font-medium text-slate-500">
-                    {dayjs(createdAt).format("MMM DD, YYYY h:mm a")}
-                  </div>
-                </div>
-                <Button onClick={() => router.push(`/workout/${id}`)}>
-                  <ChevronRightIcon className="w-6 h-6" />
-                </Button>
-              </Card>
-            ))
-          ) : (
-            <Paragraph>No workout history.</Paragraph>
-          ))}
-      </div>
-    </Layout >
+    <>
+      <Layout>
+        <form
+          className="flex-1 flex flex-col space-y-4"
+          onSubmit={(event) => {
+            openWorkoutDialog();
+            event.preventDefault();
+          }}
+        >
+          <H1 className="text-small">My Workouts</H1>
+          <div className="flex-1 flex flex-col space-y-2">
+            {isLoading && <LoadingIcon className="w-12 h-12 self-center" />}
+            {!isLoading &&
+              !error &&
+              (workouts && workouts.length ? (
+                workouts.map(({ id, name, createdAt }) => (
+                  <Card
+                    key={id}
+                    className="flex border border-slate-200 space-x-2"
+                  >
+                    <Button
+                      className="bg-none"
+                      onClick={() => deleteWorkout(id)}
+                    >
+                      <TrashIcon className="text-red-800 w-6 h-6" />
+                    </Button>
+                    <div className="flex-1 p-4">
+                      <div className="text-sm font-medium text-slate-900">
+                        {name}
+                      </div>
+                      <div className="text-sm font-medium text-slate-500">
+                        {dayjs(createdAt).format("MMM DD, YYYY h:mm a")}
+                      </div>
+                    </div>
+                    <Button onClick={() => router.push(`/workout/${id}`)}>
+                      <ChevronRightIcon className="w-6 h-6" />
+                    </Button>
+                  </Card>
+                ))
+              ) : (
+                <Paragraph>No workout history.</Paragraph>
+              ))}
+          </div>
+          <Button type="submit">
+            <FireIcon className="w-6 h-6 inline-block" />
+            Workout Now
+          </Button>
+        </form>
+        <AddWorkout isOpen={showWorkoutDialog} close={closeWorkoutDialog} />
+      </Layout>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { H1 } from "../typography";
+import { H1, H2, Paragraph } from "../typography";
 import Button from "../button";
 import Card from "../card";
 import SetsView from "./SetsView";
@@ -67,19 +67,20 @@ export default function Workout() {
 
   return (
     <Layout>
-      <div className="flex flex-col p-6">
+      <div className="flex-1 flex flex-col space-y-2">
+        <H1>Workout</H1>
         {isLoading && "Loading workout..."}
-        {!isLoading && workout && <H1>{workout.name || workout.id}</H1>}
+        {!isLoading && workout && <H2>{workout.name || workout.id}</H2>}
         {!isLoading &&
           !(sets && sets.length) &&
-          "This workout is empty! To get started, add an exercise."}
+          <Paragraph>To get started, add an exercise.</Paragraph>}
         {!isLoading &&
           sets &&
           Object.entries(setsByExercise).map(
             ([exerciseId, setsForExercise]) => (
               <Card
                 key={exerciseId}
-                className="mb-4 px-6 py-4 border border-gray-200"
+                className="px-6 py-4 border border-gray-200"
               >
                 <div className="mb-4 text-sm font-medium text-gray-900">
                   {exercisesById[exerciseId]

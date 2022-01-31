@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../button";
 import Nav from "../nav";
 import { useUser } from "../auth";
-
+import { Input, Label } from "../forms";
 
 export default function Layout({ children }) {
   const { login, user } = useUser();
@@ -12,28 +12,34 @@ export default function Layout({ children }) {
       <div className="flex m-8 mt-52 justify-center">
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={event => {
+          onSubmit={(event) => {
             const form = event.currentTarget;
-            login(form.username.value);
+            const rawInput = form.username.value;
+            const username = rawInput.trim().toLowerCase();
+            login(username);
             event.preventDefault();
           }}
         >
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Only two gym bros here...
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            <div>
+            <div className="flex flex-wrap items-baseline justify-between">
+              <Label
+                htmlFor="username"
+              >
+                Only two gym bros here...
+              </Label>
+            </div>
+            <Input
+              autoFocus
+              autoComplete="off"
               type="text"
-              placeholder="Username"
-              id="user-name"
+              id="username"
               name="username"
+              required
             />
           </div>
-          <div className="flex items-center justify-between">
+          </div>
+          <div className="flex">
             <Button className="flex-1" type="submit">
               Sign In
             </Button>
@@ -43,21 +49,12 @@ export default function Layout({ children }) {
     );
   };
 
-  const layout = () => {
-    return (
-      <div className="flex flex-col md:flex-row md:flex-row-reverse w-screen h-screen bg-white">
-        <main className="flex-1 flex flex-col p-4">{children}</main>
-        <Nav />
-      </div>
-    )
-  }
-
   return (
-    <>
-      {user === null
-        ? signIn()
-        : layout()
-      }
-    </>
+    <div className="flex flex-col md:flex-row md:flex-row-reverse w-screen h-screen bg-white break-words overflow-hidden">
+      <main className="flex-1 flex flex-col p-4">
+        {user ? children : signIn()}
+      </main>
+      <Nav />
+    </div>
   );
 }

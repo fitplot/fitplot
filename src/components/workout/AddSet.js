@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "@reach/dialog";
+import { DialogOverlay, DialogContent } from "@reach/dialog";
 import { Input, Label } from "../forms";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import SetsView from "./SetsView";
@@ -8,10 +8,9 @@ import { H2 } from "../typography";
 import { fitcode } from "../../lib/fitcode";
 import { useCreateSet } from "../../hooks/use-sets";
 import { useUser } from "../auth";
+import { PlusIcon } from "@heroicons/react/solid";
 
 export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
-  const inputRef = React.useRef(null);
-
   const [sets, updateSets] = React.useState(null);
 
   const mutation = useCreateSet();
@@ -21,7 +20,7 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
     updateSets(fitcode(rawInput, { workoutId, exerciseId }));
   };
 
-  const submit = async () => {
+  const commit = async () => {
     await Promise.all(
       sets.reduce(
         (all, set) => [
@@ -36,10 +35,11 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
   };
 
   return (
-    <Dialog isOpen={isOpen} onDismiss={close} aria-label="Add Sets">
-      <div className="flex flex-col">
+    <DialogOverlay isOpen={isOpen} onDismiss={close} aria-label="Add Sets">
+      <DialogContent className="!w-screen md:!w-half-screen">
+      <div className="flex flex-col space-y-4">
         <form
-          className="flex-none"
+          className="flex-none flex flex-col space-y-4"
           onSubmit={event => {
             const form = event.currentTarget;
             handleInput(form.fitcode.value);
@@ -48,13 +48,14 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
           autoComplete="off"
         >
           <H2>Add Sets</H2>
-          <div className="my-6">
+          <div>
             <div className="flex flex-wrap items-baseline justify-between mb-4">
               <Label htmlFor="exercise-name">Type your FitCode™</Label>
             </div>
             <div className="flex">
               <Input
-                ref={inputRef}
+                autoFocus
+              autoComplete="off"
                 type="text"
                 name="fitcode"
                 placeholder="5@185, 4@195"
@@ -65,13 +66,14 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
             </div>
           </div>
         </form>
-        <div className="flex-1 p-4">
+        <div className="flex-1">
           <SetsView sets={sets} />
         </div>
-        <Button disabled={!(sets && sets.length)} onClick={submit}>
-          Add
+        <Button disabled={!(sets && sets.length)} onClick={commit}>
+          <PlusIcon className="w-6 h-6 inline-block" />
         </Button>
       </div>
-    </Dialog>
+      </DialogContent>
+    </DialogOverlay>
   );
 }
