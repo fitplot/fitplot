@@ -71,9 +71,9 @@ export default function Workout() {
         <H1>Workout</H1>
         {isLoading && "Loading workout..."}
         {!isLoading && workout && <H2>{workout.name || workout.id}</H2>}
-        {!isLoading &&
-          !(sets && sets.length) &&
-          <Paragraph>To get started, add an exercise.</Paragraph>}
+        {!isLoading && !(sets && sets.length) && (
+          <Paragraph>To get started, add an exercise.</Paragraph>
+        )}
         {!isLoading &&
           sets &&
           Object.entries(setsByExercise).map(
