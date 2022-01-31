@@ -51,12 +51,30 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
             <div className="flex flex-wrap items-baseline justify-between mb-4">
               <Label htmlFor="exercise-name">Type your FitCode™</Label>
             </div>
-            <Input
-              ref={inputRef}
-              type="text"
-              name="fitcode"
-              placeholder="5@185, 4@195, 2@205"
-            />
+            <div className="flex">
+              <Input
+                ref={inputRef}
+                type="text"
+                name="fitcode"
+                placeholder="5@185, 4@195"
+              />
+              <Button className="p-0">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Button>
+            </div>
           </div>
         </form>
         <div className="flex-1 p-4">
