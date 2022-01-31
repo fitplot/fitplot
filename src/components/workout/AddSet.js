@@ -1,6 +1,7 @@
 import React from "react";
 import Dialog from "@reach/dialog";
 import { Input, Label } from "../forms";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 import SetsView from "./SetsView";
 import Button from "../button";
 import { H2 } from "../typography";
@@ -59,20 +60,7 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
                 placeholder="5@185, 4@195"
               />
               <Button className="p-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
+                <ChevronRightIcon className="w-6 h-6" />
               </Button>
             </div>
           </div>
