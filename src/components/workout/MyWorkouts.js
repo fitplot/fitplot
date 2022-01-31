@@ -28,13 +28,7 @@ export default function MyWorkouts() {
   return (
     <>
       <Layout>
-        <form
-          className="flex-1 flex flex-col space-y-4"
-          onSubmit={(event) => {
-            openWorkoutDialog();
-            event.preventDefault();
-          }}
-        >
+        <div className="flex-1 flex flex-col space-y-4">
           <H1 className="text-small">My Workouts</H1>
           <div className="flex-1 flex flex-col space-y-2">
             {isLoading && <LoadingIcon className="w-12 h-12 self-center" />}
@@ -69,11 +63,11 @@ export default function MyWorkouts() {
                 <Paragraph>No workout history.</Paragraph>
               ))}
           </div>
-          <Button type="submit">
+          <Button onClick={() => openWorkoutDialog()}>
             <FireIcon className="w-6 h-6 inline-block" />
             Workout Now
           </Button>
-        </form>
+        </div>
         <AddWorkout isOpen={showWorkoutDialog} close={closeWorkoutDialog} />
       </Layout>
     </>
