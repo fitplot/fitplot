@@ -11,3 +11,11 @@ export async function getWorkoutById(workoutId) {
 export async function createWorkout(workout) {
   return await prisma.workout.create({ data: workout });
 }
+
+export async function deleteWorkout(workout) {
+  return await prisma.workout.delete({
+    where: {
+      id: workout.id
+    }
+  });
+}
