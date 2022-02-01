@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import queryClient from "../../lib/query-client";
 
 const FAKE_USERS = [
   {
@@ -36,6 +37,7 @@ export const UserProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("username");
     setUser(null);
+    queryClient.clear();
     router.push("/");
   };
 
