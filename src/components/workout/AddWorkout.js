@@ -10,7 +10,7 @@ export default function AddWorkout({ isOpen, close }) {
   const { user } = useUser();
   const mutation = useCreateWorkout();
 
-  const createWorkout = async (workoutName) => {
+  const createWorkout = async workoutName => {
     await mutation.mutateAsync({ name: workoutName, userId: user.id });
   };
 
@@ -19,7 +19,7 @@ export default function AddWorkout({ isOpen, close }) {
       <DialogContent className="!w-screen md:!w-half-screen">
         <form
           className="flex flex-col space-y-4"
-          onSubmit={(event) => {
+          onSubmit={event => {
             const form = event.currentTarget;
             const workoutName = form.workout.value;
             // TODO: form validation
