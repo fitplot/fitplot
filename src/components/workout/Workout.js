@@ -11,6 +11,7 @@ import { useWorkout } from "../../hooks/use-workout";
 import { useSets } from "../../hooks/use-sets";
 import { useExercises } from "../../hooks/use-exercises";
 import Layout from "../layout";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 
 export default function Workout() {
   const router = useRouter();
@@ -107,6 +108,10 @@ export default function Workout() {
         workoutId={workoutId}
         exerciseId={activeExerciseId}
       />
+      <Button className={"mt-5 flex justify-center"} onClick={() => router.push("/workout")}>
+        Finish Workout
+        <CheckCircleIcon className="w-6 h-6 ml-1" />
+      </Button>
     </Layout>
   );
 }
