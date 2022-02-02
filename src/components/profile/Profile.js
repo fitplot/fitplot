@@ -9,13 +9,14 @@ import Card from "../card";
 
 export default function Profile() {
   const { user, logout } = useUser();
-  const { data: userExercises, error, isLoading } = useExerciseByUserId(user.id);
+  const { data: userExercises, error, isLoading } = useExerciseByUserId();
+
+  const userProfileName = user ? user.username : "";
 
   return (
     <Layout>
       <div className="flex-1 flex flex-col space-y-4">
-        <H1>Profile Page - {user.username}</H1>
-
+        <H1>Profile Page - {userProfileName}</H1>
         <div className="flex-1 flex flex-col space-y-2">
           {isLoading && <LoadingIcon className="w-12 h-12 self-center" />}
           {!isLoading &&
