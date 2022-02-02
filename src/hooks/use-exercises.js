@@ -7,11 +7,11 @@ export function useExercises() {
   );
 }
 
-export function useExerciseByUserId(exerciseId) {
+export function useExerciseByUserId(userId) {
   return useQuery(
-    ["exercises", exerciseId],
-    () => fetch(`/api/exercises/${exerciseId}`).then(res => res.json()),
-    { enabled: !!exerciseId }
+    ["exercises", userId],
+    () => fetch(`/api/exercises/${userId}`).then(res => res.json()),
+    { enabled: !!userId }
   );
 }
 
