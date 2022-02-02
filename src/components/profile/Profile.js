@@ -1,22 +1,22 @@
-import { useUser } from "../auth";
 import Button from "../button";
+import Card from "../card";
 import dayjs from "dayjs";
 import Layout from "../layout/Layout";
-import { H1, Paragraph } from "../typography";
 import LoadingIcon from "../loading-icon";
+import { H1, Paragraph } from "../typography";
+import { useUser } from "../auth";
 import { useExerciseByUserId } from "../../hooks/use-exercises";
-import Card from "../card";
 
 export default function Profile() {
   const { user, logout } = useUser();
   const { data: userExercises, error, isLoading } = useExerciseByUserId();
 
-  const userProfileName = user ? user.username : "";
+  const username = user ? user.username : "";
 
   return (
     <Layout>
       <div className="flex-1 flex flex-col space-y-4">
-        <H1>Profile Page - {userProfileName}</H1>
+        <H1>Profile Page - {username}</H1>
         <div className="flex-1 flex flex-col space-y-2">
           {isLoading && <LoadingIcon className="w-12 h-12 self-center" />}
           {!isLoading &&
