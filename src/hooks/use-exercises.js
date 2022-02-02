@@ -7,6 +7,15 @@ export function useExercises() {
   );
 }
 
+export function useExerciseByUserId(exerciseId) {
+  return useQuery(
+    ["exercises", exerciseId],
+    () => fetch(`/api/exercises/${exerciseId}`).then(res => res.json()),
+    { enabled: !!exerciseId }
+  );
+}
+
+
 export function useCreateExercise() {
   return useMutation(
     exercise =>
