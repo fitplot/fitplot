@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "react-query";
+import { useUser } from "../components/auth";
 import queryClient from "../lib/query-client";
 
 export function useExercises() {
@@ -7,14 +8,15 @@ export function useExercises() {
   );
 }
 
-export function useExerciseByUserId(userId) {
+export function useExerciseByUserId() {
+  const { user } = useUser();
+
   return useQuery(
-    ["exercises", userId],
-    () => fetch(`/api/exercises/${userId}`).then(res => res.json()),
-    { enabled: !!userId }
+    "exercises", () =>
+    fetch(`/api/exercises/${user.id}`).then(res => res.json()),
+    { enabled: !!user }
   );
 }
-
 
 export function useCreateExercise() {
   return useMutation(
