@@ -7,3 +7,11 @@ export async function getAllExercises() {
 export async function createExercise(exercise) {
   return await prisma.exercise.create({ data: exercise });
 }
+
+export async function getExercisesByUserId(userId) {
+  return await prisma.exercise.findMany({
+    where: {
+      userId
+    }
+  });
+}
