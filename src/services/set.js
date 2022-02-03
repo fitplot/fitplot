@@ -7,3 +7,22 @@ export async function getSetByWorkoutId(workoutId) {
 export async function createSetForWorkout(set) {
   return await prisma.workoutset.create({ data: set });
 }
+
+
+export async function finalAllSetsForExercise(exerciseId, workoutId) {
+  return await prisma.workoutset.findMany({
+    where: {
+      exerciseId,
+      workoutId
+    }
+  });
+}
+
+export async function deleteAllSetsForExercise(exerciseId, workoutId) {
+  return await prisma.workoutset.deleteMany({
+    where: {
+      exerciseId,
+      workoutId
+    }
+  });
+}
