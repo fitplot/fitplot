@@ -8,10 +8,10 @@ import SetsView from "./SetsView";
 import AddExercise from "./AddExercise";
 import AddSet from "./AddSet";
 import { useWorkout } from "../../hooks/use-workout";
-import { useSets } from "../../hooks/use-sets";
+import { useSets, useDeleteExercise } from "../../hooks/use-sets";
 import { useExercises } from "../../hooks/use-exercises";
 import Layout from "../layout";
-import { CheckCircleIcon } from "@heroicons/react/solid";
+import { CheckCircleIcon, TrashIcon } from "@heroicons/react/solid";
 
 export default function Workout() {
   const router = useRouter();
@@ -45,6 +45,7 @@ export default function Workout() {
   const { data: workout, isLoading: isLoadingWorkout } = useWorkout(workoutId);
   const { data: sets, isLoading: isLoadingSets } = useSets(workoutId);
   const { data: exercises, isLoading: isLoadingExercises } = useExercises();
+  const mutation = useDeleteExercise();
 
   React.useEffect(() => {
     if (exercises) {
@@ -66,6 +67,10 @@ export default function Workout() {
     setsByExercise = _.groupBy(sets, "exerciseId");
   }
 
+  const deleteExercise = async (workoutId, exerciseId) => {
+    await mutation.mutateAsync({ workoutId, exerciseId });
+  };
+
   return (
     <Layout>
       <div className="flex-1 flex flex-col space-y-2">
@@ -83,10 +88,13 @@ export default function Workout() {
                 key={exerciseId}
                 className="px-6 py-4 border border-gray-200"
               >
-                <div className="mb-4 text-sm font-medium text-gray-900">
+                <div className="flex mb-4 text-sm font-medium text-gray-900">
                   {exercisesById[exerciseId]
                     ? exercisesById[exerciseId].name
                     : "Unknown Exercise"}
+                  <div className="ml-auto">
+                    <TrashIcon onClick={() => deleteExercise(workoutId, exerciseId)} className="text-slate-900 w-6 h-6" />
+                  </div>
                 </div>
                 <SetsView sets={setsForExercise} />
                 <div className="mt-4 flex flex-row-reverse">
