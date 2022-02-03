@@ -9,6 +9,25 @@ export function useSets(workoutId) {
   );
 }
 
+export function useDeleteExercise() {
+  return useMutation(
+    (obj) =>
+      fetch(`/api/workout/${obj.workoutId}/sets/${obj.exerciseId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(obj)
+      }).then(res => res.json()),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("sets");
+      }
+    }
+  );
+}
+
+
 export function useCreateSet() {
   return useMutation(
     set =>
