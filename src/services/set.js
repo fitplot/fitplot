@@ -9,7 +9,7 @@ export async function createSetForWorkout(set) {
 }
 
 
-export async function finalAllSetsForExercise(exerciseId, workoutId) {
+export async function findAllSetsForExercise(exerciseId, workoutId) {
   return await prisma.workoutset.findMany({
     where: {
       exerciseId,

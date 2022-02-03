@@ -1,4 +1,4 @@
-import { deleteAllSetsForExercise, finalAllSetsForExercise } from "../../../../../../services/set";
+import { deleteAllSetsForExercise, findAllSetsForExercise } from "../../../../../../services/set";
 
 export default async function handler(req, res) {
   const {
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   } = req;
 
   if (method === "GET") {
-    return res.status(200).send(await finalAllSetsForExercise(exerciseId, workoutId));
+    return res.status(200).send(await findAllSetsForExercise(exerciseId, workoutId));
   }
 
   if (method === "DELETE") {
