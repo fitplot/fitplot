@@ -6,23 +6,18 @@ import Card from "../card";
 import Layout from "../layout";
 import LoadingIcon from "../loading-icon";
 import { H1, Paragraph } from "../typography";
-import { useWorkouts, useDeleteWorkout } from "../../hooks/use-workouts";
+import { useWorkouts } from "../../hooks/use-workouts";
 import { useRouter } from "next/router";
 import { ChevronRightIcon, FireIcon, TrashIcon } from "@heroicons/react/solid";
 
 export default function MyWorkouts() {
   const router = useRouter();
   const { data: workouts, error, isLoading } = useWorkouts();
-  const mutation = useDeleteWorkout();
 
   const [showWorkoutDialog, setShowWorkoutDialog] = React.useState(false);
   const openWorkoutDialog = () => setShowWorkoutDialog(true);
   const closeWorkoutDialog = () => {
     setShowWorkoutDialog(false);
-  };
-
-  const deleteWorkout = async (id) => {
-    await mutation.mutateAsync({ id });
   };
 
   return (
@@ -38,15 +33,9 @@ export default function MyWorkouts() {
                 workouts.map(({ id, name, createdAt }) => (
                   <Card
                     key={id}
-                    className="flex border border-slate-200 space-x-2"
+                    className="flex border border-slate-200"
                   >
-                    <Button
-                      className="bg-none"
-                      onClick={() => deleteWorkout(id)}
-                    >
-                      <TrashIcon className="text-red-800 w-6 h-6" />
-                    </Button>
-                    <div className="flex-1 p-4">
+                    <div className="flex-1 p-2">
                       <div className="text-sm font-medium text-slate-900">
                         {name}
                       </div>
