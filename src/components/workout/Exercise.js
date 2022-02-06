@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import _ from 'lodash';
+import React, { useEffect } from "react";
+import _ from "lodash";
 import { XIcon, CheckIcon } from "@heroicons/react/solid";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import SetsView from "./SetsView";
 import { Input } from "../forms";
 import Button from "../button";
+import { useUpdateSet } from "../../hooks/use-sets";
 
 export default function Exercise({
   exercise: { name } = {},
   sets = [],
   isOpen,
-  close,
+  close
 }) {
   const [editedSets, setEditedSets] = React.useState();
 
@@ -20,13 +21,12 @@ export default function Exercise({
     }
   }, [isOpen, editedSets, sets]);
 
-  const mutation = { mutateAsync: async () => console.log('submit', ...arguments) };
+  const mutation = useUpdateSet();
 
   const submit = async () => {
-    editedSets.forEach(async (editedSet) => {
+    editedSets.forEach(async editedSet => {
       const ogSet = sets.find(s => s.id === editedSet.id);
       if (!_.isEqual(ogSet, editedSet)) {
-        // PUT edited set
         await mutation.mutateAsync(editedSet);
       }
     });
@@ -34,13 +34,13 @@ export default function Exercise({
   };
 
   const onEditSet = (setId, changes) => {
-    const index = sets.findIndex((set) => set.id === setId);
+    const index = sets.findIndex(set => set.id === setId);
     if (index > -1) {
       const hotSet = editedSets[index];
       const changed = [
         ...editedSets.slice(0, index),
         { ...hotSet, ...changes },
-        ...editedSets.slice(index + 1),
+        ...editedSets.slice(index + 1)
       ];
       setEditedSets(changed);
     }
@@ -48,7 +48,10 @@ export default function Exercise({
 
   return (
     <DialogOverlay isOpen={isOpen} onDismiss={close} aria-label="View Exercise">
-      <DialogContent className="!w-screen md:!w-half-screen" aria-label="View Exercise">
+      <DialogContent
+        className="!w-screen md:!w-half-screen"
+        aria-label="View Exercise"
+      >
         <div className="flex flex-col space-y-2">
           <Input
             className="bg-white px-4 py-2"
