@@ -1,19 +1,17 @@
-import {
-  createSetForWorkout,
-  getSetByWorkoutId} from "../../../../services/set";
+import { createSetForWorkout, getSetByWorkoutId } from '../../../../services/set';
 
-export default async function handler(request, res) {
+export default async function handler(req, res) {
   const {
     method,
     body,
-    query: { workoutId }
-  } = request;
+    query: { workoutId },
+  } = req;
 
-  if (method === "GET") {
+  if (method === 'GET') {
     return res.status(200).send(await getSetByWorkoutId(workoutId));
   }
 
-  if (method === "POST") {
+  if (method === 'POST') {
     return res.status(200).send(await createSetForWorkout(body));
   }
 

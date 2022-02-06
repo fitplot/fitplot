@@ -1,7 +1,7 @@
-import { createExercise,getAllExercises } from '../../services/exercise';
+import { createExercise, getAllExercises } from '../../services/exercise';
 
-export default async function handler(request, res) {
-  const { method, body } = request;
+export default async function handler(req, res) {
+  const { method, body } = req;
 
   if (method === 'GET') {
     return res.status(200).send(await getAllExercises());

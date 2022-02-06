@@ -1,7 +1,7 @@
-import { createWorkout, deleteWorkout,getAllWorkouts } from '../../services/workout';
+import { createWorkout, deleteWorkout, getAllWorkouts } from '../../services/workout';
 
-export default async function handler(request, res) {
-  const { method, body } = request;
+export default async function handler(req, res) {
+  const { method, body } = req;
 
   if (method === 'GET') {
     return res.status(200).send(await getAllWorkouts());
@@ -12,7 +12,7 @@ export default async function handler(request, res) {
   }
 
   if (method === 'DELETE') {
-    return res.status(200).send(await deleteWorkout(body))
+    return res.status(200).send(await deleteWorkout(body));
   }
 
   return res.status(405).send();
