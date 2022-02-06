@@ -1,14 +1,14 @@
+import { useUser } from "../auth";
 import Button from "../button";
 import { Input, Label } from "../forms";
-import { useUser } from "../auth";
 
 export default function Login() {
   const { login } = useUser();
 
   return (
-    <div className="flex-1 flex items-center justify-center">
+    <div className="flex flex-1 justify-center items-center">
       <form
-        className="flex flex-col shadow-md rounded px-8 py-6 space-y-4"
+        className="flex flex-col py-6 px-8 space-y-4 rounded shadow-md"
         onSubmit={(event) => {
           const form = event.currentTarget;
           const rawInput = form.username.value;
@@ -18,7 +18,7 @@ export default function Login() {
         }}
       >
         <div>
-          <div className="flex flex-wrap items-baseline justify-between">
+          <div className="flex flex-wrap justify-between items-baseline">
             <Label htmlFor="username">Only two gym bros here...</Label>
           </div>
           <Input

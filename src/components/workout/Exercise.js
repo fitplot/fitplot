@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import { CheckIcon, XIcon } from '@heroicons/react/solid';
+import { DialogContent, DialogOverlay } from '@reach/dialog';
 import _ from 'lodash';
-import { XIcon, CheckIcon } from "@heroicons/react/solid";
-import { DialogContent, DialogOverlay } from "@reach/dialog";
-import SetsView from "./SetsView";
-import { Input } from "../forms";
-import Button from "../button";
+import React, { useEffect } from 'react';
 
-export default function Exercise({
-  exercise: { name } = {},
-  sets = [],
-  isOpen,
-  close,
-}) {
+import Button from '../button';
+import { Input } from '../forms';
+import SetsView from './SetsView';
+
+export default function Exercise({ exercise: { name } = {}, sets = [], isOpen, close }) {
   const [editedSets, setEditedSets] = React.useState();
 
   useEffect(() => {
@@ -20,11 +16,12 @@ export default function Exercise({
     }
   }, [isOpen, editedSets, sets]);
 
-  const mutation = { mutateAsync: async () => console.log('submit', ...arguments) };
+  /* eslint-disable-next-line no-console */
+  const mutation = { mutateAsync: async (...messages) => console.log('submit', ...messages) };
 
   const submit = async () => {
     editedSets.forEach(async (editedSet) => {
-      const ogSet = sets.find(s => s.id === editedSet.id);
+      const ogSet = sets.find((s) => s.id === editedSet.id);
       if (!_.isEqual(ogSet, editedSet)) {
         // PUT edited set
         await mutation.mutateAsync(editedSet);
@@ -47,21 +44,17 @@ export default function Exercise({
   };
 
   return (
-    <DialogOverlay isOpen={isOpen} onDismiss={close} aria-label="View Exercise">
-      <DialogContent className="!w-screen md:!w-half-screen" aria-label="View Exercise">
-        <div className="flex flex-col space-y-2">
-          <Input
-            className="bg-white px-4 py-2"
-            type="textarea"
-            defaultValue={name}
-          />
-          <SetsView sets={editedSets} isEditable={true} onEdit={onEditSet} />
-          <div className="flex space-x-4">
-            <Button className="flex-1" onClick={() => close()}>
-              <XIcon className="w-6 h-6 inline-block" />
+    <DialogOverlay isOpen={isOpen} onDismiss={close} aria-label='View Exercise'>
+      <DialogContent className='!w-screen md:!w-half-screen' aria-label='View Exercise'>
+        <div className='flex flex-col space-y-2'>
+          <Input className='py-2 px-4 bg-white' type='textarea' defaultValue={name} />
+          <SetsView sets={editedSets} isEditable onEdit={onEditSet} />
+          <div className='flex space-x-4'>
+            <Button className='flex-1' onClick={() => close()}>
+              <XIcon className='inline-block w-6 h-6' />
             </Button>
-            <Button className="flex-1" onClick={() => submit()}>
-              <CheckIcon className="w-6 h-6 inline-block" />
+            <Button className='flex-1' onClick={() => submit()}>
+              <CheckIcon className='inline-block w-6 h-6' />
             </Button>
           </div>
         </div>

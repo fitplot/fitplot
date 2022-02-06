@@ -1,10 +1,11 @@
-import Button from "../button";
-import { DialogOverlay, DialogContent } from "@reach/dialog";
-import { Input, Label } from "../forms";
-import { H2 } from "../typography";
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
+import { DialogContent,DialogOverlay } from "@reach/dialog";
+
 import { useCreateWorkout } from "../../hooks/use-workouts";
 import { useUser } from "../auth/UserProvider";
-import { CheckIcon, XIcon } from "@heroicons/react/solid";
+import Button from "../button";
+import { Input, Label } from "../forms";
+import { H2 } from "../typography";
 
 export default function AddWorkout({ isOpen, close }) {
   const { user } = useUser();
@@ -30,7 +31,7 @@ export default function AddWorkout({ isOpen, close }) {
         >
           <H2>Workout Name</H2>
           <div>
-            <div className="flex flex-wrap items-baseline justify-between">
+            <div className="flex flex-wrap justify-between items-baseline">
               <Label htmlFor="exercise-name">Name this workout</Label>
             </div>
             <Input
@@ -44,10 +45,10 @@ export default function AddWorkout({ isOpen, close }) {
           </div>
           <div className="flex space-x-4">
             <Button className="flex-1" onClick={() => close()}>
-              <XIcon className="w-6 h-6 inline-block" />
+              <XIcon className="inline-block w-6 h-6" />
             </Button>
             <Button className="flex-1" type="submit">
-              <CheckIcon className="w-6 h-6 inline-block" />
+              <CheckIcon className="inline-block w-6 h-6" />
             </Button>
           </div>
         </form>

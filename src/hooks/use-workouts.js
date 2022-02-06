@@ -1,7 +1,8 @@
-import { useQuery, useMutation } from "react-query";
-import queryClient from "../lib/query-client";
 import { useRouter } from "next/router";
+import { useMutation,useQuery } from "react-query";
+
 import { useUser } from "../components/auth/UserProvider";
+import queryClient from "../lib/query-client";
 
 export function useWorkouts() {
   const { user } = useUser();

@@ -1,5 +1,5 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
 const FONT_SIZES = {
   h1: 'leading-tight text-4xl md:text-5xl',
@@ -20,39 +20,39 @@ function Title({
   size,
   as,
   className,
-  ...props
+  ...properties
 }) {
   const Tag = as ?? size;
   return (
     <Tag
       className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)}
-      {...props}
+      {...properties}
     />
   );
 }
 
-function H1(props) {
-  return <Title {...props} size="h1" />
+function H1(properties) {
+  return <Title {...properties} size="h1" />
 }
 
-function H2(props) {
-  return <Title {...props} size="h2" />
+function H2(properties) {
+  return <Title {...properties} size="h2" />
 }
 
-function H3(props) {
-  return <Title {...props} size="h3" />
+function H3(properties) {
+  return <Title {...properties} size="h3" />
 }
 
-function H4(props) {
-  return <Title {...props} size="h4" />
+function H4(properties) {
+  return <Title {...properties} size="h4" />
 }
 
-function H5(props) {
-  return <Title {...props} size="h5" />
+function H5(properties) {
+  return <Title {...properties} size="h5" />
 }
 
-function H6(props) {
-  return <Title {...props} size="h6" />
+function H6(properties) {
+  return <Title {...properties} size="h6" />
 }
 
 function Paragraph({
@@ -60,7 +60,7 @@ function Paragraph({
   prose = true,
   as = 'p',
   textColorClassName = 'text-secondary',
-  ...props
+  ...properties
 }) {
   const proseClassName = prose ? 'prose prose-light' : '';
   return React.createElement(as, {
@@ -70,7 +70,7 @@ function Paragraph({
       className,
       proseClassName
     ),
-    ...props
+    ...properties
   })
 }
 

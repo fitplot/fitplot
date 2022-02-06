@@ -1,5 +1,5 @@
 import React from 'react'
 
-export default function Card(props) {
-  return <div {...props} />
+export default function Card(properties) {
+  return <div {...properties} />
 }
