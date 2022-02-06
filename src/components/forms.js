@@ -9,17 +9,17 @@ function Label({ className, ...labelProps }) {
   /* eslint-enable jsx-a11y/label-has-associated-control */
 }
 
-const Input = React.forwardRef((properties, reference) => {
+const Input = React.forwardRef((props, reference) => {
   const className = clsx(
     'py-8 px-11 w-full text-lg font-medium text-black placeholder:text-gray-500 disabled:text-gray-400 bg-gray-100',
-    properties.className
+    props.className
   );
 
-  if (properties.type === 'textarea') {
-    return <textarea {...properties} className={className} />;
+  if (props.type === 'textarea') {
+    return <textarea {...props} className={className} />;
   }
 
-  return <input {...properties} className={className} ref={reference} />;
+  return <input {...props} className={className} ref={reference} />;
 });
 
 export { Input, Label };

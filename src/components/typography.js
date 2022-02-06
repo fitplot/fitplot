@@ -15,44 +15,33 @@ const TITLE_COLORS = {
   secondary: 'text-gray-400',
 };
 
-function Title({
-  variant = 'primary',
-  size,
-  as,
-  className,
-  ...properties
-}) {
+function Title({ variant = 'primary', size, as, className, ...props }) {
   const Tag = as ?? size;
-  return (
-    <Tag
-      className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)}
-      {...properties}
-    />
-  );
+  return <Tag className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)} {...props} />;
 }
 
-function H1(properties) {
-  return <Title {...properties} size="h1" />
+function H1(props) {
+  return <Title {...props} size='h1' />;
 }
 
-function H2(properties) {
-  return <Title {...properties} size="h2" />
+function H2(props) {
+  return <Title {...props} size='h2' />;
 }
 
-function H3(properties) {
-  return <Title {...properties} size="h3" />
+function H3(props) {
+  return <Title {...props} size='h3' />;
 }
 
-function H4(properties) {
-  return <Title {...properties} size="h4" />
+function H4(props) {
+  return <Title {...props} size='h4' />;
 }
 
-function H5(properties) {
-  return <Title {...properties} size="h5" />
+function H5(props) {
+  return <Title {...props} size='h5' />;
 }
 
-function H6(properties) {
-  return <Title {...properties} size="h6" />
+function H6(props) {
+  return <Title {...props} size='h6' />;
 }
 
 function Paragraph({
@@ -60,18 +49,13 @@ function Paragraph({
   prose = true,
   as = 'p',
   textColorClassName = 'text-secondary',
-  ...properties
+  ...props
 }) {
   const proseClassName = prose ? 'prose prose-light' : '';
   return React.createElement(as, {
-    className: clsx(
-      "max-w-full text-lg",
-      textColorClassName,
-      className,
-      proseClassName
-    ),
-    ...properties
-  })
+    className: clsx('max-w-full text-lg', textColorClassName, className, proseClassName),
+    ...props,
+  });
 }
 
 export { H1, H2, H3, H4, H5, H6, Paragraph };
