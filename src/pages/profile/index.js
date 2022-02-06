@@ -1,7 +1,7 @@
-import { useUser } from "../../components/auth";
-import Button from "../../components/button";
-import Layout from "../../components/layout";
-import { H1 } from "../../components/typography";
+import { useUser } from '../../components/auth';
+import Button from '../../components/button';
+import Layout from '../../components/layout';
+import { H1 } from '../../components/typography';
 
 export default function Profile() {
   const { logout } = useUser();

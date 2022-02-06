@@ -125,7 +125,7 @@ jobs:
       - name: 🚀 Deploy
         uses: superfly/flyctl-actions@1.1
         with:
-          args: "deploy -i registry.fly.io/misty-lake-3835:${{ github.sha }}
-            --strategy rolling"
+          args: 'deploy -i registry.fly.io/misty-lake-3835:${{ github.sha }}
+            --strategy rolling'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

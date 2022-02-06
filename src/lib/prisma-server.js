@@ -4,6 +4,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // connect to client
-prisma.$connect()
+prisma.$connect();
 
 export default prisma;

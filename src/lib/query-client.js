@@ -1,9 +1,9 @@
-import { QueryClient } from "react-query";
+import { QueryClient } from 'react-query';
 
 export default new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Number.POSITIVE_INFINITY
-    }
-  }
+      staleTime: Number.POSITIVE_INFINITY,
+    },
+  },
 });
