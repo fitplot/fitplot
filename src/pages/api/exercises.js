@@ -1,4 +1,4 @@
-import { getAllExercises, createExercise } from '../../services/exercise';
+import { createExercise, getAllExercises } from '../../services/exercise';
 
 export default async function handler(req, res) {
   const { method, body } = req;

@@ -1,59 +1,61 @@
-import React from "react";
-import { useRouter } from "next/router";
-import queryClient from "../../lib/query-client";
+import { useRouter } from 'next/router';
+import React from 'react';
+
+import queryClient from '../../lib/query-client';
 
 const FAKE_USERS = [
   {
-    username: "jj",
-    id: "123"
+    username: 'jj',
+    id: '123',
   },
   {
-    username: "eric",
-    id: "456"
-  }
+    username: 'eric',
+    id: '456',
+  },
 ];
 
 const UserContext = React.createContext({
   user: null,
   login: null,
-  logout: null
+  logout: null,
 });
 
-export const UserProvider = ({ children }) => {
+export function UserProvider({ children }) {
   const [user, setUser] = React.useState(null);
   const router = useRouter();
 
-  const login = username => {
+  const login = React.useCallback((username) => {
     if (!username) return;
 
-    const user = FAKE_USERS.find(u => u.username === username);
+    const knownUser = FAKE_USERS.find((_user) => _user.username === username);
 
-    if (user) {
-      localStorage.setItem("username", user.username);
-      setUser(user);
+    if (knownUser) {
+      localStorage.setItem('username', knownUser.username);
+      setUser(knownUser);
     }
-  };
-
-  const logout = () => {
-    localStorage.removeItem("username");
-    setUser(null);
-    queryClient.clear();
-    router.push("/");
-  };
-
-  React.useEffect(() => {
-    login(localStorage.getItem("username"));
   }, []);
 
-  const context = {
-    user,
-    login,
-    logout
-  };
+  const logout = React.useCallback(() => {
+    localStorage.removeItem('username');
+    setUser(null);
+    queryClient.clear();
+    router.push('/');
+  }, [router]);
 
-  return (
-    <UserContext.Provider value={context}>{children}</UserContext.Provider>
+  React.useEffect(() => {
+    login(localStorage.getItem('username'));
+  }, [login]);
+
+  const context = React.useMemo(
+    () => ({
+      user,
+      login,
+      logout,
+    }),
+    [user, login, logout]
   );
-};
+
+  return <UserContext.Provider value={context}>{children}</UserContext.Provider>;
+}
 
 export const useUser = () => React.useContext(UserContext);

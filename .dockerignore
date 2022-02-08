@@ -1,2 +1,13 @@
 node_modules
+npm-debug.log
+.git
+README
+.node_modules
+LICENSE
+.vscode
+.editorconfig
+coverage
+.eslintcache
+.env
+.next
 Dockerfile

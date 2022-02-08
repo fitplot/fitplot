@@ -1,3 +1,50 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2020": true
+  },
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:unicorn/recommended",
+    "plugin:tailwindcss/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "unicorn",
+    "simple-import-sort",
+    "tailwindcss",
+    "import",
+    "promise",
+    "only-error",
+    "lodash"
+  ],
+  "rules": {
+    /* disabled to allow `export { default } from 'module'` syntax */
+    "no-restricted-exports": "off",
+
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+
+    /* TODO: remove after considering kebab-case Next.js dynamic routes */
+    "unicorn/filename-case": "off",
+
+    "unicorn/no-null": "off",
+    "unicorn/no-useless-undefined": "off",
+
+    /* conflicts with airbnb rule restricting for..of and for..in syntax */
+    "unicorn/no-array-for-each": "off",
+
+    "unicorn/prevent-abbreviations": "off"
+  }
 }
