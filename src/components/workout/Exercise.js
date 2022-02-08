@@ -17,7 +17,7 @@ export default function Exercise({
   const [editedSets, setEditedSets] = React.useState();
 
   useEffect(() => {
-    if (isOpen && !editedSets) {
+    if (isOpen && !_.isEqual(sets, editedSets)) {
       setEditedSets(_.clone(sets));
     }
   }, [isOpen, editedSets, sets]);
