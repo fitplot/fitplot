@@ -7,3 +7,16 @@ export async function getSetByWorkoutId(workoutId) {
 export async function createSetForWorkout(set) {
   return prisma.workoutset.create({ data: set });
 }
+
+export async function updateWorkoutSet(id, { amount, unit, volume }) {
+  return prisma.workoutset.update({
+    where: {
+      id,
+    },
+    data: {
+      amount,
+      unit,
+      volume,
+    },
+  });
+}

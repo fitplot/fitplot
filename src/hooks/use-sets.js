@@ -27,3 +27,21 @@ export function useCreateSet() {
     }
   );
 }
+
+export function useUpdateSet() {
+  return useMutation(
+    set =>
+      fetch(`/api/workout/${set.workoutId}/sets/${set.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(set)
+      }).then(res => res.json()),
+    {
+      onSuccess: res => {
+        queryClient.invalidateQueries(["sets", res.workoutId]);
+      }
+    }
+  );
+}
