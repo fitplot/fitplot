@@ -51,7 +51,7 @@ export default function AddSet({ isOpen, close, workoutId, exerciseId }) {
                 name='fitcode'
                 placeholder='5@185, 4@195, 2@205'
               />
-              <Button className='p-1'>
+              <Button className='p-1' type='submit'>
                 <ChevronRightIcon className='w-6 h-6' />
               </Button>
             </div>
