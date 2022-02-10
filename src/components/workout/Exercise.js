@@ -20,7 +20,7 @@ export default function Exercise({
     if (isOpen && !_.isEqual(sets, editedSets)) {
       setEditedSets(_.clone(sets));
     }
-  }, [isOpen, editedSets, sets]);
+  }, [isOpen, sets]);
 
   const mutation = useUpdateSet();
 
