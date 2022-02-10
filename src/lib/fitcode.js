@@ -1,12 +1,12 @@
-const SET_DELIM = ",";
-const MULTI_SET_DELIM = "x";
-const AMOUNT_DELIM = "@";
-const MULTI_AMOUNT_DELIM = "/";
+const SET_DELIM = ',';
+const MULTI_SET_DELIM = 'x';
+const AMOUNT_DELIM = '@';
+const MULTI_AMOUNT_DELIM = '/';
 
-export function fitcode(rawInput = "", base = {}) {
-  const input = rawInput.replace(" ", "").toLowerCase();
+export default function fitcode(rawInput = '', base = {}) {
+  const input = rawInput.replace(' ', '').toLowerCase();
 
-  if (!input) return null;
+  if (!input) return [];
 
   const sets = [];
 
@@ -28,10 +28,10 @@ export function fitcode(rawInput = "", base = {}) {
       sets.push({
         volume: volume || null,
         amount: (isMultiAmount ? amounts[count] : amount) || null,
-        unit: "lbs",
+        unit: 'lbs',
         ...base,
       });
-      count++;
+      count += 1;
     }
   } else {
     input.split(SET_DELIM).forEach((volumeAndAmount) => {
@@ -40,7 +40,7 @@ export function fitcode(rawInput = "", base = {}) {
       sets.push({
         volume: volume || null,
         amount: amount || null,
-        unit: "lbs",
+        unit: 'lbs',
         ...base,
       });
     });

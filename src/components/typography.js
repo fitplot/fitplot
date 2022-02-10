@@ -1,5 +1,5 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
 const FONT_SIZES = {
   h1: 'leading-tight text-4xl md:text-5xl',
@@ -15,44 +15,33 @@ const TITLE_COLORS = {
   secondary: 'text-gray-400',
 };
 
-function Title({
-  variant = 'primary',
-  size,
-  as,
-  className,
-  ...props
-}) {
+function Title({ variant = 'primary', size, as, className, ...props }) {
   const Tag = as ?? size;
-  return (
-    <Tag
-      className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)}
-      {...props}
-    />
-  );
+  return <Tag className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)} {...props} />;
 }
 
 function H1(props) {
-  return <Title {...props} size="h1" />
+  return <Title {...props} size='h1' />;
 }
 
 function H2(props) {
-  return <Title {...props} size="h2" />
+  return <Title {...props} size='h2' />;
 }
 
 function H3(props) {
-  return <Title {...props} size="h3" />
+  return <Title {...props} size='h3' />;
 }
 
 function H4(props) {
-  return <Title {...props} size="h4" />
+  return <Title {...props} size='h4' />;
 }
 
 function H5(props) {
-  return <Title {...props} size="h5" />
+  return <Title {...props} size='h5' />;
 }
 
 function H6(props) {
-  return <Title {...props} size="h6" />
+  return <Title {...props} size='h6' />;
 }
 
 function Paragraph({
@@ -64,14 +53,9 @@ function Paragraph({
 }) {
   const proseClassName = prose ? 'prose prose-light' : '';
   return React.createElement(as, {
-    className: clsx(
-      "max-w-full text-lg",
-      textColorClassName,
-      className,
-      proseClassName
-    ),
-    ...props
-  })
+    className: clsx('max-w-full text-lg', textColorClassName, className, proseClassName),
+    ...props,
+  });
 }
 
 export { H1, H2, H3, H4, H5, H6, Paragraph };

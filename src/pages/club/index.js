@@ -1,5 +1,5 @@
-import Layout from "../../components/layout";
-import { H1 } from "../../components/typography";
+import Layout from '../../components/layout';
+import { H1 } from '../../components/typography';
 
 export default function ClubWellness() {
   return (
