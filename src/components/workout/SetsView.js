@@ -56,15 +56,15 @@ function Set({ id, volume, amount, unit, isEditable, onEdit }) {
               type='text'
               className='py-4 px-6 w-full text-sm font-medium text-slate-900'
               defaultValue={volume}
-              onChange={(e) => onEdit(id, { volume: e.target.value })}
+              onChange={(event) => onEdit(id, { volume: event.target.value })}
             />
           </td>
           <td className='w-full whitespace-nowrap'>
             <input
               type='text'
               className='py-4 px-6 text-sm text-slate-900'
-              defaultValue={amount !== null ? `${amount} ${unit}` : null}
-              onChange={(e) => onEdit(id, { amount: e.target.value })}
+              defaultValue={amount !== null ? amount : null}
+              onChange={(event) => onEdit(id, { amount: event.target.value })}
             />
           </td>
         </>
