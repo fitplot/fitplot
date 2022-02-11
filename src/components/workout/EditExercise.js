@@ -2,56 +2,82 @@ import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import React from 'react';
 
+import { useUpdateExercise } from '../../hooks/use-exercise';
 import { useUpdateSet } from '../../hooks/use-sets';
 import Button from '../button';
 import { Input } from '../forms';
 import LoadingIcon from '../loading-icon';
 import SetsView from './SetsView';
 
-export default function EditExercise({ exercise: { name } = {}, sets = [], isOpen, close }) {
-  const mutation = useUpdateSet();
+export default function EditExercise({ exercise = {}, sets = [], isOpen, close }) {
+  const setMutation = useUpdateSet();
+  const exerciseMutation = useUpdateExercise();
+
+  const [dirtyExerciseName, setDirtyExerciseName] = React.useState(null);
 
   // Example dirty sets table (hash table):
-  //    dirty = { 4: { volume: 10, amount: 100 } }
-  const [dirty, setDirty] = React.useState({});
+  //     dirtySets = { 4: { volume: 10, amount: 100 } }
+  const [dirtySets, setDirtySets] = React.useState({});
+
+  const { name } = exercise;
+
+  React.useEffect(() => {
+    if (name) {
+      // If rendered for a different exercise, reset the dirty exercise reference.
+      setDirtyExerciseName(() => '');
+    }
+  }, [name]);
 
   React.useEffect(() => {
     if (sets && sets.length > 0) {
       // If rendered for a different exercise, reset the dirty sets table.
-      setDirty(() => ({}));
+      setDirtySets(() => ({}));
     }
   }, [sets]);
 
   const submit = async () => {
-    await Promise.all(
-      // For each entry in the dirty sets table...
-      Object.entries(dirty)
-        // Create a new updated set
-        .map(([setId, changes]) => {
-          const original = sets.find((set) => set.id === setId);
+    const requests = [];
 
-          return {
-            ...original, // Persist the original set fields
-            ...changes,
-          };
-        })
-        // And PUT each new set
-        .map((set) => mutation.mutateAsync(set))
-    );
+    Object.entries(dirtySets)
+      .map(([setId, changes]) => {
+        const original = sets.find((set) => set.id === setId);
+
+        return {
+          ...original, // Persist the original set fields
+          ...changes,
+        };
+      })
+      .map((set) => setMutation.mutateAsync(set))
+      .forEach((request) => requests.push(request));
+
+    if (dirtyExerciseName && dirtyExerciseName.trim().length > 0) {
+      const exerciseRequest = exerciseMutation.mutateAsync({
+        ...exercise,
+        name: dirtyExerciseName,
+      });
+
+      requests.push(exerciseRequest);
+    }
+
+    await Promise.all(requests);
 
     close();
   };
 
-  const onEditSet = (setId, changes) => {
-    const previousChanges = dirty[setId];
+  const onEditExercise = (_name) => {
+    setDirtyExerciseName(_name);
+  };
 
-    dirty[setId] = {
+  const onEditSet = (setId, changes) => {
+    const previousChanges = dirtySets[setId];
+
+    dirtySets[setId] = {
       ...previousChanges, // Persist any other changes to this set
       ...changes,
     };
   };
 
-  const { isLoading } = mutation;
+  const isLoading = setMutation.isLoading || exerciseMutation.isLoading;
 
   return (
     <DialogOverlay isOpen={isOpen} onDismiss={close} aria-label='View EditExercise'>
@@ -60,7 +86,12 @@ export default function EditExercise({ exercise: { name } = {}, sets = [], isOpe
           {isLoading && <LoadingIcon className='w-5 h-5' />}
           {!isLoading && (
             <div className='flex flex-col flex-1 space-y-2'>
-              <Input className='py-2 px-4 bg-white' type='textarea' defaultValue={name} />
+              <Input
+                className='py-2 px-4 bg-white'
+                type='textarea'
+                defaultValue={name}
+                onChange={(event) => onEditExercise(event.target.value)}
+              />
               <SetsView sets={sets} isEditable onEdit={onEditSet} />
               <div className='flex space-x-4'>
                 <Button className='flex-1' onClick={() => close()}>
