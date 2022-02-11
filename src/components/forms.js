@@ -11,7 +11,7 @@ function Label({ className, ...labelProps }) {
 
 const Input = React.forwardRef((props, reference) => {
   const className = clsx(
-    'py-8 px-11 w-full text-lg font-medium text-black placeholder:text-gray-500 disabled:text-gray-400 bg-gray-100',
+    'py-8 px-11 w-full text-lg font-medium text-black placeholder:text-gray-500 disabled:text-gray-400 bg-slate-100',
     props.className
   );
 

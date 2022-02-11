@@ -22,7 +22,7 @@ export default function SetsView({ sets = [], isEditable = false, onEdit }) {
                 </th>
               </tr>
             </thead>
-            <tbody className='bg-white divide-y divide-slate-200'>
+            <tbody className='divide-y divide-slate-200'>
               {sets.map((set) => (
                 <Set key={set.id} {...set} isEditable={isEditable} onEdit={onEdit} />
               ))}
