@@ -11,7 +11,7 @@ import Layout from '../layout';
 import { H1, Paragraph } from '../typography';
 import AddExercise from './AddExercise';
 import AddSet from './AddSet';
-import Exercise from './Exercise';
+import EditExercise from './EditExercise';
 import SetsView from './SetsView';
 
 export default function Workout() {
@@ -25,6 +25,7 @@ export default function Workout() {
   const [activeExerciseId, setActiveExerciseId] = React.useState();
   const [exercisesById, setExercisesById] = React.useState({});
 
+  // AddSet dialog
   const [showSetsDialog, setShowSetsDialog] = React.useState(false);
   const openSetsDialog = () => setShowSetsDialog(true);
   const closeSetsDialog = () => {
@@ -32,6 +33,7 @@ export default function Workout() {
     setActiveExerciseId();
   };
 
+  // AddExercise dialog
   const [showExerciseDialog, setShowExerciseDialog] = React.useState(false);
   const openExerciseDialog = () => setShowExerciseDialog(true);
   const closeExerciseDialog = (exerciseId) => {
@@ -47,18 +49,18 @@ export default function Workout() {
     openSetsDialog();
   };
 
+  // EditExercise dialog
   const [showEditExerciseDialog, setShowEditExerciseDialog] = React.useState(false);
-
   const editExercise = (exerciseId) => {
     setActiveExerciseId(exerciseId);
     setShowEditExerciseDialog(true);
   };
-
   const closeEditExercise = () => {
     setShowEditExerciseDialog(false);
     setActiveExerciseId();
   };
 
+  // Normalize exercises for lookup
   React.useEffect(() => {
     if (exercises) {
       setExercisesById(Object.fromEntries(exercises.map((exercise) => [exercise.id, exercise])));
@@ -120,7 +122,7 @@ export default function Workout() {
             workoutId={workoutId}
             exerciseId={activeExerciseId}
           />
-          <Exercise
+          <EditExercise
             exercise={exercisesById[activeExerciseId]}
             sets={setsByExercise[activeExerciseId]}
             isOpen={showEditExerciseDialog}
