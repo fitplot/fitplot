@@ -12,7 +12,7 @@ export async function getExerciseById(exerciseId) {
   return prisma.exercise.findUnique({ where: { id: exerciseId } });
 }
 
-export async function updateExerciseName(id, { name }) {
+export async function updateExerciseNameById(id, { name }) {
   return prisma.exercise.update({
     where: {
       id,

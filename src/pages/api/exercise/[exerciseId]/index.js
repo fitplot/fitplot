@@ -1,4 +1,4 @@
-import { getExerciseById, updateExerciseName } from "../../../../services/exercise";
+import { getExerciseById, updateExerciseNameById } from "../../../../services/exercise";
 
 export default async function handler(req, res) {
   const {
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   if (method === "PUT") {
     const { id, name } = body;
-    return res.status(200).send(await updateExerciseName(id, { name }));
+    return res.status(200).send(await updateExerciseNameById(id, { name }));
   }
 
   return res.status(405).send();
