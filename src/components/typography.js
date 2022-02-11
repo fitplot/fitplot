@@ -11,8 +11,8 @@ const FONT_SIZES = {
 };
 
 const TITLE_COLORS = {
-  primary: 'text-black',
-  secondary: 'text-gray-400',
+  primary: 'text-slate-800',
+  secondary: 'text-slate-400',
 };
 
 function Title({ variant = 'primary', size, as, className, ...props }) {

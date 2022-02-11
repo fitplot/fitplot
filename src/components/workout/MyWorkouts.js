@@ -24,14 +24,14 @@ export default function MyWorkouts() {
   return (
     <Layout>
       <div className='flex flex-col flex-1 space-y-4'>
-        <H1 className='text-sm'>My Workouts</H1>
+        <H1>Workouts</H1>
         <div className='flex flex-col flex-1 space-y-2'>
           {isLoading && <LoadingIcon className='self-center w-12 h-12' />}
           {!isLoading &&
             !error &&
             (workouts && workouts.length > 0 ? (
               workouts.map(({ id, name, createdAt }) => (
-                <Card key={id} className='flex border border-slate-200'>
+                <Card key={id} className='flex bg-white border border-slate-200'>
                   <div className='flex-1 p-2'>
                     <div className='text-sm font-medium text-slate-900'>{name}</div>
                     <div className='text-sm font-medium text-slate-500'>

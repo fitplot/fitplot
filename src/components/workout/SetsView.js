@@ -23,8 +23,8 @@ export default function SetsView({ sets = [], isEditable = false, onEdit }) {
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-slate-200'>
-              {sets.map((set) => (
-                <Set key={set.id} {...set} isEditable={isEditable} onEdit={onEdit} />
+              {sets.map((set, index) => (
+                <Set key={set.id || index} {...set} isEditable={isEditable} onEdit={onEdit} />
               ))}
             </tbody>
           </table>

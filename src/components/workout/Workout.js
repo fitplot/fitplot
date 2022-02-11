@@ -22,7 +22,7 @@ export default function Workout() {
   const { data: sets, isLoading: isLoadingSets } = useSets(workoutId);
   const { data: exercises, isLoading: isLoadingExercises } = useExercises();
 
-  const [activeExerciseId, setActiveExerciseId] = React.useState();
+  const [activeExerciseId, setActiveExerciseId] = React.useState(null);
   const [exercisesById, setExercisesById] = React.useState({});
 
   // AddSet dialog
@@ -34,13 +34,16 @@ export default function Workout() {
   };
 
   // AddExercise dialog
-  const [showExerciseDialog, setShowExerciseDialog] = React.useState(false);
-  const openExerciseDialog = () => setShowExerciseDialog(true);
-  const closeExerciseDialog = (exerciseId) => {
-    setShowExerciseDialog(false);
-    setActiveExerciseId(exerciseId);
-    if (exerciseId) {
+  const [showAddExerciseDialog, setShowAddExerciseDialog] = React.useState(false);
+  const openAddExerciseDialog = () => setShowAddExerciseDialog(true);
+  const closeAddExerciseDialog = (exerciseId) => {
+    setShowAddExerciseDialog(false);
+
+    if (exerciseId && typeof exerciseId === 'string') {
+      setActiveExerciseId(exerciseId);
       openSetsDialog();
+    } else {
+      setActiveExerciseId(null);
     }
   };
 
@@ -71,10 +74,7 @@ export default function Workout() {
 
   const isLoading = isLoadingWorkout || isLoadingSets || isLoadingExercises;
 
-  let setsByExercise;
-  if (sets && !isLoadingSets) {
-    setsByExercise = _.groupBy(sets, 'exerciseId');
-  }
+  const setsByExercise = sets && !isLoadingSets ? _.groupBy(sets, 'exerciseId') : {};
 
   return (
     <Layout>
@@ -90,7 +90,7 @@ export default function Workout() {
             const exercise = exercisesById[exerciseId];
 
             return (
-              <Card key={exerciseId} className='border border-gray-200'>
+              <Card key={exerciseId} className='bg-white border border-gray-200'>
                 <div className='p-4 text-sm font-medium text-gray-900'>
                   {exercise?.name || 'Unknown Exercise'}
                 </div>
@@ -109,13 +109,13 @@ export default function Workout() {
               </Card>
             );
           })}
-        <Button type='submit' onClick={openExerciseDialog}>
+        <Button type='submit' onClick={openAddExerciseDialog}>
           Add Exercise
         </Button>
       </div>
       {!isLoading && (
         <>
-          <AddExercise isOpen={showExerciseDialog} close={closeExerciseDialog} />
+          <AddExercise isOpen={showAddExerciseDialog} close={closeAddExerciseDialog} />
           <AddSet
             isOpen={showSetsDialog}
             close={closeSetsDialog}
