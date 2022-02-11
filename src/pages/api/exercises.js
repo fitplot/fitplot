@@ -1,13 +1,24 @@
+import CreateExerciseRequest from '../../schemas/exercise/CreateExerciseRequest';
 import { createExercise, getAllExercises } from '../../services/exercise';
 
 export default async function handler(req, res) {
   const { method, body } = req;
 
   if (method === 'GET') {
-    return res.status(200).send(await getAllExercises());
+    try {
+      return res.status(200).send(await getAllExercises());
+    } catch (error) {
+      return res.status(400).send(error);
+    }
   }
 
   if (method === 'POST') {
+    try {
+      await CreateExerciseRequest.validateAsync(body);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+
     return res.status(200).send(await createExercise(body));
   }
 
