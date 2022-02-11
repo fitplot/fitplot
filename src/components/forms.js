@@ -4,7 +4,7 @@ import React from 'react';
 function Label({ className, ...labelProps }) {
   /* eslint-disable jsx-a11y/label-has-associated-control */
   return (
-    <label className={clsx('inline-block text-lg text-gray-500', className)} {...labelProps} />
+    <label className={clsx('inline-block text-lg text-slate-500', className)} {...labelProps} />
   );
   /* eslint-enable jsx-a11y/label-has-associated-control */
 }
