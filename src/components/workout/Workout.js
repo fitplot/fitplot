@@ -90,7 +90,7 @@ export default function Workout() {
             const exercise = exercisesById[exerciseId];
 
             return (
-              <Card key={exerciseId} className='border border-gray-200'>
+              <Card key={exerciseId} className='bg-white border border-gray-200'>
                 <div className='p-4 text-sm font-medium text-gray-900'>
                   {exercise?.name || 'Unknown Exercise'}
                 </div>
