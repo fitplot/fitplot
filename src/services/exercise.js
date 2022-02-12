@@ -8,21 +8,17 @@ export async function createExercise(exercise) {
   return prisma.exercise.create({ data: exercise });
 }
 
-export async function deleteExercise(exerciseId) {
-  return prisma.exercise.delete({
-    where: {
-      id: exerciseId,
-    },
-  });
+export async function getExerciseById(exerciseId) {
+  return prisma.exercise.findUnique({ where: { id: exerciseId } });
 }
 
-export async function updateExercise(exercise) {
+export async function updateExerciseNameById(id, { name }) {
   return prisma.exercise.update({
     where: {
-      id: exercise.id,
+      id,
     },
     data: {
-      name: exercise.name,
+      name,
     },
   });
 }
