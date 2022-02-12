@@ -56,7 +56,7 @@ function ListboxOption({ displayValue, onSelect, ...props }) {
 
   return (
     <button type='button' className='flex items-center p-2 bg-white' onClick={onSelect}>
-      {!isNew && <DotsVerticalIcon className='inline-block w-5 h-5' />}
+      {!isNew && <DotsVerticalIcon className='inline-block w-5 h-5 text-slate-500' />}
       {isNew && <span className='pr-2 text-slate-500'>Create</span>}
       <span className='font-medium'>{displayValue}</span>
     </button>

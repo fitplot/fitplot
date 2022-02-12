@@ -1,7 +1,7 @@
 import React from 'react';
 
-import MyWorkouts from '../../components/workout/MyWorkouts';
+import WorkoutsHome from '../../components/workout';
 
 export default function MyWorkoutsPage() {
-  return <MyWorkouts />;
+  return <WorkoutsHome />;
 }

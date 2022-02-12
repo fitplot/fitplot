@@ -2,17 +2,18 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { useExercises } from '../../hooks/use-exercises';
-import { useSets } from '../../hooks/use-sets';
-import useWorkout from '../../hooks/use-workout';
-import Button from '../button';
-import Card from '../card';
-import Layout from '../layout';
-import { H1, Paragraph } from '../typography';
-import AddExercise from './AddExercise';
-import AddSet from './AddSet';
-import EditExercise from './EditExercise';
-import SetsView from './SetsView';
+import { useExercises } from '../../../hooks/use-exercises';
+import { useSets } from '../../../hooks/use-sets';
+import useWorkout from '../../../hooks/use-workout';
+import Button from '../../button';
+import Card from '../../card';
+import Layout from '../../layout';
+import LoadingIcon from '../../loading-icon';
+import { H1, Paragraph } from '../../typography';
+import SetsTable from '../components/sets-table';
+import AddExercise from '../overlays/add-exercise';
+import AddSet from '../overlays/add-set';
+import EditExercise from '../overlays/edit-exercise';
 
 export default function Workout() {
   const router = useRouter();
@@ -78,8 +79,8 @@ export default function Workout() {
 
   return (
     <Layout>
-      <div className='flex flex-col flex-1 space-y-2'>
-        {isLoading && 'Loading workout...'}
+      <div className='flex flex-col grow space-y-2'>
+        {isLoading && <LoadingIcon className='w-5 h-5' />}
         {!isLoading && workout && <H1>{workout.name || workout.id}</H1>}
         {!isLoading && !(sets && sets.length > 0) && (
           <Paragraph>To get started, add an exercise.</Paragraph>
@@ -94,7 +95,7 @@ export default function Workout() {
                 <div className='p-4 text-sm font-medium text-gray-900'>
                   {exercise?.name || 'Unknown Exercise'}
                 </div>
-                <SetsView sets={setsForExercise} />
+                <SetsTable sets={setsForExercise} />
                 <div className='flex'>
                   <Button
                     className='w-1/2 text-inherit bg-slate-200'
@@ -115,18 +116,18 @@ export default function Workout() {
       </div>
       {!isLoading && (
         <>
-          <AddExercise isOpen={showAddExerciseDialog} close={closeAddExerciseDialog} />
+          <AddExercise open={showAddExerciseDialog} onClose={closeAddExerciseDialog} />
           <AddSet
-            isOpen={showSetsDialog}
-            close={closeSetsDialog}
+            open={showSetsDialog}
+            onClose={closeSetsDialog}
             workoutId={workoutId}
             exerciseId={activeExerciseId}
           />
           <EditExercise
             exercise={exercisesById[activeExerciseId]}
             sets={setsByExercise[activeExerciseId]}
-            isOpen={showEditExerciseDialog}
-            close={closeEditExercise}
+            open={showEditExerciseDialog}
+            onClose={closeEditExercise}
           />
         </>
       )}

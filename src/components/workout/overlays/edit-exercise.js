@@ -1,15 +1,15 @@
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
-import { DialogContent, DialogOverlay } from '@reach/dialog';
 import React from 'react';
 
-import { useUpdateExercise } from '../../hooks/use-exercise';
-import { useUpdateSet } from '../../hooks/use-sets';
-import Button from '../button';
-import { Input } from '../forms';
-import LoadingIcon from '../loading-icon';
-import SetsView from './SetsView';
+import { useUpdateExercise } from '../../../hooks/use-exercise';
+import { useUpdateSet } from '../../../hooks/use-sets';
+import Button from '../../button';
+import Dialog from '../../dialog';
+import { Input } from '../../forms';
+import LoadingIcon from '../../loading-icon';
+import SetsTable from '../components/sets-table';
 
-export default function EditExercise({ exercise = {}, sets = [], isOpen, close }) {
+export default function EditExercise({ exercise = {}, sets = [], open, onClose }) {
   const setMutation = useUpdateSet();
   const exerciseMutation = useUpdateExercise();
 
@@ -61,7 +61,7 @@ export default function EditExercise({ exercise = {}, sets = [], isOpen, close }
 
     await Promise.all(requests);
 
-    close();
+    onClose();
   };
 
   const onEditExercise = (_name) => {
@@ -80,31 +80,29 @@ export default function EditExercise({ exercise = {}, sets = [], isOpen, close }
   const isLoading = setMutation.isLoading || exerciseMutation.isLoading;
 
   return (
-    <DialogOverlay isOpen={isOpen} onDismiss={close} aria-label='View EditExercise'>
-      <DialogContent className='!w-screen md:!w-half-screen' aria-label='View EditExercise'>
-        <div className='flex flex-col justify-center items-center'>
-          {isLoading && <LoadingIcon className='w-5 h-5' />}
-          {!isLoading && (
-            <div className='flex flex-col flex-1 space-y-2'>
-              <Input
-                className='py-2 px-4 bg-white'
-                type='textarea'
-                defaultValue={name}
-                onChange={(event) => onEditExercise(event.target.value)}
-              />
-              <SetsView sets={sets} isEditable onEdit={onEditSet} />
-              <div className='flex space-x-4'>
-                <Button className='flex-1' onClick={() => close()}>
-                  <XIcon className='inline-block w-6 h-6' />
-                </Button>
-                <Button className='flex-1' onClick={() => submit()}>
-                  <CheckIcon className='inline-block w-6 h-6' />
-                </Button>
-              </div>
+    <Dialog open={open} onClose={onClose}>
+      <div className='flex flex-col justify-center items-center'>
+        {isLoading && <LoadingIcon className='w-5 h-5' />}
+        {!isLoading && (
+          <div className='flex flex-col flex-1 space-y-2'>
+            <Input
+              className='py-2 px-4 bg-white'
+              type='textarea'
+              defaultValue={name}
+              onChange={(event) => onEditExercise(event.target.value)}
+            />
+            <SetsTable sets={sets} isEditable onEdit={onEditSet} />
+            <div className='flex space-x-4'>
+              <Button className='flex-1' onClick={() => onClose()}>
+                <XIcon className='inline-block w-6 h-6' />
+              </Button>
+              <Button className='flex-1' onClick={() => submit()}>
+                <CheckIcon className='inline-block w-6 h-6' />
+              </Button>
             </div>
-          )}
-        </div>
-      </DialogContent>
-    </DialogOverlay>
+          </div>
+        )}
+      </div>
+    </Dialog>
   );
 }
