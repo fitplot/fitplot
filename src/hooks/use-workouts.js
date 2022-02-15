@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useMutation, useQuery } from 'react-query';
 
-import { useUser } from '../components/auth/UserProvider';
+import { useUser } from '../components/auth/user';
 import queryClient from '../lib/query-client';
 
 export function useWorkouts() {

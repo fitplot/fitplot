@@ -3,15 +3,15 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { useWorkouts } from '../../hooks/use-workouts';
-import Button from '../button';
-import Card from '../card';
-import Layout from '../layout';
-import LoadingIcon from '../loading-icon';
-import { H1, Paragraph } from '../typography';
-import AddWorkout from './AddWorkout';
+import { useWorkouts } from '../../../hooks/use-workouts';
+import Button from '../../button';
+import Card from '../../card';
+import Layout from '../../layout';
+import LoadingIcon from '../../loading-icon';
+import { H1, Paragraph } from '../../typography';
+import AddWorkout from '../overlays/add-workout';
 
-export default function MyWorkouts() {
+export default function WorkoutsHome() {
   const router = useRouter();
   const { data: workouts, error, isLoading } = useWorkouts();
 
@@ -52,7 +52,7 @@ export default function MyWorkouts() {
           Workout Now
         </Button>
       </div>
-      <AddWorkout isOpen={showWorkoutDialog} close={closeWorkoutDialog} />
+      <AddWorkout open={showWorkoutDialog} onClose={closeWorkoutDialog} />
     </Layout>
   );
 }
