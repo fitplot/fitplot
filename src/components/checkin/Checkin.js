@@ -1,6 +1,6 @@
 import { CreditCardIcon } from '@heroicons/react/solid';
 
-import Layout from '../layout';
+import Layout from '../layout/Layout';
 import { H1 } from '../typography';
 
 export default function Checkin() {

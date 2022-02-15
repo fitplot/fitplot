@@ -1,4 +1,4 @@
-export default function SetsTable({ sets = [], isEditable = false, onEdit }) {
+export default function SetsView({ sets = [], isEditable = false, onEdit }) {
   if (!sets || sets.length === 0) return null;
 
   return (
