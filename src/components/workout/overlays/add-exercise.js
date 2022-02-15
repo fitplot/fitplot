@@ -2,10 +2,10 @@ import React from 'react';
 
 import { useCreateExercise, useExercises } from '../../../hooks/use-exercises';
 import { useUser } from '../../auth';
-import Dialog from '../../dialog';
 import { Label } from '../../forms';
 import ListboxInput from '../../listbox-input';
 import LoadingIcon from '../../loading-icon';
+import Overlay from '../../overlay';
 
 const predicate = (input) => (exercise) =>
   exercise.name.toLowerCase().includes(input.toLowerCase());
@@ -30,12 +30,12 @@ export default function AddExercise({ open, onClose }) {
   const isLoading = query.isLoading || mutation.isLoading;
 
   return (
-    <Dialog title='Add Exercise' open={open} onClose={onClose} initialFocus={inputRef}>
+    <Overlay title='Add Exercise' open={open} onClose={onClose} initialFocus={inputRef}>
       {isLoading && <LoadingIcon className='w-5 h-5' />}
       {!isLoading && (
-        <div className='flex flex-col space-y-4'>
-          <div className='flex flex-col'>
-            <div className='flex flex-wrap justify-between items-baseline'>
+        <div className='flex flex-col space-y-4 h-full'>
+          <div className='flex flex-col h-full'>
+            <div className='flex flex-wrap grow-0 shrink-0 justify-between items-baseline'>
               <Label htmlFor='name'>Exercise name</Label>
             </div>
             <ListboxInput
@@ -56,6 +56,6 @@ export default function AddExercise({ open, onClose }) {
           </div>
         </div>
       )}
-    </Dialog>
+    </Overlay>
   );
 }

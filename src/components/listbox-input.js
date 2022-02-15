@@ -29,11 +29,11 @@ export default function ListboxInput({
   }, [value, exactPredicate, predicate, options, field]);
 
   return (
-    <div className='flex flex-col space-y-2'>
-      <div className='shrink-0'>
+    <div className='flex flex-col space-y-2 h-full'>
+      <div className='grow-0 shrink-0'>
         <Input onChange={(event) => onChange(event.target.value)} {...inputProps} />
       </div>
-      <div className='flex overflow-y-auto flex-col grow pt-2 h-48 bg-slate-100 divide-y'>
+      <div className='flex overflow-y-auto flex-col grow pt-2 pb-4 bg-slate-100 divide-y'>
         <span className='py-3 px-6 text-xs font-medium tracking-wider text-slate-500 uppercase'>
           Select an exercise or create one
         </span>

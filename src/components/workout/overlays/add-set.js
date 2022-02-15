@@ -5,8 +5,8 @@ import { useCreateSet } from '../../../hooks/use-sets';
 import fitcode from '../../../lib/fitcode';
 import { useUser } from '../../auth';
 import Button from '../../button';
-import Dialog from '../../dialog';
 import { Input, Label } from '../../forms';
+import Overlay from '../../overlay';
 import SetsTable from '../components/sets-table';
 
 export default function AddSet({ open, onClose, workoutId, exerciseId }) {
@@ -26,7 +26,7 @@ export default function AddSet({ open, onClose, workoutId, exerciseId }) {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} title='Add Sets'>
+    <Overlay open={open} onClose={onClose} title='Add Sets'>
       <div className='flex flex-col space-y-4'>
         <form
           className='flex flex-col flex-none space-y-4'
@@ -65,6 +65,6 @@ export default function AddSet({ open, onClose, workoutId, exerciseId }) {
           </Button>
         </div>
       </div>
-    </Dialog>
+    </Overlay>
   );
 }
