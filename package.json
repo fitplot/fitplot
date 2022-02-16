@@ -10,9 +10,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
     "@prisma/client": "^3.7.0",
-    "@reach/dialog": "^0.16.2",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.7",
     "joi": "^17.6.0",

@@ -1,1 +1,1 @@
-export { default } from './Checkin';
+export { default } from './checkin';
