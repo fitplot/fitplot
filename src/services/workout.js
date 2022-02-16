@@ -20,6 +20,17 @@ export async function createWorkout(workout) {
   return prisma.workout.create({ data: workout });
 }
 
+export async function updateWorkout(id, { name }) {
+  return prisma.workout.update({
+    where: {
+      id,
+    },
+    data: {
+      name,
+    },
+  });
+}
+
 export async function deleteWorkout(workout) {
   return prisma.workout.delete({
     where: {
