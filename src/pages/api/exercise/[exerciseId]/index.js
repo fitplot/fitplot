@@ -1,4 +1,6 @@
-import { getExerciseById, updateExerciseNameById } from "../../../../services/exercise";
+import GetExerciseParam from '../../../../schemas/exercise/get-exercise-param';
+import UpdateExerciseRequest from '../../../../schemas/exercise/update-exercise-request';
+import { getExerciseById, updateExerciseNameById } from '../../../../services/exercise';
 
 export default async function handler(req, res) {
   const {
@@ -7,12 +9,25 @@ export default async function handler(req, res) {
     query: { exerciseId },
   } = req;
 
-  if (method === "GET") {
+  if (method === 'GET') {
+    try {
+      await GetExerciseParam.validateAsync(exerciseId);
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+
     return res.status(200).send(await getExerciseById(exerciseId));
   }
 
-  if (method === "PUT") {
+  if (method === 'PUT') {
     const { id, name } = body;
+
+    try {
+      await UpdateExerciseRequest.validateAsync({ id, name });
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+
     return res.status(200).send(await updateExerciseNameById(id, { name }));
   }
 
