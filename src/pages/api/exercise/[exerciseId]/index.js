@@ -1,5 +1,5 @@
-import GetExerciseParam from '../../../../schemas/exercise/GetExerciseParam';
-import UpdateExerciseRequest from '../../../../schemas/exercise/UpdateExerciseRequest';
+import GetExerciseParam from '../../../../schemas/exercise/get-exercise-param';
+import UpdateExerciseRequest from '../../../../schemas/exercise/update-exercise-request';
 import { getExerciseById, updateExerciseNameById } from '../../../../services/exercise';
 
 export default async function handler(req, res) {

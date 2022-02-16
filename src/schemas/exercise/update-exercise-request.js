@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-import GetExerciseParam from './GetExerciseParam';
+import GetExerciseParam from './get-exercise-param';
 
 export default Joi.object({
   id: GetExerciseParam,

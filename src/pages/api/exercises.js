@@ -1,4 +1,4 @@
-import CreateExerciseRequest from '../../schemas/exercise/CreateExerciseRequest';
+import CreateExerciseRequest from '../../schemas/exercise/create-exercise-request';
 import { createExercise, getAllExercises } from '../../services/exercise';
 
 export default async function handler(req, res) {
