@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     const { error: validationError } = UpdateExerciseRequest.validate({ id: exerciseId, name });
     if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
-    const updatedExercise = await updateExerciseNameById(exerciseId, { name })
+    const updatedExercise = await updateExerciseNameById(exerciseId, { name });
     return res.status(StatusCodes.OK).send(updatedExercise);
   }
 
