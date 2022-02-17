@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+
 import CreateExerciseRequest from '../../schemas/exercise/create-exercise-request';
 import { createExercise, getAllExercises } from '../../services/exercise';
 
