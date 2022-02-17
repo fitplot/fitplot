@@ -1,6 +1,6 @@
+import { StatusCodes } from 'http-status-codes';
 import CreateExerciseRequest from '../../schemas/exercise/create-exercise-request';
 import { createExercise, getAllExercises } from '../../services/exercise';
-import { StatusCodes } from 'http-status-codes';
 
 export default async function handler(req, res) {
   const { method, body } = req;
