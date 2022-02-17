@@ -1,6 +1,7 @@
 import GetExerciseParam from '../../../../schemas/exercise/get-exercise-param';
 import UpdateExerciseRequest from '../../../../schemas/exercise/update-exercise-request';
 import { getExerciseById, updateExerciseNameById } from '../../../../services/exercise';
+import { StatusCodes } from 'http-status-codes';
 
 export default async function handler(req, res) {
   const {
@@ -11,23 +12,21 @@ export default async function handler(req, res) {
 
   if (method === 'GET') {
     const { error: validationError } = GetExerciseParam.validate(exerciseId);
-    if (validationError) return res.status(400).send(validationError);
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
     const exercise = await getExerciseById(exerciseId);
-    return res.status(200).send(exercise);
+    return res.status(StatusCodes.OK).send(exercise);
   }
 
   if (method === 'PUT') {
-    const { id, name } = body;
+    const { name } = body;
 
-    try {
-      await UpdateExerciseRequest.validateAsync({ id, name });
-    } catch (error) {
-      return res.status(400).send(error);
-    }
+    const { error: validationError } = UpdateExerciseRequest.validate({ id: exerciseId, name });
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
-    return res.status(200).send(await updateExerciseNameById(id, { name }));
+    const updatedExercise = await updateExerciseNameById(exerciseId, { name })
+    return res.status(StatusCodes.OK).send(updatedExercise);
   }
 
-  return res.status(405).send();
+  return res.status(StatusCodes.METHOD_NOT_ALLOWED).send();
 }
