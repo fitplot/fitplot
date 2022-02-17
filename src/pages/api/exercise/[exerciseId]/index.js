@@ -10,13 +10,11 @@ export default async function handler(req, res) {
   } = req;
 
   if (method === 'GET') {
-    try {
-      await GetExerciseParam.validateAsync(exerciseId);
-    } catch (error) {
-      return res.status(400).send(error);
-    }
+    const { error: validationError } = GetExerciseParam.validate(exerciseId);
+    if (validationError) return res.status(400).send(validationError);
 
-    return res.status(200).send(await getExerciseById(exerciseId));
+    const exercise = await getExerciseById(exerciseId);
+    return res.status(200).send(exercise);
   }
 
   if (method === 'PUT') {
