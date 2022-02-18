@@ -1,4 +1,5 @@
 import { CheckIcon } from '@heroicons/react/solid';
+import React from 'react';
 
 import { useCreateWorkout } from '../../../hooks/use-workouts';
 import { useUser } from '../../auth/user';
@@ -7,46 +8,34 @@ import { Input, Label } from '../../forms';
 import Overlay from '../../overlay';
 
 export default function AddWorkout({ open, onClose }) {
+  const inputRef = React.useRef(null);
   const { user } = useUser();
   const mutation = useCreateWorkout();
 
-  const createWorkout = async (workoutName) => {
-    await mutation.mutateAsync({ name: workoutName, userId: user.id });
-    onClose();
+  const submit = async () => {
+    const rawInput = inputRef.current.value;
+    const workoutName = rawInput.trim();
+    if (workoutName) {
+      await mutation.mutateAsync({ name: workoutName, userId: user.id });
+      onClose();
+    }
   };
 
   return (
     <Overlay open={open} onClose={onClose} title='Add Workout'>
-      <form
-        className='flex flex-col space-y-4'
-        onSubmit={(event) => {
-          const form = event.currentTarget;
-          const workoutName = form.workout.value;
-          // TODO: form validation
-          if (workoutName) createWorkout(workoutName);
-          event.preventDefault();
-        }}
-        autoComplete='off'
-      >
+      <div className='flex flex-col space-y-4'>
         <div>
           <div className='flex flex-wrap justify-between items-baseline'>
-            <Label htmlFor='exercise-name'>Name this workout</Label>
+            <Label htmlFor='workout-name'>Name this workout</Label>
           </div>
-          <Input
-            autoFocus
-            autoComplete='off'
-            type='text'
-            id='workout-name'
-            name='workout'
-            required
-          />
+          <Input ref={inputRef} autoComplete='off' type='text' id='workout-name' required />
         </div>
         <div className='flex space-x-4'>
-          <Button className='flex-1' type='submit'>
+          <Button className='flex-1' type='button' onClick={() => submit()}>
             <CheckIcon className='inline-block w-6 h-6' />
           </Button>
         </div>
-      </form>
+      </div>
     </Overlay>
   );
 }

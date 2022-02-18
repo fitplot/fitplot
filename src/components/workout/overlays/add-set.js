@@ -11,48 +11,41 @@ import SetsTable from '../components/sets-table';
 
 export default function AddSet({ open, onClose, workoutId, exerciseId }) {
   const [sets, updateSets] = React.useState(null);
+  const inputRef = React.useRef(null);
 
   const mutation = useCreateSet();
   const user = useUser();
 
-  const handleInput = (rawInput) => {
+  const preview = () => {
+    const rawInput = inputRef.current.value;
     updateSets(fitcode(rawInput, { workoutId, exerciseId }));
   };
 
-  const commit = async () => {
+  const submit = async () => {
     await Promise.all(sets.map((set) => mutation.mutateAsync({ ...set, userId: user.user.id })));
     updateSets(null);
     onClose();
   };
 
   return (
-    <Overlay open={open} onClose={onClose} title='Add Sets'>
+    <Overlay open={open} onClose={onClose} title='Add Sets' initialFocus={inputRef}>
       <div className='flex flex-col space-y-4'>
-        <form
-          className='flex flex-col flex-none space-y-4'
-          onSubmit={(event) => {
-            const form = event.currentTarget;
-            handleInput(form.fitcode.value);
-            event.preventDefault();
-          }}
-          autoComplete='off'
-        >
+        <div className='flex flex-col flex-none space-y-4'>
           <div className='flex flex-wrap justify-between items-baseline mb-4'>
             <Label htmlFor='exercise-name'>Type your FitCode™</Label>
           </div>
           <div className='flex'>
             <Input
-              autoFocus
+              ref={inputRef}
               autoComplete='off'
               type='text'
-              name='fitcode'
               placeholder='5@185, 4@195, 2@205'
             />
-            <Button className='p-1' type='submit'>
+            <Button className='p-1' type='button' onClick={() => preview()}>
               <ChevronRightIcon className='w-6 h-6' />
             </Button>
           </div>
-        </form>
+        </div>
         <div className='flex-1'>
           <SetsTable sets={sets} />
         </div>
@@ -60,7 +53,7 @@ export default function AddSet({ open, onClose, workoutId, exerciseId }) {
           <Button className='flex-1' onClick={() => onClose()}>
             <XIcon className='inline-block w-6 h-6' />
           </Button>
-          <Button className='flex-1' disabled={!(sets && sets.length > 0)} onClick={commit}>
+          <Button className='flex-1' disabled={!(sets && sets.length > 0)} onClick={submit}>
             <CheckIcon className='inline-block w-6 h-6' />
           </Button>
         </div>
