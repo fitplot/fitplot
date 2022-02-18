@@ -31,10 +31,10 @@ export async function updateWorkout(id, { name }) {
   });
 }
 
-export async function deleteWorkout(workout) {
+export async function deleteWorkout(workoutId) {
   return prisma.workout.delete({
     where: {
-      id: workout.id,
+      id: workoutId,
     },
   });
 }

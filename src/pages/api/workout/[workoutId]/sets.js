@@ -1,4 +1,8 @@
-import { createSetForWorkout, getSetByWorkoutId } from '../../../../services/set';
+import { StatusCodes } from 'http-status-codes';
+
+import GetSetParam from '../../../../schemas/global/get-param';
+import CreateWorkoutSetRequest from '../../../../schemas/set/create-set-request';
+import { createSetForWorkout, getSetsByWorkoutId } from '../../../../services/set';
 
 export default async function handler(req, res) {
   const {
@@ -8,12 +12,20 @@ export default async function handler(req, res) {
   } = req;
 
   if (method === 'GET') {
-    return res.status(200).send(await getSetByWorkoutId(workoutId));
+    const { error: validationError } = GetSetParam.validate(workoutId);
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
+
+    const exerciseSets = await getSetsByWorkoutId(workoutId);
+    return res.status(StatusCodes.OK).send(exerciseSets);
   }
 
   if (method === 'POST') {
-    return res.status(200).send(await createSetForWorkout(body));
+    const { error: validationError } = CreateWorkoutSetRequest.validate(body);
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
+
+    const newExerciseSet = await createSetForWorkout(body);
+    return res.status(StatusCodes.OK).send(newExerciseSet);
   }
 
-  return res.status(405).send();
+  return res.status(StatusCodes.METHOD_NOT_ALLOWED).send();
 }

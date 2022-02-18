@@ -1,8 +1,8 @@
 import Joi from 'joi';
 
-import GetExerciseParam from '../global/get-param';
+import GetWorkoutParam from '../global/get-param';
 
 export default Joi.object({
-  id: GetExerciseParam,
+  id: GetWorkoutParam,
   name: Joi.string().required(),
 });

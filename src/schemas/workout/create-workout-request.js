@@ -1,8 +1,6 @@
 import Joi from 'joi';
 
-import GetExerciseParam from '../global/get-param';
-
 export default Joi.object({
-  id: GetExerciseParam,
   name: Joi.string().required(),
+  userId: Joi.string().alphanum().required(),
 });

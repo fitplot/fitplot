@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 
-import GetExerciseParam from '../../../../schemas/exercise/get-exercise-param';
 import UpdateExerciseRequest from '../../../../schemas/exercise/update-exercise-request';
+import GetExerciseParam from '../../../../schemas/global/get-param';
 import { getExerciseById, updateExerciseNameById } from '../../../../services/exercise';
 
 export default async function handler(req, res) {

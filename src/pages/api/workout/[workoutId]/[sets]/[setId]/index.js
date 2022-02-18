@@ -1,14 +1,33 @@
-import { updateWorkoutSet } from "../../../../../../services/set";
+import { StatusCodes } from 'http-status-codes';
+
+import GetSetParam from '../../../../../../schemas/global/get-param';
+import UpdateWorkoutSetRequest from '../../../../../../schemas/set/update-set-request';
+import { getWorkoutSet, updateWorkoutSet } from '../../../../../../services/set';
 
 export default async function handler(req, res) {
-  const { method, body } = req;
+  const {
+    method,
+    body,
+    query: { setId },
+  } = req;
 
-  if (method === "PUT") {
-    const { id, amount, unit, volume } = body;
-    return res
-      .status(200)
-      .send(await updateWorkoutSet(id, { amount, unit, volume, }));
+  if (method === 'GET') {
+    const { error: validationError } = GetSetParam.validate(setId);
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
+
+    const workoutSet = await getWorkoutSet(setId);
+    return res.status(StatusCodes.OK).send(workoutSet);
   }
 
-  return res.status(405).send();
+  if (method === 'PUT') {
+    const { amount, unit, volume } = body;
+
+    const { error: validationError } = UpdateWorkoutSetRequest.validate({ amount, unit, volume });
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
+
+    const updatedExercise = await updateWorkoutSet(setId, { amount, unit, volume });
+    return res.status(StatusCodes.OK).send(updatedExercise);
+  }
+
+  return res.status(StatusCodes.METHOD_NOT_ALLOWED).send();
 }

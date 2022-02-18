@@ -1,6 +1,10 @@
 import prisma from '../lib/prisma-server';
 
-export async function getSetByWorkoutId(workoutId) {
+export async function getWorkoutSet(setId) {
+  return prisma.workoutset.findUnique({ where: { id: setId } });
+}
+
+export async function getSetsByWorkoutId(workoutId) {
   return prisma.workoutset.findMany({ where: { workoutId } });
 }
 
