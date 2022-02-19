@@ -7,7 +7,6 @@ import { useWorkouts } from '../../../hooks/use-workouts';
 import Button from '../../button';
 import Card from '../../card';
 import LoadingIcon from '../../loading-icon';
-import Page from '../../page';
 import { H1, Paragraph } from '../../typography';
 import AddWorkout from '../overlays/add-workout';
 
@@ -22,7 +21,7 @@ export default function WorkoutsHome() {
   };
 
   return (
-    <Page>
+    <>
       <div className='flex flex-col flex-1 space-y-4'>
         <H1>Workouts</H1>
         <div className='flex flex-col flex-1 space-y-2'>
@@ -53,6 +52,6 @@ export default function WorkoutsHome() {
         </Button>
       </div>
       <AddWorkout open={showWorkoutDialog} onClose={closeWorkoutDialog} />
-    </Page>
+    </>
   );
 }
