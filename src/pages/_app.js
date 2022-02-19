@@ -1,14 +1,16 @@
 import 'tailwindcss/tailwind.css';
 
 import Head from 'next/head';
-import React from 'react';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { UserProvider } from '../components/auth';
+import useAppLayout from '../hooks/use-app-layout';
 import queryClient from '../lib/query-client';
 
 function App({ Component, pageProps }) {
+  useAppLayout();
+
   return (
     <UserProvider>
       <QueryClientProvider client={queryClient}>
@@ -21,12 +23,7 @@ function App({ Component, pageProps }) {
           <meta property='og:image' content='/favicon.ico' />
         </Head>
         <Component {...pageProps} />
-        <ReactQueryDevtools
-          toggleButtonProps={{
-            style: { bottom: '3rem' },
-          }}
-          initialIsOpen={false}
-        />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </UserProvider>
   );

@@ -6,6 +6,9 @@ module.exports = {
       width: {
         'half-screen': '50vw',
       },
+      translate: {
+        '9/10': '90%',
+      },
     },
   },
   variants: {
