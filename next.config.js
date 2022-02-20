@@ -11,6 +11,10 @@ module.exports = {
     );
     return config;
   },
+  /*
+   * GITHUB_SHA is an available environment variable in GitHub Actions
+   * https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
+   */
   generateBuildId: async () =>
-    process.env.GIT_SHA ? process.env.GITHUB_SHA.slice(-8) : 'development',
+    process.env.GITHUB_SHA ? process.env.GITHUB_SHA.slice(-7) : 'development',
 };

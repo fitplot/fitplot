@@ -77,7 +77,7 @@ function MainMenu({ className, navigate }) {
       <li className='flex'>
         <div className='flex flex-1 items-center p-4 space-x-2 text-slate-500'>
           <CogIcon className='w-6 h-6' />
-          <span>{getBuildId()}</span>
+          <span>Build {getBuildId()}</span>
         </div>
       </li>
     </ul>
