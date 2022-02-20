@@ -24,7 +24,7 @@ export default function Page({ children }) {
         )}
       >
         <TopBar onToggleMenu={() => toggleMenu()} />
-        <main className='flex overflow-y-auto flex-col flex-1 p-4'>
+        <main className='flex overflow-y-auto overscroll-contain flex-col flex-1 p-4'>
           {user ? children : <Login />}
         </main>
       </div>
