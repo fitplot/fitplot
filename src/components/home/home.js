@@ -1,12 +1,11 @@
 import { FireIcon } from '@heroicons/react/solid';
 import Head from 'next/head';
 
-import Layout from '../layout';
 import { H1 } from '../typography';
 
 export default function Home() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Home</title>
       </Head>
@@ -16,6 +15,6 @@ export default function Home() {
           <em>Nexus</em> Fitness
         </H1>
       </div>
-    </Layout>
+    </>
   );
 }

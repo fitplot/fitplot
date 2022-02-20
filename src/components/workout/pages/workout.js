@@ -7,7 +7,6 @@ import { useSets } from '../../../hooks/use-sets';
 import useWorkout from '../../../hooks/use-workout';
 import Button from '../../button';
 import Card from '../../card';
-import Layout from '../../layout';
 import LoadingIcon from '../../loading-icon';
 import { H1, Paragraph } from '../../typography';
 import SetsTable from '../components/sets-table';
@@ -78,7 +77,7 @@ export default function Workout() {
   const setsByExercise = sets && !isLoadingSets ? _.groupBy(sets, 'exerciseId') : {};
 
   return (
-    <Layout>
+    <>
       <div className='flex flex-col grow space-y-2'>
         {isLoading && <LoadingIcon className='w-5 h-5' />}
         {!isLoading && workout && <H1>{workout.name || workout.id}</H1>}
@@ -131,6 +130,6 @@ export default function Workout() {
           />
         </>
       )}
-    </Layout>
+    </>
   );
 }

@@ -6,7 +6,6 @@ import React from 'react';
 import { useWorkouts } from '../../../hooks/use-workouts';
 import Button from '../../button';
 import Card from '../../card';
-import Layout from '../../layout';
 import LoadingIcon from '../../loading-icon';
 import { H1, Paragraph } from '../../typography';
 import AddWorkout from '../overlays/add-workout';
@@ -22,7 +21,7 @@ export default function WorkoutsHome() {
   };
 
   return (
-    <Layout>
+    <>
       <div className='flex flex-col flex-1 space-y-4'>
         <H1>Workouts</H1>
         <div className='flex flex-col flex-1 space-y-2'>
@@ -53,6 +52,6 @@ export default function WorkoutsHome() {
         </Button>
       </div>
       <AddWorkout open={showWorkoutDialog} onClose={closeWorkoutDialog} />
-    </Layout>
+    </>
   );
 }
