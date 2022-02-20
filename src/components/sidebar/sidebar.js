@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { getBuildId } from '../../lib/server';
 import { useUser } from '../auth';
+import { ListMenu, ListMenuItem } from '../list-menu';
 
 const links = [
   {
@@ -70,30 +71,22 @@ function SideBarButton({ Icon, className, ...props }) {
 
 function MainMenu({ className, navigate }) {
   return (
-    <ul className={clsx('flex flex-col divide-y', className)} role='tree'>
+    <ListMenu className={clsx('divide-y', className)}>
       {links.map((link) => (
-        <MainMenuItem key={link.title} navigate={navigate} {...link} />
+        <MainMenuLink key={link.title} navigate={navigate} {...link} />
       ))}
-      <li className='flex'>
-        <div className='flex flex-1 items-center p-4 space-x-2 text-slate-500'>
-          <CogIcon className='w-6 h-6' />
-          <span>Build {getBuildId()}</span>
-        </div>
-      </li>
-    </ul>
+      <ListMenuItem className='space-x-2 text-slate-500'>
+        <CogIcon className='w-6 h-6' />
+        <span>Build {getBuildId()}</span>
+      </ListMenuItem>
+    </ListMenu>
   );
 }
 
-function MainMenuItem({ navigate, title, href }) {
+function MainMenuLink({ navigate, title, href }) {
   return (
-    <li className='flex'>
-      <button
-        type='button'
-        onClick={() => navigate(href)}
-        className='flex flex-1 items-center p-4 font-medium'
-      >
-        {title}
-      </button>
-    </li>
+    <ListMenuItem onClick={() => navigate(href)} className='font-medium'>
+      {title}
+    </ListMenuItem>
   );
 }
