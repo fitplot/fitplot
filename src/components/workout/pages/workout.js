@@ -4,15 +4,17 @@ import React from 'react';
 
 import { useExercises } from '../../../hooks/use-exercises';
 import { useSets } from '../../../hooks/use-sets';
-import useWorkout from '../../../hooks/use-workout';
+import { useWorkout } from '../../../hooks/use-workout';
 import Button from '../../button';
 import Card from '../../card';
 import LoadingIcon from '../../loading-icon';
+import { usePageContext } from '../../page';
 import { H1, Paragraph } from '../../typography';
 import SetsTable from '../components/sets-table';
 import AddExercise from '../overlays/add-exercise';
 import AddSet from '../overlays/add-set';
 import EditExercise from '../overlays/edit-exercise';
+import EditWorkout from '../overlays/edit-workout';
 
 export default function Workout() {
   const router = useRouter();
@@ -24,6 +26,16 @@ export default function Workout() {
 
   const [activeExerciseId, setActiveExerciseId] = React.useState(null);
   const [exercisesById, setExercisesById] = React.useState({});
+
+  // EditWorkout dialog
+  const [showEditWorkoutDialog, setShowEditWorkoutDialog] = React.useState(false);
+  const openEditWorkoutDialog = React.useCallback(
+    () => setShowEditWorkoutDialog(true),
+    [setShowEditWorkoutDialog]
+  );
+  const closeEditWorkoutDialog = () => setShowEditWorkoutDialog(false);
+
+  usePageContext({ title: 'Workout', onMoreAction: openEditWorkoutDialog });
 
   // AddSet dialog
   const [showSetsDialog, setShowSetsDialog] = React.useState(false);
@@ -127,6 +139,11 @@ export default function Workout() {
             sets={setsByExercise[activeExerciseId]}
             open={showEditExerciseDialog}
             onClose={closeEditExercise}
+          />
+          <EditWorkout
+            open={showEditWorkoutDialog}
+            onClose={closeEditWorkoutDialog}
+            workout={workout}
           />
         </>
       )}
