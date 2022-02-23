@@ -2,7 +2,14 @@
 
 ## on delete, archive exercise, find all archived exercises that are older than 10 days, remove all workoutsets on the archived exercises, set archivedAt date back to null
 
-### Prisma schema file including archiveAt date on workout and exercise collections
+```
+  1. User deletes a exercise on a particular workout, it will trigger query to archive the exercise
+  2. Then, it finds all current exercises that have been archived for over 10 days
+  3. After all archived exercises that are older than 10 days are found, it will delete all the workoutsets attached to them
+  4. Finally, it will put all the archived exercises over 10 days old back to a archivedAt date to null so its back and available to use
+```
+
+## Prisma schema file including archiveAt date on workout and exercise collections
 
 ```
 generator client {
@@ -44,7 +51,7 @@ model workoutset {
 }
 ```
 
-### archive exercise code file
+## archive exercise code file
 
 ```
 import { StatusCodes } from 'http-status-codes';
@@ -84,7 +91,9 @@ export default async function handler(req, res) {
 }
 ```
 
-### Prisma queries to archive/find/remove exercise and workoutsets
+## Prisma queries to archive/find/remove exercise and workoutsets
+
+###### archive a exercise by adding the current date user decided to `delete`
 
 ```
 export async function archiveExercise(id) {
@@ -99,6 +108,8 @@ export async function archiveExercise(id) {
 }
 ```
 
+###### find all archived exercises that are over 10 days old
+
 ```
 export async function findArchivedExercises() {
   const dateOffset = 24 * 60 * 60 * 1000 * 10;
@@ -112,6 +123,8 @@ export async function findArchivedExercises() {
   });
 }
 ```
+
+###### deactive the exercise archivedAt if it has been archived for over 10 days
 
 ```
 export async function deactivateArchivedExercise(id) {
