@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const { method, body } = req;
 
   if (method === 'DELETE') {
-    const { id: exerciseId, workoutId } = body;
+    const { exerciseId, workoutId } = body;
     const { error: validationError } = DeleteSetParam.validate({ exerciseId, workoutId });
     if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
