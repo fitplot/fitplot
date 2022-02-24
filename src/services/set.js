@@ -4,6 +4,14 @@ export async function getWorkoutSet(setId) {
   return prisma.workoutset.findUnique({ where: { id: setId } });
 }
 
+export async function findExerciseWorkoutSets(exerciseId) {
+  return prisma.workoutset.findMany({
+    where: {
+      exerciseId,
+    },
+  });
+}
+
 export async function getSetsByWorkoutId(workoutId) {
   return prisma.workoutset.findMany({ where: { workoutId } });
 }
