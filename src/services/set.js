@@ -24,3 +24,11 @@ export async function updateWorkoutSet(id, { amount, unit, volume }) {
     },
   });
 }
+
+export async function deleteWorkoutSet(workoutSetId) {
+  return prisma.workoutset.delete({
+    where: {
+      id: workoutSetId,
+    },
+  });
+}
