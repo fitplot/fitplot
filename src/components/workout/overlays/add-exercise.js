@@ -33,7 +33,7 @@ export default function AddExercise({ open, onClose }) {
     <Overlay title='Add Exercise' open={open} onClose={onClose} initialFocus={inputRef}>
       {isLoading && <LoadingIcon className='w-5 h-5' />}
       {!isLoading && (
-        <div className='flex flex-col p-6 space-y-4 h-full'>
+        <div className='flex flex-col p-4 space-y-4 h-full'>
           <div className='flex flex-wrap grow-0 shrink-0 justify-between items-baseline'>
             <Label htmlFor='name'>Exercise name</Label>
           </div>
