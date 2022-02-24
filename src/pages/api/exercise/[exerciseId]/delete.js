@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import DeleteExerciseParam from '../../../../schemas/exercise/delete-exercise-request';
 import { deleteExercise } from '../../../../services/exercise';
-import { findExerciseWorkoutSets, replaceExerciseId } from '../../../../services/set';
+import { findExerciseSets, replaceExerciseId } from '../../../../services/set';
 
 export default async function handler(req, res) {
   const { method, body } = req;
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     }
 
     if (replaceWith === undefined) {
-      const exerciseWorkoutSets = await findExerciseWorkoutSets({ exerciseId });
+      const exerciseWorkoutSets = await findExerciseSets({ exerciseId });
       return exerciseWorkoutSets.length > 0
         ? res
             .status(StatusCodes.CONFLICT)
