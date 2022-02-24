@@ -8,6 +8,14 @@ export async function createExercise(exercise) {
   return prisma.exercise.create({ data: exercise });
 }
 
+export async function getExercisesForUser(userId) {
+  return prisma.exercise.findMany({
+    where: {
+      userId,
+    },
+  });
+}
+
 export async function getExerciseById(exerciseId) {
   return prisma.exercise.findUnique({ where: { id: exerciseId } });
 }

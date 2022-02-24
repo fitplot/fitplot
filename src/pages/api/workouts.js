@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import GetUserIdParam from '../../schemas/global/get-user-id-param';
 import CreateWorkoutRequest from '../../schemas/workout/create-workout-request';
-import { createWorkout, getWorkoutsByUserId } from '../../services/workout';
+import { createWorkout, getWorkoutsForUser } from '../../services/workout';
 
 export default async function handler(req, res) {
   const {
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const { error: validationError } = GetUserIdParam.validate(userId);
     if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
-    const userWorkouts = await getWorkoutsByUserId(userId);
+    const userWorkouts = await getWorkoutsForUser(userId);
     return res.status(StatusCodes.OK).send(userWorkouts);
   }
 
