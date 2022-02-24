@@ -6,7 +6,9 @@ import queryClient from '../lib/query-client';
 
 export function useWorkouts() {
   const { user } = useUser();
-  return useQuery('workouts', () => fetch(`/api/workouts/${user.id}`).then((res) => res.json()));
+  return useQuery('workouts', () =>
+    fetch(`/api/workouts?userId=${user.id}`).then((res) => res.json())
+  );
 }
 
 export function useCreateWorkout() {
