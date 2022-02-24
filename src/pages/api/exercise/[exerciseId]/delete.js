@@ -1,22 +1,37 @@
 import { StatusCodes } from 'http-status-codes';
 
-import GetExerciseParam from '../../../../schemas/global/get-param';
-import { findExerciseWorkoutSets } from '../../../../services/set';
+import DeleteExerciseParam from '../../../../schemas/exercise/delete-exercise-request';
+import { deleteExercise } from '../../../../services/exercise';
+import { findExerciseWorkoutSets, replaceExerciseId } from '../../../../services/set';
 
 export default async function handler(req, res) {
-  const {
-    method,
-    query: { exerciseId },
-  } = req;
+  const { method, body } = req;
 
   if (method === 'DELETE') {
-    const { error: validationError } = GetExerciseParam.validate(exerciseId);
+    const { exerciseId, workoutId, replaceWith } = body;
+    const { error: validationError } = DeleteExerciseParam.validate({
+      exerciseId,
+      workoutId,
+      replaceWith,
+    });
     if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
-    const exerciseWorkoutSets = await findExerciseWorkoutSets(exerciseId);
-    return exerciseWorkoutSets.length > 0
-      ? res.status(StatusCodes.CONFLICT).send('Workout sets have been detected for this exercise!')
-      : res.status(StatusCodes.OK).send(exerciseWorkoutSets);
+    if (replaceWith !== undefined) {
+      const replacedExerciseIds = await replaceExerciseId({ exerciseId, workoutId, replaceWith });
+      const exerciseDeleted = await deleteExercise({ exerciseId });
+      return res
+        .status(StatusCodes.OK)
+        .send({ replaced: replacedExerciseIds, deleted: exerciseDeleted });
+    }
+
+    if (replaceWith === undefined) {
+      const exerciseWorkoutSets = await findExerciseWorkoutSets({ exerciseId });
+      return exerciseWorkoutSets.length > 0
+        ? res
+            .status(StatusCodes.CONFLICT)
+            .send('Workout sets have been detected for this exercise!')
+        : res.status(StatusCodes.OK).send(exerciseWorkoutSets);
+    }
   }
 
   return res.status(StatusCodes.METHOD_NOT_ALLOWED).send();

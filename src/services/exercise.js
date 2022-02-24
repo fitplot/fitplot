@@ -22,3 +22,11 @@ export async function updateExerciseNameById(id, { name }) {
     },
   });
 }
+
+export async function deleteExercise({ exerciseId: id }) {
+  return prisma.exercise.delete({
+    where: {
+      id,
+    },
+  });
+}
