@@ -1,1 +1,1 @@
-export { default } from './page';
+export { default, PageContextProvider, usePageContext, usePageContextValues } from './page';

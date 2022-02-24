@@ -7,12 +7,14 @@ import { useWorkouts } from '../../../hooks/use-workouts';
 import Button from '../../button';
 import Card from '../../card';
 import LoadingIcon from '../../loading-icon';
-import { H1, Paragraph } from '../../typography';
+import { usePageContext } from '../../page';
+import { Paragraph } from '../../typography';
 import AddWorkout from '../overlays/add-workout';
 
 export default function WorkoutsHome() {
   const router = useRouter();
   const { data: workouts, error, isLoading } = useWorkouts();
+  usePageContext({ title: 'My Workouts' });
 
   const [showWorkoutDialog, setShowWorkoutDialog] = React.useState(false);
   const openWorkoutDialog = () => setShowWorkoutDialog(true);
@@ -23,7 +25,6 @@ export default function WorkoutsHome() {
   return (
     <>
       <div className='flex flex-col flex-1 space-y-4'>
-        <H1>Workouts</H1>
         <div className='flex flex-col flex-1 space-y-2'>
           {isLoading && <LoadingIcon className='self-center w-12 h-12' />}
           {!isLoading &&

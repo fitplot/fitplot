@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import GetSetParam from '../../../../../../schemas/global/get-param';
 import UpdateWorkoutSetRequest from '../../../../../../schemas/set/update-set-request';
-import { getWorkoutSet, updateWorkoutSet } from '../../../../../../services/set';
+import { deleteWorkoutSet, getWorkoutSet, updateWorkoutSet } from '../../../../../../services/set';
 
 export default async function handler(req, res) {
   const {
@@ -27,6 +27,14 @@ export default async function handler(req, res) {
 
     const updatedExercise = await updateWorkoutSet(setId, { amount, unit, volume });
     return res.status(StatusCodes.OK).send(updatedExercise);
+  }
+
+  if (method === 'DELETE') {
+    const { error: validationError } = GetSetParam.validate(setId);
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
+
+    const deletedWorkoutSet = await deleteWorkoutSet(setId);
+    return res.status(StatusCodes.OK).send(deletedWorkoutSet);
   }
 
   return res.status(StatusCodes.METHOD_NOT_ALLOWED).send();
