@@ -1,9 +1,13 @@
 import { useMutation, useQuery } from 'react-query';
 
+import { useUser } from '../components/auth/user';
 import queryClient from '../lib/query-client';
 
 export function useExercises() {
-  return useQuery('exercises', () => fetch('/api/exercises').then((res) => res.json()));
+  const { user } = useUser();
+  return useQuery('exercises', () =>
+    fetch(`/api/exercises?userId=${user.id}`).then((res) => res.json())
+  );
 }
 
 export function useCreateExercise() {
