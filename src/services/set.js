@@ -25,10 +25,11 @@ export async function updateWorkoutSet(id, { amount, unit, volume }) {
   });
 }
 
-export async function deleteWorkoutSet(workoutSetId) {
-  return prisma.workoutset.delete({
+export async function findAndRemoveWorkoutSets(exerciseId, workoutId) {
+  return prisma.workoutset.deleteMany({
     where: {
-      id: workoutSetId,
+      exerciseId,
+      workoutId,
     },
   });
 }
