@@ -24,7 +24,6 @@ export async function replaceExerciseId({ exerciseId, workoutId, replaceWith }) 
   return prisma.workoutset.updateMany({
     where: {
       exerciseId,
-      workoutId,
     },
     data: {
       exerciseId: replaceWith,
