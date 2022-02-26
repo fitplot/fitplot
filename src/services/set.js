@@ -39,3 +39,12 @@ export async function updateWorkoutSet(id, { amount, unit, volume }) {
     },
   });
 }
+
+export async function findAndRemoveWorkoutSets(exerciseId, workoutId) {
+  return prisma.workoutset.deleteMany({
+    where: {
+      exerciseId,
+      workoutId,
+    },
+  });
+}

@@ -1,12 +1,12 @@
-import { CheckIcon, XIcon } from '@heroicons/react/solid';
+import { CheckIcon } from '@heroicons/react/solid';
 import React from 'react';
 
 import { useUpdateExercise } from '../../../hooks/use-exercise';
 import { useUpdateSet } from '../../../hooks/use-sets';
 import Button from '../../button';
-import Dialog from '../../dialog';
 import { Input } from '../../forms';
 import LoadingIcon from '../../loading-icon';
+import Overlay from '../../overlay';
 import SetsTable from '../components/sets-table';
 
 export default function EditExercise({ exercise = {}, sets = [], open, onClose }) {
@@ -80,29 +80,24 @@ export default function EditExercise({ exercise = {}, sets = [], open, onClose }
   const isLoading = setMutation.isLoading || exerciseMutation.isLoading;
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <div className='flex flex-col justify-center items-center'>
+    <Overlay open={open} onClose={onClose}>
+      <div className='flex flex-col p-4 space-y-4'>
         {isLoading && <LoadingIcon className='w-5 h-5' />}
         {!isLoading && (
           <div className='flex flex-col flex-1 space-y-2'>
             <Input
-              className='py-2 px-4 bg-white'
+              className='py-2 px-4 bg-none'
               type='textarea'
               defaultValue={name}
               onChange={(event) => onEditExercise(event.target.value)}
             />
             <SetsTable sets={sets} isEditable onEdit={onEditSet} />
-            <div className='flex space-x-4'>
-              <Button className='flex-1' onClick={() => onClose()}>
-                <XIcon className='inline-block w-6 h-6' />
-              </Button>
-              <Button className='flex-1' onClick={() => submit()}>
-                <CheckIcon className='inline-block w-6 h-6' />
-              </Button>
-            </div>
+            <Button className='flex justify-center' onClick={() => submit()}>
+              <CheckIcon className='inline-block w-6 h-6' />
+            </Button>
           </div>
         )}
       </div>
-    </Dialog>
+    </Overlay>
   );
 }

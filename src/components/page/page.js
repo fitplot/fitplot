@@ -31,3 +31,62 @@ export default function Page({ children }) {
     </div>
   );
 }
+
+const INITIAL_PAGE_CONTEXT = {
+  title: null,
+  onMoreAction: null,
+  withPageContext: null,
+  resetPageContext: null,
+};
+
+const PageContext = React.createContext(INITIAL_PAGE_CONTEXT);
+
+export function PageContextProvider({ children }) {
+  const [value, setValue] = React.useState(INITIAL_PAGE_CONTEXT);
+
+  const set = React.useCallback(
+    ({ title = null, onMoreAction = null } = {}) => {
+      setValue({
+        title,
+        onMoreAction,
+      });
+    },
+    [setValue]
+  );
+
+  const reset = React.useCallback(() => {
+    set({
+      title: null,
+      onMoreAction: null,
+    });
+  }, [set]);
+
+  const context = React.useMemo(
+    () => ({
+      title: value.title,
+      onMoreAction: value.onMoreAction,
+      set,
+      reset,
+    }),
+    [set, reset, value]
+  );
+
+  return <PageContext.Provider value={context}>{children}</PageContext.Provider>;
+}
+
+export const usePageContext = ({ title, onMoreAction }) => {
+  const { set, reset } = React.useContext(PageContext);
+
+  React.useEffect(() => {
+    set({ title, onMoreAction });
+
+    return () => {
+      reset();
+    };
+  }, [set, reset, title, onMoreAction]);
+};
+
+export const usePageContextValues = () => {
+  const { setPageContext, resetPageContext, ...context } = React.useContext(PageContext);
+  return context;
+};
