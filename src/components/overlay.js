@@ -38,7 +38,7 @@ export default function Overlay({ title, open, onClose, initialFocus, children }
               </button>
             </div>
           </Dialog.Title>
-          <div className='flex overflow-y-auto flex-col grow p-6'>{children}</div>
+          <div className='flex overflow-y-auto flex-col grow'>{children}</div>
         </div>
       </Dialog>
     </Transition>

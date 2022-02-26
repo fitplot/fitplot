@@ -1,14 +1,22 @@
 import { StatusCodes } from 'http-status-codes';
 
 import CreateExerciseRequest from '../../schemas/exercise/create-exercise-request';
-import { createExercise, getAllExercises } from '../../services/exercise';
+import GetUserIdParam from '../../schemas/global/get-user-id-param';
+import { createExercise, getExercisesForUser } from '../../services/exercise';
 
 export default async function handler(req, res) {
-  const { method, body } = req;
+  const {
+    method,
+    body,
+    query: { userId },
+  } = req;
 
   if (method === 'GET') {
-    const exercises = await getAllExercises();
-    return res.status(StatusCodes.OK).send(exercises);
+    const { error: validationError } = GetUserIdParam.validate(userId);
+    if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
+
+    const userExercises = await getExercisesForUser(userId);
+    return res.status(StatusCodes.OK).send(userExercises);
   }
 
   if (method === 'POST') {
