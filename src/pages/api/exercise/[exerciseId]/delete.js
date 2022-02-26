@@ -9,13 +9,10 @@ export default async function handler(req, res) {
 
   if (method === 'DELETE') {
     const { exerciseId, replaceWith } = body;
-    const { error: validationError } = DeleteExerciseParam.validate({
-      exerciseId,
-      replaceWith,
-    });
+    const { error: validationError } = DeleteExerciseParam.validate({ exerciseId });
     if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
-    if (replaceWith !== undefined) {
+    if (replaceWith) {
       const replacedExerciseIds = await replaceExerciseId({ exerciseId, replaceWith });
       const exerciseDeleted = await deleteExercise({ exerciseId });
       return res
@@ -23,7 +20,7 @@ export default async function handler(req, res) {
         .send({ replaced: replacedExerciseIds, deleted: exerciseDeleted });
     }
 
-    if (replaceWith === undefined) {
+    if (!replaceWith) {
       const exerciseWorkoutSets = await findExerciseSets({ exerciseId });
       return exerciseWorkoutSets.length > 0
         ? res
