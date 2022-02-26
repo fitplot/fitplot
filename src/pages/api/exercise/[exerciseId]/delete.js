@@ -8,16 +8,15 @@ export default async function handler(req, res) {
   const { method, body } = req;
 
   if (method === 'DELETE') {
-    const { exerciseId, workoutId, replaceWith } = body;
+    const { exerciseId, replaceWith } = body;
     const { error: validationError } = DeleteExerciseParam.validate({
       exerciseId,
-      workoutId,
       replaceWith,
     });
     if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
     if (replaceWith !== undefined) {
-      const replacedExerciseIds = await replaceExerciseId({ exerciseId, workoutId, replaceWith });
+      const replacedExerciseIds = await replaceExerciseId({ exerciseId, replaceWith });
       const exerciseDeleted = await deleteExercise({ exerciseId });
       return res
         .status(StatusCodes.OK)

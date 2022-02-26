@@ -20,7 +20,7 @@ export async function createSetForWorkout(set) {
   return prisma.workoutset.create({ data: set });
 }
 
-export async function replaceExerciseId({ exerciseId, workoutId, replaceWith }) {
+export async function replaceExerciseId({ exerciseId, replaceWith }) {
   return prisma.workoutset.updateMany({
     where: {
       exerciseId,
