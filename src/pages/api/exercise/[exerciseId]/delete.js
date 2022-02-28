@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import DeleteExerciseParam from '../../../../schemas/exercise/delete-exercise-request';
 import { deleteExercise } from '../../../../services/exercise';
-import { findExerciseSets, replaceExerciseId } from '../../../../services/set';
+import { replaceExerciseId } from '../../../../services/set';
 
 export default async function handler(req, res) {
   const { method, body } = req;
@@ -20,13 +20,10 @@ export default async function handler(req, res) {
         .send({ replaced: replacedExerciseIds, deleted: exerciseDeleted });
     }
 
-    if (!replaceWith) {
-      const exerciseWorkoutSets = await findExerciseSets({ exerciseId });
-      return exerciseWorkoutSets.length > 0
-        ? res
-            .status(StatusCodes.CONFLICT)
-            .send('Workout sets have been detected for this exercise!')
-        : res.status(StatusCodes.OK).send(exerciseWorkoutSets);
+    try {
+      res.status(StatusCodes.OK).send(await deleteExercise({ exerciseId }));
+    } catch (error) {
+      res.status(StatusCodes.CONFLICT).send(error);
     }
   }
 
