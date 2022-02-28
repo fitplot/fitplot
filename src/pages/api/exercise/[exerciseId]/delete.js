@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   if (method === 'DELETE') {
     const { exerciseId, replaceWith } = body;
-    const { error: validationError } = DeleteExerciseParam.validate({ exerciseId });
+    const { error: validationError } = DeleteExerciseParam.validate({ exerciseId, replaceWith });
     if (validationError) return res.status(StatusCodes.BAD_REQUEST).send(validationError);
 
     if (replaceWith) {
