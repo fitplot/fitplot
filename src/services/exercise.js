@@ -17,7 +17,14 @@ export async function getExercisesForUser(userId) {
 }
 
 export async function getExerciseById(exerciseId) {
-  return prisma.exercise.findUnique({ where: { id: exerciseId } });
+  return prisma.exercise.findUnique({
+    where: {
+      id: exerciseId,
+    },
+    include: {
+      sets: true,
+    },
+  });
 }
 
 export async function updateExerciseNameById(id, { name }) {
@@ -27,6 +34,14 @@ export async function updateExerciseNameById(id, { name }) {
     },
     data: {
       name,
+    },
+  });
+}
+
+export async function deleteExercise({ exerciseId: id }) {
+  return prisma.exercise.delete({
+    where: {
+      id,
     },
   });
 }
