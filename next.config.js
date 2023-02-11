@@ -16,7 +16,7 @@ module.exports = {
    * https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
    */
   generateBuildId: async () =>
-    process.env.GITHUB_SHA ? process.env.GITHUB_SHA.slice(-7) : 'development',
+    process.env.GITHUB_SHA ? process.env.GITHUB_SHA.slice(0, 7) : 'development',
   rewrites: async () => [
     {
       source: '/api/:path*',
