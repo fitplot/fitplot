@@ -4,8 +4,6 @@ FROM node:18-bullseye-slim as base
 # install all node_modules, including dev
 FROM base as deps
 
-ENV HUSKY_SKIP_INSTALL=1
-
 RUN mkdir /app/
 WORKDIR /app/
 
