@@ -1,3 +1,10 @@
-.husky
-.next
-node_modules
+.vscode/
+.DS_Store
+node_modules/
+
+/.cache
+.next/
+/coverage
+
+app/styles
+/test-results/
