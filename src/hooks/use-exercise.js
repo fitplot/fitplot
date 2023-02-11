@@ -27,8 +27,8 @@ export function useUpdateExercise() {
         body: JSON.stringify(exercise),
       }).then((res) => res.json()),
     {
-      onSuccess: (res) => {
-        queryClient.invalidateQueries(['exercise', res.id]);
+      onSuccess: (exercise) => {
+        queryClient.invalidateQueries(['exercise', exercise.id]);
         queryClient.invalidateQueries('exercises');
       },
     }

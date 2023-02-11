@@ -13,7 +13,7 @@ export function useExercises() {
 export function useCreateExercise() {
   return useMutation(
     (exercise) =>
-      fetch('/api/exercises', {
+      fetch('/api/exercise', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

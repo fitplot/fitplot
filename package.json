@@ -12,7 +12,6 @@
   "dependencies": {
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
-    "@prisma/client": "^3.9.2",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.7",
     "http-proxy": "^1.18.1",
@@ -21,7 +20,6 @@
     "lodash": "^4.17.21",
     "next": "^12.0.7",
     "pino": "^7.2.0",
-    "prisma": "^3.9.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-query": "^3.32.3",
@@ -43,5 +41,8 @@
     "husky": "^7.0.0",
     "postcss": "^8.3.11",
     "prettier": "^2.5.1"
+  },
+  "volta": {
+    "node": "18.14.0"
   }
 }

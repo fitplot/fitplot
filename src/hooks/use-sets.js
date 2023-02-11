@@ -21,8 +21,8 @@ export function useCreateSet() {
         body: JSON.stringify(set),
       }).then((res) => res.json()),
     {
-      onSuccess: (res) => {
-        queryClient.invalidateQueries(['sets', res.workoutId]);
+      onSuccess: (set) => {
+        queryClient.invalidateQueries(['sets', set.workoutId]);
       },
     }
   );
@@ -30,18 +30,18 @@ export function useCreateSet() {
 
 export function useUpdateSet() {
   return useMutation(
-    set =>
+    (set) =>
       fetch(`/api/workout/${set.workoutId}/sets/${set.id}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(set)
-      }).then(res => res.json()),
+        body: JSON.stringify(set),
+      }).then((res) => res.json()),
     {
-      onSuccess: res => {
-        queryClient.invalidateQueries(["sets", res.workoutId]);
-      }
+      onSuccess: (set) => {
+        queryClient.invalidateQueries(['sets', set.workoutId]);
+      },
     }
   );
 }

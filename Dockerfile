@@ -1,8 +1,5 @@
 # base node image
-FROM node:16-bullseye-slim as base
-
-# install open ssl for prisma
-RUN apt-get update && apt-get install -y openssl
+FROM node:18-bullseye-slim as base
 
 # install all node_modules, including dev
 FROM base as deps
@@ -36,10 +33,6 @@ WORKDIR /app/
 
 COPY --from=deps /app/node_modules /app/node_modules
 
-# schema doesn't change much so these will stay cached
-ADD prisma .
-RUN npx prisma generate
-
 # app code changes all the time
 ADD . .
 RUN npm run build
@@ -53,7 +46,6 @@ RUN mkdir /app/
 WORKDIR /app/
 
 COPY --from=production-deps /app/node_modules /app/node_modules
-COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 COPY --from=build /app/.next /app/.next
 COPY --from=build /app/public /app/public
 COPY --from=build /app/next.config.js /app/next.config.js

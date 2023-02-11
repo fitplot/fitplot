@@ -8,6 +8,6 @@ LICENSE
 .editorconfig
 coverage
 .eslintcache
-.env
+.env*
 .next
 Dockerfile

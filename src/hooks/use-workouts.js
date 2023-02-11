@@ -15,7 +15,7 @@ export function useCreateWorkout() {
   const router = useRouter();
   return useMutation(
     (workout) =>
-      fetch('/api/workouts', {
+      fetch('/api/workout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,9 +23,9 @@ export function useCreateWorkout() {
         body: JSON.stringify(workout),
       }).then((res) => res.json()),
     {
-      onSuccess: (res) => {
+      onSuccess: (workout) => {
         queryClient.invalidateQueries('workouts');
-        router.push(`/workout/${res.id}`);
+        router.push(`/workout/${workout.id}`);
       },
     }
   );
