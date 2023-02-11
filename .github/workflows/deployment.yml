@@ -68,7 +68,7 @@ jobs:
         id: service_url
         with:
           file: 'fly.toml'
-          field: 'app'
+          field: 'env.SERVICE_URL'
 
       - name: 🚀 Deploy
         uses: superfly/flyctl-actions@1.3
