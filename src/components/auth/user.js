@@ -12,6 +12,10 @@ const FAKE_USERS = [
     username: 'eric',
     id: '456',
   },
+  {
+    username: 'sierra',
+    id: '789',
+  },
 ];
 
 const UserContext = React.createContext({
@@ -55,7 +59,9 @@ export function UserProvider({ children }) {
     [user, login, logout]
   );
 
-  return <UserContext.Provider value={context}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={context}>{children}</UserContext.Provider>
+  );
 }
 
 export const useUser = () => React.useContext(UserContext);
