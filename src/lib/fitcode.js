@@ -38,8 +38,8 @@ export default function fitcode(rawInput = '', base = {}) {
       const [volume, amount] = volumeAndAmount.split(AMOUNT_DELIM);
 
       sets.push({
-        volume: volume || null,
-        amount: amount || null,
+        volume: volume || undefined,
+        amount: amount || undefined,
         unit: 'lbs',
         ...base,
       });
