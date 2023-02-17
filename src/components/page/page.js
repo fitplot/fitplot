@@ -71,7 +71,9 @@ export function PageContextProvider({ children }) {
     [set, reset, value]
   );
 
-  return <PageContext.Provider value={context}>{children}</PageContext.Provider>;
+  return (
+    <PageContext.Provider value={context}>{children}</PageContext.Provider>
+  );
 }
 
 export const usePageContext = ({ title, onMoreAction }) => {
@@ -87,6 +89,7 @@ export const usePageContext = ({ title, onMoreAction }) => {
 };
 
 export const usePageContextValues = () => {
-  const { setPageContext, resetPageContext, ...context } = React.useContext(PageContext);
+  const { setPageContext, resetPageContext, ...context } =
+    React.useContext(PageContext);
   return context;
 };

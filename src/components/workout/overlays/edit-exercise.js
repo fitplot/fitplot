@@ -1,42 +1,23 @@
 import { CheckIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
-import { useUpdateExercise } from '../../../hooks/use-exercise';
 import { useUpdateSet } from '../../../hooks/use-sets';
 import Button from '../../button';
-import { Input } from '../../forms';
 import LoadingIcon from '../../loading-icon';
 import Overlay from '../../overlay';
 import SetsTable from '../components/sets-table';
 
-export default function EditExercise({
-  exercise = {},
-  sets = [],
-  open,
-  onClose,
-}) {
-  const setMutation = useUpdateSet();
-  const exerciseMutation = useUpdateExercise();
-
-  const [dirtyExerciseName, setDirtyExerciseName] = React.useState(null);
+export default function EditExercise({ sets = [], open, onClose }) {
+  const mutation = useUpdateSet();
 
   // Example dirty sets table (hash table):
   //     dirtySets = { 4: { volume: 10, amount: 100 } }
   const [dirtySets, setDirtySets] = React.useState({});
 
-  const { name } = exercise;
-
-  React.useEffect(() => {
-    if (name) {
-      // If rendered for a different exercise, reset the dirty exercise reference.
-      setDirtyExerciseName(() => '');
-    }
-  }, [name]);
-
   React.useEffect(() => {
     if (sets && sets.length > 0) {
       // If rendered for a different exercise, reset the dirty sets table.
-      setDirtySets(() => ({}));
+      setDirtySets({});
     }
   }, [sets]);
 
@@ -52,28 +33,15 @@ export default function EditExercise({
           ...changes,
         };
       })
-      .map((set) => setMutation.mutateAsync(set))
+      .map((set) => mutation.mutateAsync(set))
       .forEach((request) => requests.push(request));
-
-    if (dirtyExerciseName && dirtyExerciseName.trim().length > 0) {
-      const exerciseRequest = exerciseMutation.mutateAsync({
-        ...exercise,
-        name: dirtyExerciseName,
-      });
-
-      requests.push(exerciseRequest);
-    }
 
     await Promise.all(requests);
 
     onClose();
   };
 
-  const onEditExercise = (_name) => {
-    setDirtyExerciseName(_name);
-  };
-
-  const onEditSet = (setId, changes) => {
+  const onEdit = (setId, changes) => {
     const previousChanges = dirtySets[setId];
 
     dirtySets[setId] = {
@@ -82,25 +50,17 @@ export default function EditExercise({
     };
   };
 
-  const isLoading = setMutation.isLoading || exerciseMutation.isLoading;
-
   return (
     <Overlay open={open} onClose={onClose}>
       <div className='flex flex-col p-4 space-y-4'>
         <div className='flex flex-col flex-1 space-y-2'>
-          <Input
-            className='py-2 px-4 bg-none'
-            type='textarea'
-            defaultValue={name}
-            onChange={(event) => onEditExercise(event.target.value)}
-          />
-          <SetsTable sets={sets} isEditable onEdit={onEditSet} />
+          <SetsTable sets={sets} isEditable onEdit={onEdit} />
           <Button
             className='flex justify-center'
-            disabled={isLoading}
+            disabled={mutation.isLoading}
             onClick={() => submit()}
           >
-            {isLoading ? (
+            {mutation.isLoading ? (
               <LoadingIcon className='w-6 h-6' />
             ) : (
               <CheckIcon className='inline-block w-6 h-6' />
