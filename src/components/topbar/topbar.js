@@ -1,4 +1,4 @@
-import { DotsHorizontalIcon, MenuIcon } from '@heroicons/react/solid';
+import { Bars3Icon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 
 import { usePageContextValues } from '../page';
@@ -8,13 +8,17 @@ export default function TopBar({ onToggleMenu }) {
 
   return (
     <div className='flex justify-between items-center px-1 h-12 bg-slate-50 border-b'>
-      <TopBarButton Icon={MenuIcon} className='shrink-0' onClick={onToggleMenu} />
+      <TopBarButton
+        Icon={Bars3Icon}
+        className='shrink-0'
+        onClick={onToggleMenu}
+      />
       <div className='flex grow justify-center items-center'>
         <span className='font-medium'>{title}</span>
       </div>
       {onMoreAction && (
         <TopBarButton
-          Icon={DotsHorizontalIcon}
+          Icon={EllipsisHorizontalIcon}
           className='shrink-0'
           onClick={() => onMoreAction()}
         />
@@ -27,7 +31,10 @@ function TopBarButton({ className, Icon, ...props }) {
   return (
     <button
       {...props}
-      className={clsx('flex justify-center items-center w-10 h-full', className)}
+      className={clsx(
+        'flex justify-center items-center w-10 h-full',
+        className
+      )}
       type='button'
     >
       <Icon className='w-6 h-6' />

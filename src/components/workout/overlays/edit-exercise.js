@@ -1,4 +1,4 @@
-import { CheckIcon } from '@heroicons/react/solid';
+import { CheckIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
 import { useUpdateExercise } from '../../../hooks/use-exercise';
@@ -9,7 +9,12 @@ import LoadingIcon from '../../loading-icon';
 import Overlay from '../../overlay';
 import SetsTable from '../components/sets-table';
 
-export default function EditExercise({ exercise = {}, sets = [], open, onClose }) {
+export default function EditExercise({
+  exercise = {},
+  sets = [],
+  open,
+  onClose,
+}) {
   const setMutation = useUpdateSet();
   const exerciseMutation = useUpdateExercise();
 
@@ -82,21 +87,26 @@ export default function EditExercise({ exercise = {}, sets = [], open, onClose }
   return (
     <Overlay open={open} onClose={onClose}>
       <div className='flex flex-col p-4 space-y-4'>
-        {isLoading && <LoadingIcon className='w-5 h-5' />}
-        {!isLoading && (
-          <div className='flex flex-col flex-1 space-y-2'>
-            <Input
-              className='py-2 px-4 bg-none'
-              type='textarea'
-              defaultValue={name}
-              onChange={(event) => onEditExercise(event.target.value)}
-            />
-            <SetsTable sets={sets} isEditable onEdit={onEditSet} />
-            <Button className='flex justify-center' onClick={() => submit()}>
+        <div className='flex flex-col flex-1 space-y-2'>
+          <Input
+            className='py-2 px-4 bg-none'
+            type='textarea'
+            defaultValue={name}
+            onChange={(event) => onEditExercise(event.target.value)}
+          />
+          <SetsTable sets={sets} isEditable onEdit={onEditSet} />
+          <Button
+            className='flex justify-center'
+            disabled={isLoading}
+            onClick={() => submit()}
+          >
+            {isLoading ? (
+              <LoadingIcon className='w-6 h-6' />
+            ) : (
               <CheckIcon className='inline-block w-6 h-6' />
-            </Button>
-          </div>
-        )}
+            )}
+          </Button>
+        </div>
       </div>
     </Overlay>
   );

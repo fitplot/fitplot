@@ -1,6 +1,8 @@
 import _ from 'lodash';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useToggle } from 'react-use';
 
 import { useExercises } from '../../../hooks/use-exercises';
 import { useSets } from '../../../hooks/use-sets';
@@ -12,11 +14,11 @@ import { usePageContext } from '../../page';
 import { H1, Paragraph } from '../../typography';
 import SetsTable from '../components/sets-table';
 import AddExercise from '../overlays/add-exercise';
-import AddSet from '../overlays/add-set';
+import AddOrEditSets from '../overlays/add-or-edit-sets';
 import EditExercise from '../overlays/edit-exercise';
-import EditWorkout from '../overlays/edit-workout';
+import WorkoutMoreActions from '../overlays/workout-more-actions';
 
-export default function Workout() {
+export default function WorkoutPage() {
   const router = useRouter();
   const { workoutId } = router.query;
 
@@ -25,31 +27,30 @@ export default function Workout() {
   const { data: exercises, isLoading: isLoadingExercises } = useExercises();
 
   const [activeExerciseId, setActiveExerciseId] = React.useState(null);
-  const [exercisesById, setExercisesById] = React.useState({});
 
-  // EditWorkout dialog
-  const [showEditWorkoutDialog, setShowEditWorkoutDialog] = React.useState(false);
-  const openEditWorkoutDialog = React.useCallback(
-    () => setShowEditWorkoutDialog(true),
-    [setShowEditWorkoutDialog]
+  const [showWorkoutActions, toggleWorkoutActions] = useToggle(false);
+  const closeEditWorkoutDialog = () => toggleWorkoutActions(false);
+
+  const onMoreAction = React.useCallback(
+    () => toggleWorkoutActions(true),
+    [toggleWorkoutActions]
   );
-  const closeEditWorkoutDialog = () => setShowEditWorkoutDialog(false);
 
-  usePageContext({ title: 'Workout', onMoreAction: openEditWorkoutDialog });
+  usePageContext({ title: 'Workout', onMoreAction });
 
   // AddSet dialog
-  const [showSetsDialog, setShowSetsDialog] = React.useState(false);
-  const openSetsDialog = () => setShowSetsDialog(true);
+  const [showAddOrEditSets, toggleAddOrEditSets] = useToggle(false);
+  const openSetsDialog = () => toggleAddOrEditSets(true);
   const closeSetsDialog = () => {
-    setShowSetsDialog(false);
+    toggleAddOrEditSets(false);
     setActiveExerciseId();
   };
 
   // AddExercise dialog
-  const [showAddExerciseDialog, setShowAddExerciseDialog] = React.useState(false);
-  const openAddExerciseDialog = () => setShowAddExerciseDialog(true);
+  const [showAddExercise, toggleAddExercise] = useToggle(false);
+  const openAddExerciseDialog = () => toggleAddExercise(true);
   const closeAddExerciseDialog = (exerciseId) => {
-    setShowAddExerciseDialog(false);
+    toggleAddExercise(false);
 
     if (exerciseId && typeof exerciseId === 'string') {
       setActiveExerciseId(exerciseId);
@@ -65,88 +66,97 @@ export default function Workout() {
   };
 
   // EditExercise dialog
-  const [showEditExerciseDialog, setShowEditExerciseDialog] = React.useState(false);
+  const [showEditExerciseDialog, toggleEditExercise] = useToggle(false);
   const editExercise = (exerciseId) => {
     setActiveExerciseId(exerciseId);
-    setShowEditExerciseDialog(true);
+    toggleEditExercise(true);
   };
   const closeEditExercise = () => {
-    setShowEditExerciseDialog(false);
+    toggleEditExercise(false);
     setActiveExerciseId();
   };
 
   // Normalize exercises for lookup
-  React.useEffect(() => {
-    if (exercises) {
-      setExercisesById(Object.fromEntries(exercises.map((exercise) => [exercise.id, exercise])));
-    } else {
-      setExercisesById({});
-    }
+  const exercisesById = React.useMemo(() => {
+    if (!exercises) return {};
+
+    return Object.fromEntries(
+      exercises.map((exercise) => [exercise.id, exercise])
+    );
   }, [exercises]);
+
+  const setsByExercise = React.useMemo(() => {
+    if (!sets) return {};
+
+    return _.groupBy(sets, 'exerciseId');
+  }, [sets]);
 
   const isLoading = isLoadingWorkout || isLoadingSets || isLoadingExercises;
 
-  const setsByExercise = sets && !isLoadingSets ? _.groupBy(sets, 'exerciseId') : {};
+  if (isLoading)
+    return (
+      <div className='flex flex-col grow space-y-2'>
+        <LoadingIcon className='self-center w-12 h-12' />
+      </div>
+    );
+
+  const hasSets = Boolean(sets && sets.length > 0);
 
   return (
     <>
+      <Head>
+        <title>{workout ? workout.name : 'Workouts'}</title>
+      </Head>
       <div className='flex flex-col grow space-y-2'>
-        {isLoading && <LoadingIcon className='w-5 h-5' />}
-        {!isLoading && workout && <H1>{workout.name || workout.id}</H1>}
-        {!isLoading && !(sets && sets.length > 0) && (
-          <Paragraph>To get started, add an exercise.</Paragraph>
-        )}
-        {!isLoading &&
-          sets &&
-          Object.entries(setsByExercise).map(([exerciseId, setsForExercise]) => {
-            const exercise = exercisesById[exerciseId];
-
-            return (
-              <Card key={exerciseId} className='bg-white border border-gray-200'>
-                <div className='p-4 text-sm font-medium text-gray-900'>
-                  {exercise?.name || 'Unknown Exercise'}
-                </div>
-                <SetsTable sets={setsForExercise} />
-                <div className='flex'>
-                  <Button
-                    className='w-1/2 text-inherit bg-slate-200'
-                    onClick={() => editExercise(exerciseId)}
-                  >
-                    Edit
-                  </Button>
-                  <Button className='w-1/2' onClick={() => addSetToExercise(exerciseId)}>
-                    Add Set
-                  </Button>
-                </div>
-              </Card>
-            );
-          })}
+        {workout && <H1>{workout.name || workout.id}</H1>}
+        {!hasSets && <Paragraph>To get started, add an exercise.</Paragraph>}
+        {Object.entries(setsByExercise).map(([exerciseId, setsForExercise]) => {
+          const exercise = exercisesById[exerciseId];
+          return (
+            <Card key={exerciseId} className='bg-white border border-gray-200'>
+              <div className='p-4 text-sm font-medium text-gray-900'>
+                {exercise?.name || 'Unknown Exercise'}
+              </div>
+              <SetsTable sets={setsForExercise} />
+              <div className='flex'>
+                <Button
+                  className='w-1/2 text-inherit bg-slate-200'
+                  onClick={() => editExercise(exerciseId)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className='w-1/2'
+                  onClick={() => addSetToExercise(exerciseId)}
+                >
+                  Add Set
+                </Button>
+              </div>
+            </Card>
+          );
+        })}
         <Button type='submit' onClick={openAddExerciseDialog}>
           Add Exercise
         </Button>
       </div>
-      {!isLoading && (
-        <>
-          <AddExercise open={showAddExerciseDialog} onClose={closeAddExerciseDialog} />
-          <AddSet
-            open={showSetsDialog}
-            onClose={closeSetsDialog}
-            workoutId={workoutId}
-            exerciseId={activeExerciseId}
-          />
-          <EditExercise
-            exercise={exercisesById[activeExerciseId]}
-            sets={setsByExercise[activeExerciseId]}
-            open={showEditExerciseDialog}
-            onClose={closeEditExercise}
-          />
-          <EditWorkout
-            open={showEditWorkoutDialog}
-            onClose={closeEditWorkoutDialog}
-            workout={workout}
-          />
-        </>
-      )}
+      <AddExercise open={showAddExercise} onClose={closeAddExerciseDialog} />
+      <AddOrEditSets
+        open={showAddOrEditSets}
+        onClose={closeSetsDialog}
+        workoutId={workoutId}
+        exercise={exercisesById[activeExerciseId]}
+      />
+      <EditExercise
+        exercise={exercisesById[activeExerciseId]}
+        sets={setsByExercise[activeExerciseId]}
+        open={showEditExerciseDialog}
+        onClose={closeEditExercise}
+      />
+      <WorkoutMoreActions
+        open={showWorkoutActions}
+        onClose={closeEditWorkoutDialog}
+        workout={workout}
+      />
     </>
   );
 }

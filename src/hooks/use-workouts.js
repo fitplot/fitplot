@@ -1,50 +1,10 @@
-import { useRouter } from 'next/router';
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
 import { useUser } from '../components/auth/user';
-import queryClient from '../lib/query-client';
 
-export function useWorkouts() {
+export default function useWorkouts() {
   const { user } = useUser();
   return useQuery('workouts', () =>
     fetch(`/api/workouts?userId=${user.id}`).then((res) => res.json())
-  );
-}
-
-export function useCreateWorkout() {
-  const router = useRouter();
-  return useMutation(
-    (workout) =>
-      fetch('/api/workout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(workout),
-      }).then((res) => res.json()),
-    {
-      onSuccess: (workout) => {
-        queryClient.invalidateQueries('workouts');
-        router.push(`/workout/${workout.id}`);
-      },
-    }
-  );
-}
-
-export function useDeleteWorkout() {
-  return useMutation(
-    (workout) =>
-      fetch('/api/workouts', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(workout),
-      }).then((res) => res.json()),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('workouts');
-      },
-    }
   );
 }

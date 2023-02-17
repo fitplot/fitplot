@@ -1,16 +1,21 @@
-import { CheckIcon } from '@heroicons/react/solid';
+import { CheckIcon } from '@heroicons/react/24/solid';
+import { useRouter } from 'next/router';
 import React from 'react';
 
-import { useCreateWorkout } from '../../../hooks/use-workouts';
+import { useCreateWorkout } from '../../../hooks/use-workout';
 import { useUser } from '../../auth/user';
 import Button from '../../button';
 import { Input, Label } from '../../forms';
+import LoadingIcon from '../../loading-icon';
 import Overlay from '../../overlay';
 
 export default function AddWorkout({ open, onClose }) {
   const inputRef = React.useRef(null);
+  const router = useRouter();
   const { user } = useUser();
-  const mutation = useCreateWorkout();
+  const mutation = useCreateWorkout({
+    onSuccess: (workout) => router.push(`/workout/${workout.id}`),
+  });
 
   const submit = async () => {
     const rawInput = inputRef.current.value;
@@ -27,9 +32,23 @@ export default function AddWorkout({ open, onClose }) {
         <div className='flex flex-wrap'>
           <Label htmlFor='workout-name'>Name this workout</Label>
         </div>
-        <Input ref={inputRef} autoComplete='off' type='text' id='workout-name' required />
-        <Button className='flex justify-center' type='button' onClick={() => submit()}>
-          <CheckIcon className='inline-block w-6 h-6' />
+        <Input
+          ref={inputRef}
+          autoComplete='off'
+          type='text'
+          id='workout-name'
+          required
+        />
+        <Button
+          className='flex justify-center'
+          disabled={mutation.isLoading}
+          onClick={() => submit()}
+        >
+          {mutation.isLoading ? (
+            <LoadingIcon className='inline-block w-6 h-6' />
+          ) : (
+            <CheckIcon className='inline-block w-6 h-6' />
+          )}
         </Button>
       </div>
     </Overlay>

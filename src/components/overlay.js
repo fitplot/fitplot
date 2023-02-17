@@ -1,10 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
 import { H6 } from './typography';
 
-export default function Overlay({ title, open, onClose, initialFocus, children }) {
+export default function Overlay({
+  title,
+  open,
+  onClose,
+  initialFocus,
+  children,
+}) {
   return (
     <Transition
       appear
@@ -29,12 +35,19 @@ export default function Overlay({ title, open, onClose, initialFocus, children }
             className='flex relative grow-0 shrink-0 justify-center items-stretch h-12 text-lg'
           >
             <div className='flex flex-1 items-center' />
-            <H6 as='h2' className='flex flex-1 justify-center items-center whitespace-nowrap'>
+            <H6
+              as='h2'
+              className='flex flex-1 justify-center items-center whitespace-nowrap'
+            >
               {title}
             </H6>
             <div className='flex flex-1 justify-end items-center'>
-              <button type='button' className='px-4 h-full font-medium' onClick={onClose}>
-                <XIcon className='w-6 h-6' />
+              <button
+                type='button'
+                className='px-4 h-full font-medium'
+                onClick={onClose}
+              >
+                <XMarkIcon className='w-6 h-6' />
               </button>
             </div>
           </Dialog.Title>

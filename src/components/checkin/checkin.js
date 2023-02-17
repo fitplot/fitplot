@@ -1,4 +1,4 @@
-import { CreditCardIcon } from '@heroicons/react/solid';
+import { CreditCardIcon } from '@heroicons/react/24/solid';
 
 import { H1 } from '../typography';
 

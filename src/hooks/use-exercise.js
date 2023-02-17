@@ -5,13 +5,7 @@ import queryClient from '../lib/query-client';
 export function useGetExercise(exerciseId) {
   return useQuery(
     ['exercise', exerciseId],
-    () =>
-      fetch(`/api/exercise/${exerciseId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((res) => res.json()),
+    () => fetch(`/api/exercise/${exerciseId}`).then((res) => res.json()),
     { enabled: !!exerciseId }
   );
 }

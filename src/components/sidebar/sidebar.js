@@ -1,5 +1,5 @@
-import { BellIcon } from '@heroicons/react/outline';
-import { CogIcon, UserIcon } from '@heroicons/react/solid';
+import { BellIcon } from '@heroicons/react/24/outline';
+import { CogIcon, UserIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
@@ -13,8 +13,8 @@ const links = [
     href: '/',
   },
   {
-    title: 'Workout',
-    href: '/workout',
+    title: 'Workouts',
+    href: '/workouts',
   },
 ];
 
@@ -49,7 +49,10 @@ function ActiveUser({ className }) {
   return (
     <button
       type='button'
-      className={clsx('flex justify-center items-center space-x-2 h-full', className)}
+      className={clsx(
+        'flex justify-center items-center space-x-2 h-full',
+        className
+      )}
     >
       <UserIcon className='w-6 h-6' />
       <span>{user ? user.username : 'WHO?'}</span>
@@ -61,7 +64,10 @@ function SideBarButton({ Icon, className, ...props }) {
   return (
     <button
       {...props}
-      className={clsx('flex justify-center items-center w-10 h-full', className)}
+      className={clsx(
+        'flex justify-center items-center w-10 h-full',
+        className
+      )}
       type='button'
     >
       <Icon className='w-6 h-6' />
@@ -75,7 +81,7 @@ function MainMenu({ className, navigate }) {
       {links.map((link) => (
         <MainMenuLink key={link.title} navigate={navigate} {...link} />
       ))}
-      <ListMenuItem className='space-x-2 text-slate-500'>
+      <ListMenuItem className='space-x-2 text-slate-500 bg-transparent'>
         <CogIcon className='w-6 h-6' />
         <span>Build {getBuildId()}</span>
       </ListMenuItem>
@@ -85,7 +91,7 @@ function MainMenu({ className, navigate }) {
 
 function MainMenuLink({ navigate, title, href }) {
   return (
-    <ListMenuItem onClick={() => navigate(href)} className='font-medium'>
+    <ListMenuItem onClick={() => navigate(href)} className='bg-transparent'>
       {title}
     </ListMenuItem>
   );

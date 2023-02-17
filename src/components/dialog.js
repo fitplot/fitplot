@@ -1,10 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
 import { H2 } from './typography';
 
-export default function CustomDialog({ title, open, onClose, initialFocus, children }) {
+export default function CustomDialog({
+  title,
+  open,
+  onClose,
+  initialFocus,
+  children,
+}) {
   return (
     <Transition appear show={open} as={React.Fragment}>
       <Dialog
@@ -37,7 +43,11 @@ export default function CustomDialog({ title, open, onClose, initialFocus, child
             <div className='overflow-hidden p-6 my-8 w-full bg-white transform md:w-half-screen'>
               <Dialog.Title as='div' className='flex'>
                 {title && <H2 className='grow'>{title}</H2>}
-                <XIcon role='button' onClick={onClose} className='w-6 h-6' />
+                <XMarkIcon
+                  role='button'
+                  onClick={onClose}
+                  className='w-6 h-6'
+                />
               </Dialog.Title>
               {children}
             </div>
