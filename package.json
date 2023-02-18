@@ -2,7 +2,7 @@
   "name": "nexus",
   "private": true,
   "scripts": {
-    "dev": "SERVICE_URL=http://127.0.0.1:3030 next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "test": "echo \"No test suite.\" && exit 0",

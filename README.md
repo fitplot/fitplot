@@ -32,12 +32,7 @@ volta pin node@x.x.x
 
 ### `.env`
 
-Create a `.env` file at your project root. In this file, add the following secret keys:
-
-```
-# development api
-SERVICE_URL=http://127.0.0.1:3030
-```
+Make a copy of the `.env.example` file in the project root. Name your local copy `.env.local`. This file will not be checked in.
 
 ## Stack
 
