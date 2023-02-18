@@ -1,79 +1,82 @@
-export default function SetsTable({ sets = [], isEditable = false, onEdit }) {
+import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
+import clsx from 'clsx';
+
+export default function SetsTable({
+  className,
+  sets = [],
+  isActionable = false,
+  onAction,
+}) {
   if (!sets || sets.length === 0) return null;
 
   return (
-    <div className='-my-2 sm:-mx-6 lg:-mx-8'>
-      <div className='inline-block py-2 min-w-full align-middle sm:px-6 lg:px-8'>
-        <div className='border-b border-slate-200 shadow sm:rounded-lg'>
-          <table className='min-w-full divide-y divide-slate-200'>
-            <thead className='bg-slate-50'>
-              <tr>
-                <th
-                  scope='col'
-                  className='py-3 px-6 text-xs font-medium tracking-wider text-left text-slate-500 uppercase'
-                >
-                  Volume
-                </th>
-                <th
-                  scope='col'
-                  className='py-3 px-6 text-xs font-medium tracking-wider text-left text-slate-500 uppercase'
-                >
-                  Amount
-                </th>
-              </tr>
-            </thead>
-            <tbody className='bg-white divide-y divide-slate-200'>
-              {sets.map((set) => (
-                <Set
-                  key={set.id}
-                  {...set}
-                  isEditable={isEditable}
-                  onEdit={onEdit}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+    <div className={clsx(className, 'flex flex-col divide-y')}>
+      <div className='flex'>
+        <HeadCell className='flex-1 py-3 px-6'>Volume</HeadCell>
+        <HeadCell className='flex-1 py-3 px-6'>Amount</HeadCell>
+        {isActionable ? <HeadCell className='w-10' /> : null}
       </div>
+      {sets.map((set) => (
+        <Set
+          key={set.id}
+          set={set}
+          isActionable={isActionable}
+          onAction={onAction}
+        />
+      ))}
     </div>
   );
 }
 
-function Set({ id, volume, amount, unit, isEditable, onEdit }) {
+function Set({ isActionable, onAction, set }) {
+  const { volume, amount, unit } = set;
+
+  const Container = isActionable
+    ? ({ children, className, onActionFn }) => (
+        <button
+          type='button'
+          className={clsx(className, 'text-left')}
+          onClick={() => onActionFn(set)}
+        >
+          {children}
+        </button>
+      )
+    : 'div';
+
   return (
-    <tr>
-      {!isEditable && (
-        <>
-          <td className='py-4 px-6 whitespace-nowrap'>
-            <div className='text-sm font-medium text-slate-900'>{volume}</div>
-          </td>
-          <td className='py-4 px-6 whitespace-nowrap'>
-            <div className='text-sm text-slate-900'>
-              {amount !== null ? `${amount} ${unit}` : null}
-            </div>
-          </td>
-        </>
+    <Container onActionFn={onAction} className='flex'>
+      <Cell className='flex-1 py-4 px-6'>{volume}</Cell>
+      <Cell className='flex-1 py-4 px-6'>
+        {amount ? `${amount} ${unit}` : null}
+      </Cell>
+      {isActionable ? (
+        <Cell className='flex justify-center items-center w-10 h-full'>
+          <EllipsisVerticalIcon className='inline-block w-6 h-6' />
+        </Cell>
+      ) : null}
+    </Container>
+  );
+}
+
+function HeadCell({ children, className }) {
+  return (
+    <div
+      className={clsx(
+        className,
+        'text-xs font-medium text-slate-500 uppercase bg-slate-50'
       )}
-      {isEditable && (
-        <>
-          <td className='whitespace-nowrap'>
-            <input
-              type='text'
-              className='py-4 px-6 w-full text-sm font-medium text-slate-900'
-              defaultValue={volume}
-              onChange={(event) => onEdit(id, { volume: event.target.value })}
-            />
-          </td>
-          <td className='w-full whitespace-nowrap'>
-            <input
-              type='text'
-              className='py-4 px-6 text-sm text-slate-900'
-              defaultValue={amount !== null ? amount : null}
-              onChange={(event) => onEdit(id, { amount: event.target.value })}
-            />
-          </td>
-        </>
-      )}
-    </tr>
+    >
+      {children}
+    </div>
+  );
+}
+
+function Cell({ children, className }) {
+  return (
+    <div
+      className={clsx(className, 'text-sm font-medium text-slate-900 bg-white')}
+    >
+      {children}
+    </div>
   );
 }

@@ -1,5 +1,6 @@
 import { ClockIcon } from '@heroicons/react/24/outline';
 import { CheckIcon, TrashIcon } from '@heroicons/react/24/solid';
+import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -13,7 +14,7 @@ import LoadingIcon from '../../loading-icon';
 import Overlay from '../../overlay';
 
 export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
-  const { name, createdAt, updatedAt } = workout;
+  const { name, createdAt, updatedAt, completedAt } = workout;
 
   const inputRef = React.useRef(null);
   const router = useRouter();
@@ -43,6 +44,13 @@ export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
     router.push('/workouts');
   };
 
+  const submitToggleCompleted = async () => {
+    await updateMutation.mutateAsync({
+      ...workout,
+      completedAt: completedAt ? null : dayjs().toISOString(),
+    });
+  };
+
   return (
     <>
       <Overlay open={open} onClose={onClose} title='More Actions'>
@@ -57,6 +65,28 @@ export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
                   >
                     Rename Workout
                   </ListMenuItem>
+                  <ListMenuItem
+                    onClick={() => submitToggleCompleted()}
+                    disabled={updateMutation.isLoading}
+                  >
+                    <div className='flex flex-1 space-x-2'>
+                      {updateMutation.isLoading ? (
+                        <LoadingIcon className='w-5 h-5' />
+                      ) : (
+                        <CheckIcon
+                          className={clsx(
+                            { 'text-green-500': Boolean(completedAt) },
+                            'inline-block w-6 h-6'
+                          )}
+                        />
+                      )}
+                      <span>
+                        Mark as {completedAt ? 'Incomplete' : 'Complete'}
+                      </span>
+                    </div>
+                  </ListMenuItem>
+                </ListMenuGroup>
+                <ListMenuGroup>
                   <ListMenuItem className='text-slate-500'>
                     <div className='flex flex-1 space-x-2'>
                       <ClockIcon className='w-6 h-6' />
@@ -75,6 +105,17 @@ export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
                       {dayjs(updatedAt).format('MMM DD, YYYY h:mm a')}
                     </div>
                   </ListMenuItem>
+                  {completedAt ? (
+                    <ListMenuItem className='text-slate-500'>
+                      <div className='flex flex-1 space-x-2'>
+                        <ClockIcon className='inline-block w-6 h-6' />
+                        <span>Completed on</span>
+                      </div>
+                      <div className='mt-auto'>
+                        {dayjs(completedAt).format('MMM DD, YYYY h:mm a')}
+                      </div>
+                    </ListMenuItem>
+                  ) : null}
                 </ListMenuGroup>
                 <ListMenuGroup>
                   <ListMenuItem

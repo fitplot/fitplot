@@ -31,7 +31,7 @@ export function useCreateSets() {
 export function useUpdateSet() {
   return useMutation(
     (set) =>
-      fetch(`/api/workout/${set.workoutId}/sets/${set.id}`, {
+      fetch(`/api/workout/set/${set.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -41,6 +41,21 @@ export function useUpdateSet() {
     {
       onSuccess: (set) => {
         queryClient.invalidateQueries(['set', set.workoutId]);
+      },
+    }
+  );
+}
+
+export function useDeleteSet() {
+  return useMutation(
+    (set) =>
+      fetch(`/api/workout/set/${set.id}`, {
+        method: 'DELETE',
+      }).then((res) => res.json()),
+    {
+      onSuccess: (set) => {
+        queryClient.invalidateQueries(['set', set.id]);
+        queryClient.invalidateQueries(['set']);
       },
     }
   );

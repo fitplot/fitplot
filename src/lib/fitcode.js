@@ -35,11 +35,17 @@ export default function fitcode(rawInput = '', base = {}) {
     }
   } else {
     input.split(SET_DELIM).forEach((volumeAndAmount) => {
-      const [volume, amount] = volumeAndAmount.split(AMOUNT_DELIM);
+      let [volume, amount] = volumeAndAmount.split(AMOUNT_DELIM);
+
+      if (amount === undefined) {
+        // swap string split if only 'amount' is entered instead of 'volume@amount'
+        amount = volume;
+        volume = null;
+      }
 
       sets.push({
-        volume: volume || undefined,
-        amount: amount || undefined,
+        volume,
+        amount,
         unit: 'lbs',
         ...base,
       });

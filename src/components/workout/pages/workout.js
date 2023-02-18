@@ -1,3 +1,4 @@
+import { CheckIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -14,7 +15,7 @@ import { usePageContext } from '../../page';
 import { H1, Paragraph } from '../../typography';
 import SetsTable from '../components/sets-table';
 import AddExercise from '../overlays/add-exercise';
-import AddOrEditSets from '../overlays/add-or-edit-sets';
+import AddSets from '../overlays/add-sets';
 import EditExercise from '../overlays/edit-exercise';
 import WorkoutMoreActions from '../overlays/workout-more-actions';
 
@@ -25,6 +26,9 @@ export default function WorkoutPage() {
   const { data: workout, isLoading: isLoadingWorkout } = useWorkout(workoutId);
   const { data: sets, isLoading: isLoadingSets } = useSets(workoutId);
   const { data: exercises, isLoading: isLoadingExercises } = useExercises();
+
+  const { name, completedAt } = workout || {};
+  const isReadonly = Boolean(completedAt);
 
   const [activeExerciseId, setActiveExerciseId] = React.useState(null);
 
@@ -38,11 +42,11 @@ export default function WorkoutPage() {
 
   usePageContext({ title: 'Workout', onMoreAction });
 
-  // AddSet dialog
-  const [showAddOrEditSets, toggleAddOrEditSets] = useToggle(false);
-  const openSetsDialog = () => toggleAddOrEditSets(true);
+  // AddSets dialog
+  const [showAddSets, toggleAddSets] = useToggle(false);
+  const openSetsDialog = () => toggleAddSets(true);
   const closeSetsDialog = () => {
-    toggleAddOrEditSets(false);
+    toggleAddSets(false);
     setActiveExerciseId();
   };
 
@@ -105,43 +109,56 @@ export default function WorkoutPage() {
   return (
     <>
       <Head>
-        <title>{workout ? workout.name : 'Workouts'}</title>
+        <title>{name || 'Workout'}</title>
       </Head>
       <div className='flex flex-col grow space-y-2'>
-        {workout && <H1>{workout.name || workout.id}</H1>}
+        <H1 as='div' className='flex items-center space-x-2'>
+          {isReadonly ? (
+            <>
+              <div className='flex-1'>{name}</div>
+              <CheckIcon className='w-6 h-6 text-green-500' />
+            </>
+          ) : (
+            name
+          )}
+        </H1>
         {!hasSets && <Paragraph>To get started, add an exercise.</Paragraph>}
         {Object.entries(setsByExercise).map(([exerciseId, setsForExercise]) => {
           const exercise = exercisesById[exerciseId];
           return (
             <Card key={exerciseId} className='bg-white border border-gray-200'>
-              <div className='p-4 text-sm font-medium text-gray-900'>
+              <div className='p-4 font-medium text-gray-900'>
                 {exercise?.name || 'Unknown Exercise'}
               </div>
               <SetsTable sets={setsForExercise} />
-              <div className='flex'>
-                <Button
-                  className='w-1/2 text-inherit bg-slate-200'
-                  onClick={() => editExercise(exerciseId)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  className='w-1/2'
-                  onClick={() => addSetToExercise(exerciseId)}
-                >
-                  Add Set
-                </Button>
-              </div>
+              {!isReadonly && (
+                <div className='flex'>
+                  <Button
+                    className='w-1/2 text-inherit bg-slate-200'
+                    onClick={() => editExercise(exerciseId)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    className='w-1/2'
+                    onClick={() => addSetToExercise(exerciseId)}
+                  >
+                    Add Set
+                  </Button>
+                </div>
+              )}
             </Card>
           );
         })}
-        <Button type='submit' onClick={openAddExerciseDialog}>
-          Add Exercise
-        </Button>
+        {!isReadonly && (
+          <Button type='submit' onClick={openAddExerciseDialog}>
+            Add Exercise
+          </Button>
+        )}
       </div>
       <AddExercise open={showAddExercise} onClose={closeAddExerciseDialog} />
-      <AddOrEditSets
-        open={showAddOrEditSets}
+      <AddSets
+        open={showAddSets}
         onClose={closeSetsDialog}
         workoutId={workoutId}
         exercise={exercisesById[activeExerciseId]}

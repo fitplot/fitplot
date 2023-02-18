@@ -1,4 +1,5 @@
-import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { CheckIcon } from '@heroicons/react/24/solid';
+import _ from 'lodash';
 import React from 'react';
 
 import { useCreateSets } from '../../../hooks/use-sets';
@@ -9,17 +10,27 @@ import { Input, Label } from '../../forms';
 import Overlay from '../../overlay';
 import SetsTable from '../components/sets-table';
 
-export default function AddSet({ open, onClose, workoutId, exercise }) {
+export default function AddSets({ open, onClose, workoutId, exercise }) {
   const [sets, updateSets] = React.useState(null);
   const inputRef = React.useRef(null);
 
   const mutation = useCreateSets();
   const user = useUser();
 
-  const preview = () => {
-    const rawInput = inputRef.current.value;
-    updateSets(fitcode(rawInput, { workoutId, exerciseId: exercise.id }));
-  };
+  const preview = React.useCallback(
+    (e) => {
+      const rawInput = e.target.value;
+      updateSets(
+        fitcode(rawInput.trim(), { workoutId, exerciseId: exercise.id })
+      );
+    },
+    [updateSets, workoutId, exercise]
+  );
+
+  const onChange = React.useCallback(
+    (e) => _.throttle(preview, 250, { leading: false })(e),
+    [preview]
+  );
 
   const submit = async () => {
     await mutation.mutateAsync(
@@ -37,23 +48,20 @@ export default function AddSet({ open, onClose, workoutId, exercise }) {
       initialFocus={inputRef}
     >
       <div className='flex flex-col p-4 space-y-4'>
-        <div className='p-4 text-sm font-medium text-gray-900'>
+        <div className='p-4 font-medium text-gray-900'>
           {exercise?.name || 'Unknown Exercise'}
         </div>
         <div className='flex flex-wrap'>
-          <Label htmlFor='exercise-name'>Type your FitCode™</Label>
+          <Label htmlFor='fitcode'>Type your FitCode™</Label>
         </div>
-        <div className='flex'>
-          <Input
-            ref={inputRef}
-            autoComplete='off'
-            type='text'
-            placeholder='5@185, 4@195, 2@205'
-          />
-          <Button className='p-1' type='button' onClick={() => preview()}>
-            <ChevronRightIcon className='w-6 h-6' />
-          </Button>
-        </div>
+        <Input
+          ref={inputRef}
+          id='fitcode'
+          autoComplete='off'
+          type='text'
+          placeholder='5@185, 4@195, 2@205'
+          onChange={onChange}
+        />
         <div className='grow'>
           <SetsTable sets={sets} />
         </div>
