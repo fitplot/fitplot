@@ -1,11 +1,11 @@
 import { CheckIcon, TrophyIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
+
 import { useWorkoutsSummary } from '../../hooks/use-workouts';
 import { useUser } from '../auth';
 import Button from '../button';
 import Card from '../card';
 import LoadingIcon from '../loading-icon';
-
 import { H1, H2 } from '../typography';
 import WorkoutList from '../workout/components/workout-list';
 
@@ -24,7 +24,7 @@ export default function Home() {
           <TrophyIcon className='w-6 h-6 text-yellow-500' />
           <div className='grow'>Total Workouts</div>
           {isLoading ? (
-            <LoadingIcon className='w-6 h-6 mt-auto' />
+            <LoadingIcon className='w-6 h-6' />
           ) : (
             <div>{summary.total}</div>
           )}
@@ -40,7 +40,7 @@ export default function Home() {
         </HomeHighlight>
         <H2>Recent Workouts</H2>
         {isLoading && (
-          <LoadingIcon className='w-6 h-6 justify-self-center self-center' />
+          <LoadingIcon className='justify-self-center self-center w-6 h-6' />
         )}
         {!isLoading && <WorkoutList workouts={summary.workouts} />}
         <Button href='/workouts' className='text-center'>

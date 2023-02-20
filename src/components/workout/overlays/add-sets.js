@@ -1,3 +1,4 @@
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 import React from 'react';
@@ -12,7 +13,6 @@ import Button from '../../button';
 import { Input, Label } from '../../forms';
 import Overlay from '../../overlay';
 import SetsTable from '../../sets-table';
-import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { H2 } from '../../typography';
 
 export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
@@ -65,8 +65,8 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
       <div className='flex flex-col p-4 space-y-4'>
         <H2>{exercise?.name}</H2>
         {previousFitcode && (
-          <div className='flex rounded bg-slate-200 p-4 items-center space-x-4'>
-            <InformationCircleIcon className='text-blue-500 w-6 h-6' />
+          <div className='flex items-center p-4 space-x-4 bg-slate-200 rounded'>
+            <InformationCircleIcon className='w-6 h-6 text-blue-500' />
             <div className='grow p-2'>
               <div className='text-sm text-slate-500'>
                 <span>Last time you did this exercise for</span>

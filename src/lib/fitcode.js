@@ -56,8 +56,7 @@ function fitcode(rawInput = '', base = {}) {
 }
 
 function from(sets = []) {
-  console.log('fitcode from', sets);
-  if (!sets.length) return null;
+  if (sets.length === 0) return null;
 
   const volumes = sets.map(({ volume }) => volume);
   const isVariableVolume = !volumes.every((volume) => volume === volumes[0]);

@@ -64,7 +64,7 @@ export function useDeleteSet() {
         method: 'DELETE',
       }).then((res) => res.json()),
     {
-      onSuccess: (set) => {
+      onSuccess: () => {
         queryClient.invalidateQueries(['set']);
       },
     }
