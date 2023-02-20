@@ -32,13 +32,7 @@ export default function AddWorkout({ open, onClose }) {
         <div className='flex flex-wrap'>
           <Label htmlFor='workout-name'>Name this workout</Label>
         </div>
-        <Input
-          ref={inputRef}
-          autoComplete='off'
-          type='text'
-          id='workout-name'
-          required
-        />
+        <Input ref={inputRef} type='text' id='workout-name' required />
         <Button
           className='flex justify-center'
           disabled={mutation.isLoading}

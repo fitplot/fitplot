@@ -52,7 +52,6 @@ export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
             id='amount'
             ref={amountRef}
             defaultValue={set.amount}
-            autoComplete='off'
             type='text'
           />
           <div className='flex flex-wrap'>
@@ -62,7 +61,6 @@ export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
             id='volume'
             ref={volumeRef}
             defaultValue={set.volume}
-            autoComplete='off'
             type='text'
           />
           <div className='flex'>

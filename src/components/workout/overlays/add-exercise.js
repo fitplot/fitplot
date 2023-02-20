@@ -9,7 +9,8 @@ import Overlay from '../../overlay';
 
 const predicate = (input) => (exercise) =>
   exercise.name.toLowerCase().includes(input.toLowerCase());
-const exactPredicate = (input) => (exercise) => exercise.name.toLowerCase() === input.toLowerCase();
+const exactPredicate = (input) => (exercise) =>
+  exercise.name.toLowerCase() === input.toLowerCase();
 
 export default function AddExercise({ open, onClose }) {
   const inputRef = React.useRef(null);
@@ -30,7 +31,12 @@ export default function AddExercise({ open, onClose }) {
   const isLoading = query.isLoading || mutation.isLoading;
 
   return (
-    <Overlay title='Add Exercise' open={open} onClose={onClose} initialFocus={inputRef}>
+    <Overlay
+      title='Add Exercise'
+      open={open}
+      onClose={onClose}
+      initialFocus={inputRef}
+    >
       {isLoading && <LoadingIcon className='w-5 h-5' />}
       {!isLoading && (
         <div className='flex flex-col p-4 space-y-4 h-full'>
@@ -48,7 +54,6 @@ export default function AddExercise({ open, onClose }) {
             type='text'
             id='name'
             name='name'
-            autoComplete='off'
             required
             ref={inputRef}
           />

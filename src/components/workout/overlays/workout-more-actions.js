@@ -144,7 +144,6 @@ export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
           </div>
           <Input
             ref={inputRef}
-            autoComplete='off'
             type='text'
             id='workout-name'
             defaultValue={name}

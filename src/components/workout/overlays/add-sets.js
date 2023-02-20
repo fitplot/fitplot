@@ -83,7 +83,6 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
         <Input
           ref={inputRef}
           id='fitcode'
-          autoComplete='off'
           type='text'
           placeholder={previousFitcode || '2x5@185'}
           onChange={onChange}

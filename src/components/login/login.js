@@ -21,7 +21,7 @@ export default function Login() {
           <div className='flex flex-wrap justify-between items-baseline'>
             <Label htmlFor='username'>Only two gym bros here...</Label>
           </div>
-          <Input autoFocus autoComplete='off' type='text' id='username' name='username' required />
+          <Input autoFocus type='text' id='username' name='username' required />
         </div>
         <Button type='submit'>Sign In</Button>
       </form>

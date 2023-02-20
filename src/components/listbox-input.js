@@ -14,21 +14,23 @@ export default function ListboxInput({
   ...inputProps
 }) {
   const [value, setValue] = React.useState('');
-  const [filteredOptions, setFilteredOptions] = React.useState([]);
-  const [hasExactMatch, setHasExactMatch] = React.useState(false);
 
   const onChange = (rawInput) => {
     setValue(rawInput.trim());
   };
 
-  React.useEffect(() => {
+  const filteredOptions = React.useMemo(() => {
     const filter =
       predicate ||
       ((input) => (field ? _.matches({ [field]: input }) : _.identity));
 
-    setFilteredOptions(() => (value ? options.filter(filter(value)) : []));
-    setHasExactMatch(() => options.some(exactPredicate(value)));
-  }, [value, exactPredicate, predicate, options, field]);
+    return value ? options.filter(filter(value)) : [];
+  }, [options, value, predicate, field]);
+
+  const hasExactMatch = React.useMemo(
+    () => options.some(exactPredicate(value)),
+    [options, value, exactPredicate]
+  );
 
   return (
     <div className='flex flex-col space-y-2 h-full'>
