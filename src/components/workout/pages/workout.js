@@ -111,7 +111,7 @@ export default function WorkoutPage() {
       <Head>
         <title>{name || 'Workout'}</title>
       </Head>
-      <div className='flex flex-col grow space-y-2'>
+      <div className='flex flex-col grow space-y-4'>
         <H1 as='div' className='flex items-center space-x-2'>
           {isReadonly ? (
             <>

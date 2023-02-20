@@ -1,8 +1,6 @@
-import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import Head from 'next/head';
-import Link from 'next/link';
 import React from 'react';
 import { useToggle } from 'react-use';
 
@@ -10,7 +8,8 @@ import useWorkouts from '../../../hooks/use-workouts';
 import Button from '../../button';
 import LoadingIcon from '../../loading-icon';
 import { usePageContext } from '../../page';
-import { Paragraph } from '../../typography';
+import { H1 } from '../../typography';
+import WorkoutList from '../components/workout-list';
 import AddWorkout from '../overlays/add-workout';
 import WorkoutsMoreActions, {
   WORKOUTS_ORDERBY,
@@ -54,35 +53,11 @@ export default function WorkoutsPage() {
         <title>Workouts</title>
       </Head>
       <div className='flex flex-col flex-1 space-y-4'>
-        <div className='flex flex-col flex-1 space-y-2'>
-          {isLoading && (
-            <LoadingIcon className='justify-self-center self-center w-12 h-12' />
-          )}
-          {!isLoading &&
-            (orderedWorkouts.length > 0 ? (
-              orderedWorkouts.map(({ id, name, createdAt }) => (
-                <Link
-                  key={id}
-                  href={`/workout/${id}`}
-                  className='inline-flex text-left bg-white border border-slate-200'
-                >
-                  <div className='flex-1 p-2'>
-                    <div className='text-sm font-medium text-slate-900'>
-                      {name}
-                    </div>
-                    <div className='text-sm font-medium text-slate-500'>
-                      {dayjs(createdAt).format('MMM DD, YYYY h:mm a')}
-                    </div>
-                  </div>
-                  <div className='flex flex-none items-center p-2 text-white bg-slate-900'>
-                    <ChevronRightIcon className='w-6 h-6' />
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <Paragraph>No workout history.</Paragraph>
-            ))}
-        </div>
+        <H1>All Workouts</H1>
+        {isLoading && (
+          <LoadingIcon className='justify-self-center self-center w-12 h-12' />
+        )}
+        {!isLoading && <WorkoutList workouts={orderedWorkouts} />}
         <Button onClick={() => toggleAddWorkout(true)}>New Workout</Button>
       </div>
       <AddWorkout
