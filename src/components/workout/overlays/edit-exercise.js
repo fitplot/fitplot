@@ -2,7 +2,7 @@ import React from 'react';
 import { useToggle } from 'react-use';
 
 import Overlay from '../../overlay';
-import SetsTable from '../components/sets-table';
+import SetsTable from '../../sets-table';
 import EditSet from './edit-set';
 
 export default function EditExercise({ exercise, sets = [], open, onClose }) {

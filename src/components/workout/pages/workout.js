@@ -13,7 +13,7 @@ import Card from '../../card';
 import LoadingIcon from '../../loading-icon';
 import { usePageContext } from '../../page';
 import { H1, Paragraph } from '../../typography';
-import SetsTable from '../components/sets-table';
+import SetsTable from '../../sets-table';
 import AddExercise from '../overlays/add-exercise';
 import AddSets from '../overlays/add-sets';
 import EditExercise from '../overlays/edit-exercise';

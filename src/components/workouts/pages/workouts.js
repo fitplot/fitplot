@@ -9,7 +9,7 @@ import Button from '../../button';
 import LoadingIcon from '../../loading-icon';
 import { usePageContext } from '../../page';
 import { H1 } from '../../typography';
-import WorkoutList from '../components/workout-list';
+import WorkoutList from '../../workout-list';
 import AddWorkout from '../overlays/add-workout';
 import WorkoutsMoreActions, {
   WORKOUTS_ORDERBY,

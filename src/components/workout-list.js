@@ -2,7 +2,7 @@ import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Link from 'next/link';
-import { Paragraph } from '../../typography';
+import { Paragraph } from './typography';
 
 export default function WorkoutList({ className, workouts }) {
   if (workouts === undefined || workouts === null) return null;

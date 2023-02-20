@@ -3,7 +3,7 @@ const MULTI_SET_DELIM = 'x';
 const AMOUNT_DELIM = '@';
 const MULTI_AMOUNT_DELIM = '/';
 
-export default function fitcode(rawInput = '', base = {}) {
+function fitcode(rawInput = '', base = {}) {
   const input = rawInput.replace(' ', '').toLowerCase();
 
   if (!input) return [];
@@ -54,3 +54,29 @@ export default function fitcode(rawInput = '', base = {}) {
 
   return sets;
 }
+
+function from(sets = []) {
+  console.log('fitcode from', sets);
+  if (!sets.length) return null;
+
+  const volumes = sets.map(({ volume }) => volume);
+  const isVariableVolume = !volumes.every((volume) => volume === volumes[0]);
+  const volume = isVariableVolume
+    ? volumes.join(MULTI_AMOUNT_DELIM)
+    : volumes[0];
+
+  const amounts = sets.map(({ amount }) => amount);
+  const isVariableAmount = !amounts.every((amount) => amount === amounts[0]);
+  const amount = isVariableAmount
+    ? amounts.join(MULTI_AMOUNT_DELIM)
+    : amounts[0];
+
+  const volumeAndAmount = [volume, amount].join(AMOUNT_DELIM);
+
+  if (sets.length < 2) return volumeAndAmount;
+
+  return [sets.length, volumeAndAmount].join(MULTI_SET_DELIM);
+}
+
+fitcode.from = from;
+export default fitcode;

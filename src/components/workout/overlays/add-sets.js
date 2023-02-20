@@ -2,20 +2,35 @@ import { CheckIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 import React from 'react';
 
-import { useCreateSets } from '../../../hooks/use-sets';
+import {
+  useCreateSets,
+  usePreviousSetsForExercise,
+} from '../../../hooks/use-sets';
 import fitcode from '../../../lib/fitcode';
 import { useUser } from '../../auth';
 import Button from '../../button';
 import { Input, Label } from '../../forms';
 import Overlay from '../../overlay';
-import SetsTable from '../components/sets-table';
+import SetsTable from '../../sets-table';
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
+import { H2 } from '../../typography';
 
-export default function AddSets({ open, onClose, workoutId, exercise }) {
+export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
   const [sets, updateSets] = React.useState(null);
   const inputRef = React.useRef(null);
 
+  const { data: previousSets } = usePreviousSetsForExercise(
+    exercise.id,
+    workoutId
+  );
   const mutation = useCreateSets();
   const user = useUser();
+
+  const previousFitcode = React.useMemo(() => {
+    if (!(Boolean(previousSets) && previousSets.length > 0)) return null;
+
+    return fitcode.from(previousSets);
+  }, [previousSets]);
 
   const preview = React.useCallback(
     (e) => {
@@ -48,9 +63,20 @@ export default function AddSets({ open, onClose, workoutId, exercise }) {
       initialFocus={inputRef}
     >
       <div className='flex flex-col p-4 space-y-4'>
-        <div className='p-4 font-medium text-gray-900'>
-          {exercise?.name || 'Unknown Exercise'}
-        </div>
+        <H2>{exercise?.name}</H2>
+        {previousFitcode && (
+          <div className='flex rounded bg-slate-200 p-4 items-center space-x-4'>
+            <InformationCircleIcon className='text-blue-500 w-6 h-6' />
+            <div className='grow p-2'>
+              <div className='text-sm text-slate-500'>
+                <span>Last time you did this exercise for</span>
+              </div>
+              <div className='text-sm font-medium text-slate-900'>
+                {previousFitcode}
+              </div>
+            </div>
+          </div>
+        )}
         <div className='flex flex-wrap'>
           <Label htmlFor='fitcode'>Type your FitCode™</Label>
         </div>
@@ -59,7 +85,7 @@ export default function AddSets({ open, onClose, workoutId, exercise }) {
           id='fitcode'
           autoComplete='off'
           type='text'
-          placeholder='5@185, 4@195, 2@205'
+          placeholder={previousFitcode || '2x5@185'}
           onChange={onChange}
         />
         <div className='grow'>

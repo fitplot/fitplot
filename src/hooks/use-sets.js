@@ -6,14 +6,25 @@ export function useSets(workoutId) {
   return useQuery(
     ['set', workoutId],
     () => fetch(`/api/workout/${workoutId}/sets`).then((res) => res.json()),
-    { enabled: !!workoutId }
+    { enabled: Boolean(workoutId) }
+  );
+}
+
+export function usePreviousSetsForExercise(exerciseId, workoutId) {
+  return useQuery(
+    ['set', 'previous', exerciseId, workoutId],
+    () =>
+      fetch(
+        `/api/exercise/${exerciseId}/sets/previous?workoutId=${workoutId}`
+      ).then((res) => res.json()),
+    { enabled: Boolean(exerciseId) && Boolean(workoutId) }
   );
 }
 
 export function useCreateSets() {
   return useMutation(
     (sets) =>
-      fetch(`/api/workout/sets`, {
+      fetch(`/api/sets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +65,6 @@ export function useDeleteSet() {
       }).then((res) => res.json()),
     {
       onSuccess: (set) => {
-        queryClient.invalidateQueries(['set', set.id]);
         queryClient.invalidateQueries(['set']);
       },
     }
