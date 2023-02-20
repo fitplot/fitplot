@@ -2,6 +2,7 @@ import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Link from 'next/link';
+
 import { Paragraph } from './typography';
 
 export default function WorkoutList({ className, workouts }) {
@@ -24,9 +25,9 @@ export default function WorkoutList({ className, workouts }) {
                 {dayjs(createdAt).format('MMM DD, YYYY h:mm a')}
               </div>
             </div>
-            {Boolean(completedAt) ? (
+            {completedAt ? (
               <div className='flex shrink-0 p-4'>
-                <CheckIcon className='text-green-500 w-6 h-6' />
+                <CheckIcon className='w-6 h-6 text-green-500' />
               </div>
             ) : null}
             <div className='flex shrink-0 items-center p-2 text-white bg-slate-900'>

@@ -2,12 +2,12 @@ import { CheckIcon, TrophyIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
 
 import { useWorkoutsSummary } from '../../hooks/use-workouts';
-import WorkoutList from '../workout-list';
 import { useUser } from '../auth';
 import Button from '../button';
 import Card from '../card';
 import LoadingIcon from '../loading-icon';
 import { H1, H2 } from '../typography';
+import WorkoutList from '../workout-list';
 
 export default function Home() {
   const { user } = useUser();
@@ -53,7 +53,7 @@ export default function Home() {
 
 function HomeHighlight({ children }) {
   return (
-    <Card className='flex p-4 space-x-4 items-center font-medium text-white bg-slate-900 rounded-lg border'>
+    <Card className='flex items-center p-4 space-x-4 font-medium text-white bg-slate-900 rounded-lg border'>
       {children}
     </Card>
   );
