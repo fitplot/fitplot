@@ -1,7 +1,2 @@
-import React from 'react';
-
-import Home from '../components/home';
-
-export default function Index() {
-  return <Home />;
-}
+export { default } from '../components/home';
+export { default as getServerSideProps } from '../lib/with-user';
