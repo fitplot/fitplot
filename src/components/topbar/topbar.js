@@ -3,20 +3,22 @@ import clsx from 'clsx';
 
 import { usePageContextValues } from '../page';
 
-export default function TopBar({ onToggleMenu }) {
+export default function TopBar({ noop, onToggleMenu }) {
   const { title, onMoreAction } = usePageContextValues();
 
   return (
     <div className='flex justify-between items-center px-1 h-12 bg-slate-50 border-b'>
-      <TopBarButton
-        Icon={Bars3Icon}
-        className='shrink-0'
-        onClick={onToggleMenu}
-      />
+      {!noop && (
+        <TopBarButton
+          Icon={Bars3Icon}
+          className='shrink-0'
+          onClick={onToggleMenu}
+        />
+      )}
       <div className='flex grow justify-center items-center'>
         <span className='font-medium'>{title}</span>
       </div>
-      {onMoreAction && (
+      {!noop && onMoreAction && (
         <TopBarButton
           Icon={EllipsisHorizontalIcon}
           className='shrink-0'

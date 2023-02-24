@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useCreateExercise, useExercises } from '../../../hooks/use-exercises';
-import { useUser } from '../../auth';
 import { Label } from '../../forms';
 import ListboxInput from '../../listbox-input';
 import LoadingIcon from '../../loading-icon';
@@ -16,7 +15,6 @@ export default function AddExercise({ open, onClose }) {
   const inputRef = React.useRef(null);
 
   const { data: exercises, ...query } = useExercises();
-  const { user } = useUser();
   const mutation = useCreateExercise();
 
   const onSelect = (exercise) => {
@@ -24,7 +22,7 @@ export default function AddExercise({ open, onClose }) {
   };
 
   const onSubmit = async (name) => {
-    const exercise = await mutation.mutateAsync({ userId: user.id, name });
+    const exercise = await mutation.mutateAsync({ name });
     onClose(exercise.id);
   };
 

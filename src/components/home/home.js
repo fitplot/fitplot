@@ -1,8 +1,8 @@
 import { CheckIcon, TrophyIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
 
+import useUser from '../../hooks/use-user';
 import { useWorkoutsSummary } from '../../hooks/use-workouts';
-import { useUser } from '../auth';
 import Button from '../button';
 import Card from '../card';
 import LoadingIcon from '../loading-icon';
@@ -10,8 +10,11 @@ import { H1, H2 } from '../typography';
 import WorkoutList from '../workout-list';
 
 export default function Home() {
-  const { user } = useUser();
-  const { data: summary, isLoading } = useWorkoutsSummary();
+  const { data: user, isLoading: isLoadingUser } = useUser();
+  const { data: summary, isLoading: isLoadingWorkoutSummary } =
+    useWorkoutsSummary();
+
+  const isLoading = isLoadingUser || isLoadingWorkoutSummary;
 
   return (
     <>

@@ -8,7 +8,6 @@ import {
   usePreviousSetsForExercise,
 } from '../../../hooks/use-sets';
 import fitcode from '../../../lib/fitcode';
-import { useUser } from '../../auth';
 import Button from '../../button';
 import { Input, Label } from '../../forms';
 import Overlay from '../../overlay';
@@ -24,7 +23,6 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
     workoutId
   );
   const mutation = useCreateSets();
-  const user = useUser();
 
   const previousFitcode = React.useMemo(() => {
     if (!(Boolean(previousSets) && previousSets.length > 0)) return null;
@@ -48,9 +46,7 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
   );
 
   const submit = async () => {
-    await mutation.mutateAsync(
-      sets.map((set) => ({ ...set, userId: user.user.id }))
-    );
+    await mutation.mutateAsync(sets);
     updateSets(null);
     onClose();
   };

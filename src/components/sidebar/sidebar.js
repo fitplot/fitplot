@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
 import { getBuildId } from '../../lib/server';
-import { useUser } from '../auth';
 import { ListMenu, ListMenuItem } from '../list-menu';
 
 const links = [
@@ -18,7 +17,7 @@ const links = [
   },
 ];
 
-export default function SideBar({ toggleMenu }) {
+export default function SideBar({ user, toggleMenu }) {
   const router = useRouter();
 
   const navigate = (to) => {
@@ -28,24 +27,22 @@ export default function SideBar({ toggleMenu }) {
 
   return (
     <div className='flex overflow-y-auto fixed top-0 left-0 flex-col w-9/12 h-full bg-slate-100'>
-      <HeaderBar className='grow-0 shrink-0' />
-      <MainMenu className='grow my-4' navigate={navigate} />
+      <HeaderBar user={user} navigate={navigate} className='grow-0 shrink-0' />
+      <MainMenu navigate={navigate} className='grow my-4' />
     </div>
   );
 }
 
-function HeaderBar({ className }) {
+function HeaderBar({ user, navigate, className }) {
   return (
     <div className={clsx('flex justify-center px-1 h-12 border-b', className)}>
-      <ActiveUser className='grow' />
+      <ActiveUser user={user} navigate={navigate} className='grow' />
       <SideBarButton Icon={BellIcon} />
     </div>
   );
 }
 
-function ActiveUser({ className }) {
-  const { user } = useUser();
-
+function ActiveUser({ user, navigate, className }) {
   return (
     <button
       type='button'
@@ -53,9 +50,10 @@ function ActiveUser({ className }) {
         'flex justify-center items-center space-x-2 h-full',
         className
       )}
+      onClick={() => navigate('/me')}
     >
-      <UserIcon className='w-6 h-6' />
-      <span>{user ? user.username : 'WHO?'}</span>
+      <UserIcon className='inline-block w-6 h-6' />
+      <span>{user.firstName}</span>
     </button>
   );
 }

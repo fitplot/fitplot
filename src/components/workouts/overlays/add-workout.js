@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import { useCreateWorkout } from '../../../hooks/use-workout';
-import { useUser } from '../../auth/user';
 import Button from '../../button';
 import { Input, Label } from '../../forms';
 import LoadingIcon from '../../loading-icon';
@@ -12,7 +11,6 @@ import Overlay from '../../overlay';
 export default function AddWorkout({ open, onClose }) {
   const inputRef = React.useRef(null);
   const router = useRouter();
-  const { user } = useUser();
   const mutation = useCreateWorkout({
     onSuccess: (workout) => router.push(`/workout/${workout.id}`),
   });
@@ -21,7 +19,7 @@ export default function AddWorkout({ open, onClose }) {
     const rawInput = inputRef.current.value;
     const workoutName = rawInput.trim();
     if (workoutName) {
-      await mutation.mutateAsync({ name: workoutName, userId: user.id });
+      await mutation.mutateAsync({ name: workoutName });
       onClose();
     }
   };
