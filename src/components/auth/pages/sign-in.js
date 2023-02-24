@@ -1,6 +1,5 @@
 import { CheckIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
@@ -12,25 +11,26 @@ import LoadingIcon from '../../loading-icon';
 import { usePageContext } from '../../page';
 
 export default function SignIn() {
-  const router = useRouter();
-
   const emailRef = React.useRef();
   const nameRef = React.useRef();
 
   const [isNewUser, setIsNewUser] = useToggle(false);
+  const [isRedirecting, setIsRedirecting] = useToggle(false);
 
   const signInMutation = useSignIn({
     onSuccess: (response) => {
       if (response.status && response.status === 401) {
         setIsNewUser(true);
       } else if (response.magicLink) {
-        router.replace(response.magicLink);
+        setIsRedirecting(true);
+        window.location = response.magicLink;
       }
     },
   });
 
   const signUpMutation = useSignUp({
     onSuccess: () => {
+      setIsRedirecting(true);
       window.location = '/';
     },
   });
@@ -51,6 +51,9 @@ export default function SignIn() {
     }
   };
 
+  const isLoading =
+    signInMutation.isLoading || signUpMutation.isLoading || isRedirecting;
+
   return (
     <>
       <Head>
@@ -67,10 +70,10 @@ export default function SignIn() {
         )}
         <Button
           className='flex justify-center items-center'
-          disabled={signInMutation.isLoading}
+          disabled={isLoading}
           onClick={() => submit()}
         >
-          {signInMutation.isLoading ? (
+          {isLoading ? (
             <LoadingIcon className='w-6 h-6' />
           ) : (
             <CheckIcon className='w-6 h-6' />
