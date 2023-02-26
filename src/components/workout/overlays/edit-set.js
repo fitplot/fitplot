@@ -46,21 +46,21 @@ export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
         <div className='flex flex-col p-4 space-y-4'>
           <div className='p-4 font-medium text-gray-900'>{exercise.name}</div>
           <div className='flex flex-wrap'>
-            <Label htmlFor='amount'>Amount</Label>
-          </div>
-          <Input
-            id='amount'
-            ref={amountRef}
-            defaultValue={set.amount}
-            type='text'
-          />
-          <div className='flex flex-wrap'>
             <Label htmlFor='volume'>Volume</Label>
           </div>
           <Input
             id='volume'
             ref={volumeRef}
             defaultValue={set.volume}
+            type='text'
+          />
+          <div className='flex flex-wrap'>
+            <Label htmlFor='amount'>Amount</Label>
+          </div>
+          <Input
+            id='amount'
+            ref={amountRef}
+            defaultValue={set.amount}
             type='text'
           />
           <div className='flex'>
