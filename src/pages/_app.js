@@ -1,5 +1,8 @@
 import 'tailwindcss/tailwind.css';
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/calendar';
+import calendar from 'dayjs/plugin/relativeTime';
 import Head from 'next/head';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -7,6 +10,9 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import Page, { PageContextProvider } from '../components/page';
 import useAppLayout from '../hooks/use-app-layout';
 import queryClient from '../lib/query-client';
+
+dayjs.extend(relativeTime);
+dayjs.extend(calendar);
 
 function App({ Component, pageProps }) {
   useAppLayout();

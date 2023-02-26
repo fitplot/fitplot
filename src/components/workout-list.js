@@ -22,14 +22,18 @@ export default function WorkoutList({ className, workouts }) {
                 <span>{name}</span>
               </div>
               <div className='text-sm font-medium text-slate-500'>
-                {dayjs(createdAt).format('MMM DD, YYYY h:mm a')}
+                {dayjs(createdAt).isBefore(dayjs().subtract(12, 'hours'))
+                  ? dayjs(createdAt).calendar(null, {
+                      sameElse: 'MMM DD, YYYY h:mm a',
+                    })
+                  : dayjs().to(dayjs(createdAt))}
               </div>
             </div>
-            {completedAt ? (
+            {Boolean(completedAt) && (
               <div className='flex shrink-0 p-4'>
                 <CheckIcon className='w-6 h-6 text-green-500' />
               </div>
-            ) : null}
+            )}
             <div className='flex shrink-0 items-center p-2 text-white bg-slate-900'>
               <ChevronRightIcon className='w-6 h-6' />
             </div>

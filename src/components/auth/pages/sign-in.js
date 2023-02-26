@@ -1,5 +1,6 @@
 import { CheckIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
@@ -11,6 +12,8 @@ import LoadingIcon from '../../loading-icon';
 import { usePageContext } from '../../page';
 
 export default function SignIn() {
+  const router = useRouter();
+
   const emailRef = React.useRef();
   const nameRef = React.useRef();
 
@@ -31,7 +34,7 @@ export default function SignIn() {
   const signUpMutation = useSignUp({
     onSuccess: () => {
       setIsRedirecting(true);
-      window.location = '/';
+      router.push('/');
     },
   });
 
