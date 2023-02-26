@@ -16,7 +16,7 @@ export default function Magic() {
 
   return (
     <div className='flex flex-1 justify-center items-center'>
-      <SparklesIcon className='w-6 h-6' />
+      <SparklesIcon className='w-6 h-6 animate-pulse' />
     </div>
   );
 }
