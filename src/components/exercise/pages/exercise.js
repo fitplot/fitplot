@@ -17,14 +17,12 @@ export default function Exercise() {
 
   const { data: exercise, isLoading } = useExercise(exerciseId);
 
-  const { name } = exercise;
-
   const onMoreAction = React.useCallback(() => {
     toggleShowMoreActions(true);
   }, [toggleShowMoreActions]);
 
   usePageContext({
-    title: name,
+    title: isLoading ? 'Exercise' : exercise.name,
     onMoreAction,
   });
 
