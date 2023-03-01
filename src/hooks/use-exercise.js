@@ -1,12 +1,13 @@
+import { URLSearchParams } from 'next/dist/compiled/@edge-runtime/primitives/url';
 import { useMutation, useQuery } from 'react-query';
 
 import queryClient from '../lib/query-client';
 
-export function useGetExercise(exerciseId) {
+export function useExercise(exerciseId) {
   return useQuery(
     ['exercise', exerciseId],
     () => fetch(`/api/exercise/${exerciseId}`).then((res) => res.json()),
-    { enabled: !!exerciseId }
+    { enabled: Boolean(exerciseId) }
   );
 }
 
@@ -25,6 +26,30 @@ export function useUpdateExercise() {
         queryClient.invalidateQueries(['exercise', exercise.id]);
         queryClient.invalidateQueries('exercises');
       },
+    }
+  );
+}
+
+export function useDeleteExercise(options) {
+  return useMutation(
+    ({ exercise, reassignTo }) => {
+      const params = new URLSearchParams();
+      if (reassignTo) params.append('reassignTo', reassignTo);
+
+      return fetch(`/api/exercise/${exercise.id}?${params.toString()}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(exercise),
+      }).then((response) => (response.ok ? response.json() : response));
+    },
+    {
+      onSuccess: (exercise) => {
+        queryClient.invalidateQueries(['exercise', exercise.id]);
+        queryClient.invalidateQueries('exercises');
+      },
+      ...options,
     }
   );
 }

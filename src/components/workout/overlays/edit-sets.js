@@ -5,7 +5,7 @@ import Overlay from '../../overlay';
 import SetsTable from '../../sets-table';
 import EditSet from './edit-set';
 
-export default function EditExercise({ exercise, sets = [], open, onClose }) {
+export default function EditSets({ exercise, sets = [], open, onClose }) {
   const [showEditSet, toggleEditSet] = useToggle(false);
   const [activeSet, setActiveSet] = React.useState(null);
 

@@ -12,8 +12,12 @@ const links = [
     href: '/',
   },
   {
-    title: 'Workouts',
+    title: 'My Workouts',
     href: '/workouts',
+  },
+  {
+    title: 'My Exercises',
+    href: '/exercises',
   },
 ];
 

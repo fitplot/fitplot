@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useCreateExercise, useExercises } from '../../../hooks/use-exercises';
+import Combobox from '../../combobox';
 import { Label } from '../../forms';
-import Combobox from '../../listbox-input';
 import LoadingIcon from '../../loading-icon';
 import Overlay from '../../overlay';
 
@@ -24,14 +24,12 @@ export default function AddExercise({ open, onClose }) {
       {isLoading && <LoadingIcon className='w-5 h-5' />}
       {!isLoading && (
         <div className='flex flex-col p-4 space-y-4 h-full'>
-          <div className='flex flex-wrap grow-0 shrink-0 justify-between items-baseline'>
-            <Label htmlFor='name'>Exercise name</Label>
-          </div>
           <Combobox
             options={exercises}
             field='name'
             onAdd={onAdd}
             onSelect={onSelect}
+            placeholder='Search exercises'
           />
         </div>
       )}

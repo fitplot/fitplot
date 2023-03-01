@@ -13,11 +13,12 @@ import { ListMenu, ListMenuGroup, ListMenuItem } from '../../list-menu';
 import LoadingIcon from '../../loading-icon';
 import Overlay from '../../overlay';
 
-export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
+export default function MoreActions({ workout = {}, open, onClose }) {
+  const router = useRouter();
+
   const { name, createdAt, updatedAt, completedAt } = workout;
 
   const inputRef = React.useRef(null);
-  const router = useRouter();
 
   const [showRenameWorkout, toggleRenameWorkout] = useToggle(false);
   const [showDeleteWorkout, toggleDeleteWorkout] = useToggle(false);
@@ -56,80 +57,74 @@ export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
       <Overlay open={open} onClose={onClose} title='More Actions'>
         <div className='flex flex-col'>
           <ListMenu>
-            {workout && (
-              <>
-                <ListMenuGroup>
-                  <ListMenuItem
-                    onClick={() => toggleRenameWorkout(true)}
-                    className='font-medium'
-                  >
-                    Rename Workout
-                  </ListMenuItem>
-                  <ListMenuItem
-                    onClick={() => submitToggleCompleted()}
-                    disabled={updateMutation.isLoading}
-                  >
-                    <div className='flex flex-1 space-x-2'>
-                      {updateMutation.isLoading ? (
-                        <LoadingIcon className='w-5 h-5' />
-                      ) : (
-                        <CheckIcon
-                          className={clsx(
-                            { 'text-green-500': Boolean(completedAt) },
-                            'inline-block w-6 h-6'
-                          )}
-                        />
+            <ListMenuGroup>
+              <ListMenuItem
+                onClick={() => toggleRenameWorkout(true)}
+                className='font-medium'
+              >
+                Rename Workout
+              </ListMenuItem>
+              <ListMenuItem
+                onClick={() => submitToggleCompleted()}
+                disabled={updateMutation.isLoading}
+              >
+                <div className='flex flex-1 space-x-2'>
+                  {updateMutation.isLoading ? (
+                    <LoadingIcon className='w-5 h-5' />
+                  ) : (
+                    <CheckIcon
+                      className={clsx(
+                        { 'text-green-500': Boolean(completedAt) },
+                        'inline-block w-6 h-6'
                       )}
-                      <span>
-                        Mark as {completedAt ? 'Incomplete' : 'Complete'}
-                      </span>
-                    </div>
-                  </ListMenuItem>
-                </ListMenuGroup>
-                <ListMenuGroup>
-                  <ListMenuItem className='text-slate-500'>
-                    <div className='flex flex-1 space-x-2'>
-                      <ClockIcon className='w-6 h-6' />
-                      <span>Started on</span>
-                    </div>
-                    <div className='mt-auto'>
-                      {dayjs(createdAt).format('MMM DD, YYYY h:mm a')}
-                    </div>
-                  </ListMenuItem>
-                  <ListMenuItem className='text-slate-500'>
-                    <div className='flex flex-1 space-x-2'>
-                      <ClockIcon className='inline-block w-6 h-6' />
-                      <span>Last updated on</span>
-                    </div>
-                    <div className='mt-auto'>
-                      {dayjs(updatedAt).format('MMM DD, YYYY h:mm a')}
-                    </div>
-                  </ListMenuItem>
-                  {completedAt ? (
-                    <ListMenuItem className='text-slate-500'>
-                      <div className='flex flex-1 space-x-2'>
-                        <ClockIcon className='inline-block w-6 h-6' />
-                        <span>Completed on</span>
-                      </div>
-                      <div className='mt-auto'>
-                        {dayjs(completedAt).format('MMM DD, YYYY h:mm a')}
-                      </div>
-                    </ListMenuItem>
-                  ) : null}
-                </ListMenuGroup>
-                <ListMenuGroup>
-                  <ListMenuItem
-                    onClick={() => toggleDeleteWorkout(true)}
-                    className='text-red-500'
-                  >
-                    <div className='flex flex-1 items-center space-x-2'>
-                      <TrashIcon className='w-6 h-6' />
-                      <span>Delete</span>
-                    </div>
-                  </ListMenuItem>
-                </ListMenuGroup>
-              </>
-            )}
+                    />
+                  )}
+                  <span>Mark as {completedAt ? 'Incomplete' : 'Complete'}</span>
+                </div>
+              </ListMenuItem>
+            </ListMenuGroup>
+            <ListMenuGroup>
+              <ListMenuItem className='text-slate-500'>
+                <div className='flex flex-1 space-x-2'>
+                  <ClockIcon className='w-6 h-6' />
+                  <span>Started on</span>
+                </div>
+                <div className='mt-auto'>
+                  {dayjs(createdAt).format('MMM DD, YYYY h:mm a')}
+                </div>
+              </ListMenuItem>
+              <ListMenuItem className='text-slate-500'>
+                <div className='flex flex-1 space-x-2'>
+                  <ClockIcon className='inline-block w-6 h-6' />
+                  <span>Last updated on</span>
+                </div>
+                <div className='mt-auto'>
+                  {dayjs(updatedAt).format('MMM DD, YYYY h:mm a')}
+                </div>
+              </ListMenuItem>
+              {Boolean(completedAt) && (
+                <ListMenuItem className='text-slate-500'>
+                  <div className='flex flex-1 space-x-2'>
+                    <ClockIcon className='inline-block w-6 h-6' />
+                    <span>Completed on</span>
+                  </div>
+                  <div className='mt-auto'>
+                    {dayjs(completedAt).format('MMM DD, YYYY h:mm a')}
+                  </div>
+                </ListMenuItem>
+              )}
+            </ListMenuGroup>
+            <ListMenuGroup>
+              <ListMenuItem
+                onClick={() => toggleDeleteWorkout(true)}
+                className='text-red-500'
+              >
+                <div className='flex flex-1 items-center space-x-2'>
+                  <TrashIcon className='w-6 h-6' />
+                  <span>Delete</span>
+                </div>
+              </ListMenuItem>
+            </ListMenuGroup>
           </ListMenu>
         </div>
       </Overlay>

@@ -1,33 +1,53 @@
 import clsx from 'clsx';
+import React from 'react';
 
 export function ListMenu({ className, children }) {
   return (
-    <ul className={clsx('flex flex-col divide-y', className)} role='tree'>
+    <ul className={clsx('flex flex-col', className)} role='tree'>
       {children}
     </ul>
   );
 }
 // TODO: FIX: the `divide-y` borders between list items and groups are interacting pretty wonky
-export function ListMenuItem({ className, onClick, children }) {
-  if (onClick)
+export const ListMenuItem = React.forwardRef(
+  ({ className, onClick, children }, ref) => {
+    if (onClick)
+      return (
+        <li className='flex'>
+          <button
+            className={clsx('flex grow p-4 font-medium bg-white', className)}
+            ref={ref}
+            type='button'
+            onClick={onClick}
+          >
+            {children}
+          </button>
+        </li>
+      );
+
     return (
-      <li className='flex'>
-        <button
-          className={clsx('flex grow p-4 font-medium bg-white', className)}
-          type='button'
-          onClick={onClick}
-        >
-          {children}
-        </button>
+      <li
+        className={clsx('flex items-center p-4 bg-white', className)}
+        ref={ref}
+      >
+        {children}
       </li>
     );
+  }
+);
 
-  return (
-    <li className={clsx('flex items-center p-4 bg-white', className)}>
-      {children}
+export const ListMenuTextInput = React.forwardRef(
+  ({ className, ...props }, ref) => (
+    <li className={clsx('bg-white', className)}>
+      <input
+        type='text'
+        ref={ref}
+        {...props}
+        className='p-4 w-full placeholder:text-gray-500 disabled:text-gray-400 bg-slate-100'
+      />
     </li>
-  );
-}
+  )
+);
 
 export function ListMenuGroup({ className, title, children }) {
   if (title) {

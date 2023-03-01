@@ -16,8 +16,8 @@ import SetsTable from '../../sets-table';
 import { H1, Paragraph } from '../../typography';
 import AddExercise from '../overlays/add-exercise';
 import AddSets from '../overlays/add-sets';
-import EditExercise from '../overlays/edit-exercise';
-import WorkoutMoreActions from '../overlays/workout-more-actions';
+import EditSets from '../overlays/edit-sets';
+import MoreActions from '../overlays/more-actions';
 
 export default function WorkoutPage() {
   const router = useRouter();
@@ -70,14 +70,14 @@ export default function WorkoutPage() {
   };
 
   // EditExercise dialog
-  const [showEditExerciseDialog, toggleEditExercise] = useToggle(false);
+  const [showEditSetsDialog, toggleEditSets] = useToggle(false);
   const editExercise = (exerciseId) => {
     setActiveExerciseId(exerciseId);
-    toggleEditExercise(true);
+    toggleEditSets(true);
   };
-  const closeEditExercise = () => {
-    toggleEditExercise(false);
-    setActiveExerciseId();
+  const closeEditSets = () => {
+    toggleEditSets(false);
+    setActiveExerciseId(null);
   };
 
   // Normalize exercises for lookup
@@ -163,13 +163,13 @@ export default function WorkoutPage() {
         workoutId={workoutId}
         exercise={exercisesById[activeExerciseId]}
       />
-      <EditExercise
+      <EditSets
         exercise={exercisesById[activeExerciseId]}
         sets={setsByExercise[activeExerciseId]}
-        open={showEditExerciseDialog}
-        onClose={closeEditExercise}
+        open={showEditSetsDialog}
+        onClose={closeEditSets}
       />
-      <WorkoutMoreActions
+      <MoreActions
         open={showWorkoutActions}
         onClose={closeEditWorkoutDialog}
         workout={workout}
