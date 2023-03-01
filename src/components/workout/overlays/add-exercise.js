@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useCreateExercise, useExercises } from '../../../hooks/use-exercises';
 import Combobox from '../../combobox';
-import { Label } from '../../forms';
 import LoadingIcon from '../../loading-icon';
 import Overlay from '../../overlay';
 
