@@ -1,3 +1,4 @@
+import { HandRaisedIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -8,6 +9,7 @@ import useSignIn from '../../../hooks/use-sign-in';
 import useSignUp from '../../../hooks/use-sign-up';
 import Button from '../../button';
 import { Input, Label } from '../../forms';
+import InfoCard from '../../info-card';
 import LoadingIcon from '../../loading-icon';
 import { usePageContext } from '../../page';
 
@@ -19,14 +21,19 @@ export default function SignIn() {
 
   const [isNewUser, setIsNewUser] = useToggle(false);
   const [isRedirecting, setIsRedirecting] = useToggle(false);
+  const [isComplete, setIsComplete] = useToggle(false);
+  const [isRateLimited, setIsRateLimited] = useToggle(false);
 
   const signInMutation = useSignIn({
     onSuccess: (response) => {
-      if (response.status && response.status === 401) {
+      if (response.ok) {
+        setIsComplete(true);
+      } else if (response.status === 429) {
+        setIsRateLimited(true);
+      } else if (response.status === 401) {
         setIsNewUser(true);
-      } else if (response.magicLink) {
-        setIsRedirecting(true);
-        window.location = response.magicLink;
+      } else {
+        // TODO: handle error
       }
     },
   });
@@ -57,23 +64,27 @@ export default function SignIn() {
   const isLoading =
     signInMutation.isLoading || signUpMutation.isLoading || isRedirecting;
 
+  const disabled= isComplete || isLoading;
+
   return (
     <>
       <Head>
         <title>Sign-In</title>
       </Head>
-      <div className='flex flex-col flex-1 space-y-4'>
+      <div className='flex flex-col space-y-4'>
+        {isComplete && <InfoCard variant='success'><SparklesIcon className='w-6 h-6 pr-2' /><span>We sent you a magic link. Please check your email inbox.</span></InfoCard>}
+        {isRateLimited && <InfoCard variant='warn'><HandRaisedIcon className='w-6 h-6 pr-2' /><span>Whoa, hold your horses there. Please slow down.</span></InfoCard>}
         <Label htmlFor='email'>Email</Label>
-        <Input id='email' type='email' name='email' ref={emailRef} />
+        <Input id='email' type='email' name='email' ref={emailRef} disabled={disabled} readOnly={disabled} />
         {isNewUser && (
           <>
             <Label htmlFor='name'>Name</Label>
-            <Input id='name' type='text' name='name' ref={nameRef} />
+            <Input id='name' type='text' name='name' ref={nameRef} disabled={disabled} readOnly={disabled} />
           </>
         )}
         <Button
           className='flex justify-center items-center'
-          disabled={isLoading}
+          disabled={disabled}
           onClick={() => submit()}
         >
           {isLoading ? (

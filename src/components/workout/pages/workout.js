@@ -99,8 +99,8 @@ export default function WorkoutPage() {
 
   if (isLoading)
     return (
-      <div className='flex flex-col grow space-y-2'>
-        <LoadingIcon className='self-center w-12 h-12' />
+      <div className='flex grow flex-col space-y-2'>
+        <LoadingIcon className='h-12 w-12 self-center' />
       </div>
     );
 
@@ -111,12 +111,12 @@ export default function WorkoutPage() {
       <Head>
         <title>{name || 'Workout'}</title>
       </Head>
-      <div className='flex flex-col grow space-y-4'>
+      <div className='flex grow flex-col space-y-4'>
         <H1 as='div' className='flex items-center space-x-2'>
           {isReadonly ? (
             <>
               <div className='flex-1'>{name}</div>
-              <CheckIcon className='w-6 h-6 text-green-500' />
+              <CheckIcon className='h-6 w-6 text-green-500' />
             </>
           ) : (
             name
@@ -126,7 +126,10 @@ export default function WorkoutPage() {
         {Object.entries(setsByExercise).map(([exerciseId, setsForExercise]) => {
           const exercise = exercisesById[exerciseId];
           return (
-            <Card key={exerciseId} className='bg-white border border-gray-200'>
+            <Card
+              key={exerciseId}
+              className='border border-gray-200 bg-slate-200'
+            >
               <div className='p-4 font-medium text-gray-900'>
                 {exercise?.name || 'Unknown Exercise'}
               </div>
@@ -134,7 +137,7 @@ export default function WorkoutPage() {
               {!isReadonly && (
                 <div className='flex'>
                   <Button
-                    className='w-1/2 text-inherit bg-slate-200'
+                    className='w-1/2 bg-slate-200 text-inherit'
                     onClick={() => editExercise(exerciseId)}
                   >
                     Edit

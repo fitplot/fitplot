@@ -10,11 +10,6 @@ export default function useSignIn(options) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
-      }).then((response) => {
-        if (response.ok)
-          return response.status === 204 ? response.text() : response.json();
-
-        return response;
       }),
     options
   );

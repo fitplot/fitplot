@@ -1,4 +1,9 @@
-import { CheckIcon, TrophyIcon } from '@heroicons/react/24/solid';
+import {
+  CheckCircleIcon,
+  PowerIcon,
+  TrophyIcon,
+} from '@heroicons/react/24/solid';
+import clsx from 'clsx';
 import Head from 'next/head';
 
 import useUser from '../../hooks/use-user';
@@ -21,32 +26,34 @@ export default function Home() {
       <Head>
         <title>Home</title>
       </Head>
-      <div className='flex flex-col flex-1 space-y-4'>
+      <div className='flex grow flex-col space-y-4'>
         {user ? <H1 className='uppercase'>{user.username}</H1> : null}
-        <HomeHighlight>
-          <TrophyIcon className='w-6 h-6 text-yellow-500' />
-          <div className='grow'>Total Workouts</div>
-          {isLoading ? (
-            <LoadingIcon className='w-6 h-6' />
-          ) : (
-            <div>{summary.total}</div>
-          )}
-        </HomeHighlight>
-        <HomeHighlight>
-          <CheckIcon className='w-6 h-6 text-green-500' />
-          <div className='grow'>Total Completed</div>
-          {isLoading ? (
-            <LoadingIcon className='w-6 h-6' />
-          ) : (
-            summary.totalCompleted
-          )}
-        </HomeHighlight>
+        <div className='flex space-x-2'>
+          <HomeHighlight
+            className='grow'
+            icon={<TrophyIcon className='h-8 w-8 text-yellow-500' />}
+            title='Total Workouts'
+            value={summary.total}
+            isLoading={isLoading}
+          />
+          <HomeHighlight
+            className='grow'
+            icon={<CheckCircleIcon className='h-8 w-8 text-green-500' />}
+            title='Total Completed'
+            value={summary.totalCompleted}
+            isLoading={isLoading}
+          />
+        </div>
+        <Button className='aspect-square w-1/2 flex-col self-center rounded-full'>
+          <PowerIcon className='h-16 w-16' />
+        </Button>
+        <H2 className='self-center'>Start Workout</H2>
         <H2>Recent Workouts</H2>
         {isLoading && (
-          <LoadingIcon className='justify-self-center self-center w-6 h-6' />
+          <LoadingIcon className='h-6 w-6 self-center justify-self-center' />
         )}
         {!isLoading && <WorkoutList workouts={summary.workouts} />}
-        <Button href='/workouts' className='text-center'>
+        <Button href='/workouts'>
           See All Workouts
         </Button>
       </div>
@@ -54,10 +61,21 @@ export default function Home() {
   );
 }
 
-function HomeHighlight({ children }) {
+function HomeHighlight({ className, icon, title, isLoading, value }) {
   return (
-    <Card className='flex items-center p-4 space-x-4 font-medium text-white bg-slate-900 rounded-lg border'>
-      {children}
+    <Card
+      className={clsx(
+        className,
+        'flex flex-col items-center gap-2 rounded bg-slate-200 p-4'
+      )}
+    >
+      {icon}
+      <span className='font-medium'>{title}</span>
+      {isLoading ? (
+        <LoadingIcon className='h-6 w-6' />
+      ) : (
+        <span className='text-6xl font-bold'>{value}</span>
+      )}
     </Card>
   );
 }

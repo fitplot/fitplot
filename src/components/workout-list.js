@@ -1,47 +1,54 @@
 import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
-import dayjs from 'dayjs';
 import Link from 'next/link';
 
-import { Paragraph } from './typography';
+import relative from '../lib/date';
+import { H5, Paragraph } from './typography';
 
 export default function WorkoutList({ className, workouts }) {
   if (workouts === undefined || workouts === null) return null;
 
   return (
-    <div className={clsx(className, 'flex flex-col space-y-2')}>
+    <ul className={clsx(className, 'flex flex-col space-y-2')}>
       {workouts.length > 0 ? (
-        workouts.map(({ id, name, createdAt, completedAt }) => (
-          <Link
-            key={id}
-            href={`/workout/${id}`}
-            className='inline-flex text-left bg-white border border-slate-200'
-          >
-            <div className='grow p-2'>
-              <div className='text-sm font-medium text-slate-900'>
-                <span>{name}</span>
-              </div>
-              <div className='text-sm font-medium text-slate-500'>
-                {dayjs(createdAt).isBefore(dayjs().subtract(12, 'hours'))
-                  ? dayjs(createdAt).calendar(null, {
-                      sameElse: 'MMM DD, YYYY h:mm a',
-                    })
-                  : dayjs().to(dayjs(createdAt))}
-              </div>
-            </div>
-            {Boolean(completedAt) && (
-              <div className='flex shrink-0 p-4'>
-                <CheckIcon className='w-6 h-6 text-green-500' />
-              </div>
-            )}
-            <div className='flex shrink-0 items-center p-2 text-white bg-slate-900'>
-              <ChevronRightIcon className='w-6 h-6' />
-            </div>
-          </Link>
+        workouts.map((workout) => (
+          <li>
+            <Workout key={workout.id} workout={workout} />
+          </li>
         ))
       ) : (
         <Paragraph>No workout history.</Paragraph>
       )}
-    </div>
+    </ul>
+  );
+}
+
+function Workout({ workout = {} }) {
+  const { id, name, createdAt, completedAt } = workout;
+
+  const date = relative(createdAt);
+
+  return (
+    <Link
+      href={`/workout/${id}`}
+      className='flex bg-white border border-slate-200'
+    >
+      <div className='grow p-2'>
+        <div>
+          <H5 as='h2'>{name}</H5>
+        </div>
+        <div>
+          <span className='text-sm text-slate-500'>{date}</span>
+        </div>
+      </div>
+      {Boolean(completedAt) && (
+        <div className='flex shrink-0 items-center p-4'>
+          <CheckIcon className='h-6 w-6 text-emerald-500' />
+        </div>
+      )}
+      <div className='flex shrink-0 items-center p-2'>
+        <ChevronRightIcon className='h-6 w-6' />
+      </div>
+    </Link>
   );
 }

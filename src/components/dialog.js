@@ -15,11 +15,11 @@ export default function CustomDialog({
     <Transition appear show={open} as={React.Fragment}>
       <Dialog
         as='div'
-        className='overflow-y-auto fixed inset-0'
+        className='fixed inset-0 overflow-y-auto'
         onClose={onClose}
         initialFocus={initialFocus}
       >
-        <div className='flex flex-col justify-center items-center px-4 w-screen h-screen'>
+        <div className='flex h-screen w-screen flex-col items-center justify-center px-4'>
           <Transition.Child
             as={React.Fragment}
             enter='transition-opacity ease-in duration-300'
@@ -39,14 +39,13 @@ export default function CustomDialog({
             leaveFrom='opacity-100 scale-100'
             leaveTo='opacity-0 scale-95'
           >
-            {/* eslint-disable-next-line tailwindcss/migration-from-tailwind-2 */}
-            <div className='overflow-hidden p-6 my-8 w-full bg-white transform md:w-half-screen'>
+            <div className='my-8 w-full transform overflow-hidden bg-slate-200 p-6 md:w-half-screen'>
               <Dialog.Title as='div' className='flex'>
                 {title && <H2 className='grow'>{title}</H2>}
                 <XMarkIcon
                   role='button'
                   onClick={onClose}
-                  className='w-6 h-6'
+                  className='h-6 w-6'
                 />
               </Dialog.Title>
               {children}

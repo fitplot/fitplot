@@ -52,13 +52,15 @@ export default function WorkoutsPage() {
       <Head>
         <title>Workouts</title>
       </Head>
-      <div className='flex flex-col flex-1 space-y-4'>
+      <div className='flex flex-1 flex-col space-y-8'>
         <H1>All Workouts</H1>
         {isLoading && (
-          <LoadingIcon className='justify-self-center self-center w-12 h-12' />
+          <LoadingIcon className='h-12 w-12 self-center justify-self-center' />
         )}
         {!isLoading && <WorkoutList workouts={orderedWorkouts} />}
-        <Button onClick={() => toggleAddWorkout(true)}>New Workout</Button>
+        <Button onClick={() => toggleAddWorkout(true)}>
+          New Workout
+        </Button>
       </div>
       <AddWorkout
         open={showAddWorkout}

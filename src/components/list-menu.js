@@ -52,8 +52,8 @@ export const ListMenuTextInput = React.forwardRef(
 export function ListMenuGroup({ className, title, children }) {
   if (title) {
     return (
-      <div className={clsx('flex flex-col pt-4 divide-y', className)}>
-        <div className='flex px-4 mb-2 text-xs font-medium uppercase text-ellipsis whitespace-nowrap'>
+      <div className={clsx('flex flex-col divide-y pt-4', className)}>
+        <div className='mb-2 flex text-ellipsis whitespace-nowrap px-4 text-xs font-medium uppercase'>
           {title}
         </div>
         {children}
@@ -62,7 +62,7 @@ export function ListMenuGroup({ className, title, children }) {
   }
 
   return (
-    <div className={clsx('flex flex-col pt-4 divide-y', className)}>
+    <div className={clsx('flex flex-col divide-y pt-4', className)}>
       {children}
     </div>
   );

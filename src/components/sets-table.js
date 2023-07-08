@@ -50,8 +50,8 @@ function Set({ isActionable, onAction, set }) {
         {amount ? `${amount} ${unit}` : null}
       </Cell>
       {isActionable ? (
-        <Cell className='flex justify-center items-center w-10 h-full'>
-          <EllipsisVerticalIcon className='inline-block w-6 h-6' />
+        <Cell className='flex h-full w-10 items-center justify-center'>
+          <EllipsisVerticalIcon className='inline-block h-6 w-6' />
         </Cell>
       ) : null}
     </Container>
@@ -63,7 +63,7 @@ function HeadCell({ children, className }) {
     <div
       className={clsx(
         className,
-        'text-xs font-medium text-slate-500 uppercase bg-slate-50'
+        'bg-slate-50 text-xs font-medium uppercase text-slate-500'
       )}
     >
       {children}
@@ -74,7 +74,10 @@ function HeadCell({ children, className }) {
 function Cell({ children, className }) {
   return (
     <div
-      className={clsx(className, 'text-sm font-medium text-slate-900 bg-white')}
+      className={clsx(
+        className,
+        'bg-slate-200 text-sm font-medium text-slate-900'
+      )}
     >
       {children}
     </div>
