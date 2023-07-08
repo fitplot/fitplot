@@ -1,5 +1,5 @@
-app = "misty-lake-3835"
-
+app = "fitplot"
+primary_region = "lax"
 kill_signal = "SIGINT"
 kill_timeout = 5
 
@@ -7,43 +7,42 @@ kill_timeout = 5
   PORT = "8080"
   NODE_ENV = "production"
   FLY = "true"
-  PRIMARY_REGION = "ord"
-  SERVICE_URL = "http://autumn-wind-3561.internal:8080"
+  SERVICE_URL = "http://fitplot-api.internal:8080"
 
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
 
 [[services]]
-  internal_port = 8080
   protocol = "tcp"
-  script_checks = []
+  internal_port = 8080
 
   [services.concurrency]
+    type = "requests"
     hard_limit = 200
     soft_limit = 150
-    type = "requests"
 
   [[services.ports]]
-    handlers = ["http"]
     port = 80
+    handlers = ["http"]
+    force_https = true
 
   [[services.ports]]
-    handlers = ["tls", "http"]
     port = 443
+    handlers = ["tls", "http"]
 
   [[services.tcp_checks]]
-    grace_period = "10s"
     interval = "15s"
-    restart_limit = 6
     timeout = "2s"
+    grace_period = "10s"
+    restart_limit = 6
 
-  [[services.http_checks]]
-    interval = 10000
-    grace_period = "5s"
-    method = "get"
-    path = "/api/healthcheck"
-    protocol = "http"
-    timeout = 2000
-    tls_skip_verify = false
-    [services.http_checks.headers]
+# TODO: introduce healthcheck
+#  [[services.http_checks]]
+#    interval = "10s"
+#    timeout = "5s"
+#    grace_period = "1m0s"
+#    restart_limit = 0
+#    method = "get"
+#    path = "/healthcheck"
+#    protocol = "http"
