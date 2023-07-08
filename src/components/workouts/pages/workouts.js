@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
@@ -16,16 +17,17 @@ import WorkoutsMoreActions, {
 } from '../overlays/workouts-more-actions';
 
 export default function WorkoutsPage() {
+  const { query } = useRouter();
   const { data: workouts, isLoading } = useWorkouts();
 
   const [orderBy, setOrderBy] = React.useState(WORKOUTS_ORDERBY.Recent);
 
-  const [showAddWorkout, toggleAddWorkout] = useToggle(false);
+  const [showAddWorkout, toggleAddWorkout] = useToggle('now' in query);
   const [showMoreActions, toggleMoreActions] = useToggle(false);
 
   const onMoreAction = React.useCallback(
     () => toggleMoreActions(true),
-    [toggleMoreActions]
+    [toggleMoreActions],
   );
 
   usePageContext({
@@ -42,7 +44,7 @@ export default function WorkoutsPage() {
       case WORKOUTS_ORDERBY.Recent.key:
       default:
         return [...workouts].sort((a, b) =>
-          dayjs(a.createdAt).isBefore(dayjs(b.createdAt)) ? 1 : -1
+          dayjs(a.createdAt).isBefore(dayjs(b.createdAt)) ? 1 : -1,
         );
     }
   }, [orderBy, workouts]);
@@ -53,14 +55,12 @@ export default function WorkoutsPage() {
         <title>Workouts</title>
       </Head>
       <div className='flex flex-1 flex-col space-y-8'>
+        <Button onClick={() => toggleAddWorkout(true)}>New Workout</Button>
         <H1>All Workouts</H1>
         {isLoading && (
           <LoadingIcon className='h-12 w-12 self-center justify-self-center' />
         )}
         {!isLoading && <WorkoutList workouts={orderedWorkouts} />}
-        <Button onClick={() => toggleAddWorkout(true)}>
-          New Workout
-        </Button>
       </div>
       <AddWorkout
         open={showAddWorkout}

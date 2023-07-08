@@ -48,7 +48,10 @@ export default function Home() {
             isLoading={isLoading}
           />
         </div>
-        <Button className='flex items-center justify-center aspect-square w-1/2 flex-col self-center rounded-full drop-shadow-lg'>
+        <Button
+          href='/workouts?now'
+          className='flex items-center justify-center aspect-square w-1/2 flex-col self-center rounded-full drop-shadow-lg'
+        >
           <PlayIcon className='h-16 w-16' />
         </Button>
         <H2 className='font-medium self-center'>Start Workout</H2>
