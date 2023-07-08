@@ -1,4 +1,4 @@
-import 'tailwindcss/tailwind.css';
+import '../main.css';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/calendar';
