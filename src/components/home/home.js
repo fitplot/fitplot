@@ -1,8 +1,5 @@
-import {
-  CheckCircleIcon,
-  PowerIcon,
-  TrophyIcon,
-} from '@heroicons/react/24/solid';
+import { PlayIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, TrophyIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import Head from 'next/head';
 
@@ -51,10 +48,10 @@ export default function Home() {
             isLoading={isLoading}
           />
         </div>
-        <Button className='aspect-square w-1/2 flex-col self-center rounded-full'>
-          <PowerIcon className='h-16 w-16' />
+        <Button className='flex items-center justify-center aspect-square w-1/2 flex-col self-center rounded-full drop-shadow-lg'>
+          <PlayIcon className='h-16 w-16' />
         </Button>
-        <H2 className='self-center'>Start Workout</H2>
+        <H2 className='font-medium self-center'>Start Workout</H2>
         <H2>Recent Workouts</H2>
         {isLoading && (
           <LoadingIcon className='h-6 w-6 self-center justify-self-center' />
