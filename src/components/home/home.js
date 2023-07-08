@@ -21,6 +21,13 @@ export default function Home() {
 
   const isLoading = isLoadingUser || isLoadingWorkoutSummary;
 
+  if (isLoading)
+    return (
+      <div className='flex flex-col grow space-y-2'>
+        <LoadingIcon className='self-center w-12 h-12' />
+      </div>
+    );
+
   return (
     <>
       <Head>
@@ -53,9 +60,7 @@ export default function Home() {
           <LoadingIcon className='h-6 w-6 self-center justify-self-center' />
         )}
         {!isLoading && <WorkoutList workouts={summary.workouts} />}
-        <Button href='/workouts'>
-          See All Workouts
-        </Button>
+        <Button href='/workouts'>See All Workouts</Button>
       </div>
     </>
   );
@@ -66,7 +71,7 @@ function HomeHighlight({ className, icon, title, isLoading, value }) {
     <Card
       className={clsx(
         className,
-        'flex flex-col items-center gap-2 rounded bg-slate-200 p-4'
+        'flex flex-col items-center gap-2 rounded bg-slate-200 p-4',
       )}
     >
       {icon}
