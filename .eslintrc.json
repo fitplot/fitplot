@@ -12,13 +12,11 @@
     "airbnb",
     "airbnb/hooks",
     "plugin:unicorn/recommended",
-    "plugin:tailwindcss/recommended",
     "prettier"
   ],
   "plugins": [
     "unicorn",
     "simple-import-sort",
-    "tailwindcss",
     "import",
     "promise",
     "only-error",

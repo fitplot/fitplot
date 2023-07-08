@@ -32,11 +32,11 @@
     "eslint-plugin-only-error": "^1.0.2",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-tailwindcss": "^3.4.3",
     "eslint-plugin-unicorn": "^40.1.0",
     "husky": "^7.0.0",
     "postcss": "^8.3.11",
-    "prettier": "^2.5.1"
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.3.0"
   },
   "volta": {
     "node": "18.14.0"
