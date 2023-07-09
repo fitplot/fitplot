@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import React from 'react';
 
 const FONT_SIZES = {
-  h1: 'leading-tight text-4xl md:text-5xl',
-  h2: 'leading-tight text-3xl md:text-4xl',
+  h1: 'text-4xl md:text-5xl',
+  h2: 'text-3xl md:text-4xl',
   h3: 'text-2xl font-medium md:text-3xl',
   h4: 'text-xl font-medium md:text-2xl',
   h5: 'text-lg font-medium md:text-xl',
@@ -17,7 +17,12 @@ const TITLE_COLORS = {
 
 function Title({ variant = 'primary', size, as, className, ...props }) {
   const Tag = as ?? size;
-  return <Tag className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)} {...props} />;
+  return (
+    <Tag
+      className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)}
+      {...props}
+    />
+  );
 }
 
 function H1(props) {
@@ -44,16 +49,13 @@ function H6(props) {
   return <Title {...props} size='h6' />;
 }
 
-function Paragraph({
-  className,
-  prose = true,
-  as = 'p',
-  textColorClassName = 'text-secondary',
-  ...props
-}) {
-  const proseClassName = prose ? 'prose prose-light' : '';
+function Paragraph({ className, as = 'p', variant = 'default', ...props }) {
+  const variants = {
+    default: '',
+    prose: 'text-gray-500',
+  };
   return React.createElement(as, {
-    className: clsx('max-w-full text-lg', textColorClassName, className, proseClassName),
+    className: clsx('max-w-full text-lg', variants[variant], className),
     ...props,
   });
 }
