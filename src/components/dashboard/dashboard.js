@@ -11,7 +11,7 @@ import LoadingIcon from '../loading-icon';
 import { H1, H2 } from '../typography';
 import WorkoutList from '../workout-list';
 
-export default function Home() {
+export default function Dashboard() {
   const { data: user, isLoading: isLoadingUser } = useUser();
   const { data: summary, isLoading: isLoadingWorkoutSummary } =
     useWorkoutsSummary();
@@ -28,19 +28,19 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Dashboard</title>
       </Head>
       <div className='flex grow flex-col space-y-4'>
         {user ? <H1 className='uppercase'>{user.username}</H1> : null}
         <div className='flex space-x-2'>
-          <HomeHighlight
+          <DashboardHighlight
             className='grow'
             icon={<TrophyIcon className='h-8 w-8 text-yellow-500' />}
             title='Total Workouts'
             value={summary.total}
             isLoading={isLoading}
           />
-          <HomeHighlight
+          <DashboardHighlight
             className='grow'
             icon={<CheckCircleIcon className='h-8 w-8 text-green-500' />}
             title='Total Completed'
@@ -66,7 +66,7 @@ export default function Home() {
   );
 }
 
-function HomeHighlight({ className, icon, title, isLoading, value }) {
+function DashboardHighlight({ className, icon, title, isLoading, value }) {
   return (
     <Card
       className={clsx(
