@@ -36,6 +36,9 @@ Make a copy of the `.env.example` file in the project root. Name your local copy
 
 ## Stack
 
-- Next.js
-- Tailwind
-- Headless UI
+- [Next.js](https://vercel.com/solutions/nextjs) fullstack web client
+- Styled with [TailwindCSS](https://tailwindcss.com/)
+- Built on [Headless UI](https://headlessui.com/)
+- App servers on [Fly.io](https://fly.io/)
+- [Fathom](https://usefathom.com/) ethical analytics
+- [React-Query](https://tanstack.com/query/v3/) api fetching and caching
