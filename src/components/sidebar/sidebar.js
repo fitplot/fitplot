@@ -8,15 +8,15 @@ import { ListMenu, ListMenuItem } from '../list-menu';
 
 const links = [
   {
-    title: 'Home',
-    href: '/',
+    title: 'Dashboard',
+    href: '/dashboard',
   },
   {
-    title: 'My Workouts',
+    title: 'Workouts',
     href: '/workouts',
   },
   {
-    title: 'My Exercises',
+    title: 'Exercises',
     href: '/exercises',
   },
 ];
@@ -52,7 +52,7 @@ function ActiveUser({ user, navigate, className }) {
       type='button'
       className={clsx(
         'flex justify-center items-center space-x-2 h-full',
-        className
+        className,
       )}
       onClick={() => navigate('/me')}
     >
@@ -68,7 +68,7 @@ function SideBarButton({ Icon, className, ...props }) {
       {...props}
       className={clsx(
         'flex justify-center items-center w-10 h-full',
-        className
+        className,
       )}
       type='button'
     >

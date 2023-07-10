@@ -9,8 +9,8 @@ export default function useMagicLink() {
     ({ dust }) => fetch(`/api/magic?dust=${dust}`, { method: 'POST' }),
     {
       onSuccess: () => {
-        router.replace('/');
+        router.replace('/dashboard');
       },
-    }
+    },
   );
 }

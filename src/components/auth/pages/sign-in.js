@@ -41,7 +41,7 @@ export default function SignIn() {
   const signUpMutation = useSignUp({
     onSuccess: () => {
       setIsRedirecting(true);
-      router.push('/');
+      router.push('/dashboard');
     },
   });
 
@@ -64,7 +64,7 @@ export default function SignIn() {
   const isLoading =
     signInMutation.isLoading || signUpMutation.isLoading || isRedirecting;
 
-  const disabled= isComplete || isLoading;
+  const disabled = isComplete || isLoading;
 
   return (
     <>
@@ -72,14 +72,40 @@ export default function SignIn() {
         <title>Sign-In</title>
       </Head>
       <div className='flex flex-col space-y-4'>
-        {isComplete && <InfoCard variant='success'><SparklesIcon className='w-6 h-6 pr-2' /><span>We sent you a magic link. Please check your email inbox.</span></InfoCard>}
-        {isRateLimited && <InfoCard variant='warn'><HandRaisedIcon className='w-6 h-6 pr-2' /><span>Whoa, hold your horses there. Please slow down.</span></InfoCard>}
+        {isComplete && (
+          <InfoCard variant='success'>
+            <SparklesIcon className='w-6 h-6 pr-2' />
+            <span>
+              We sent you a magic link. Please check your email inbox.
+            </span>
+          </InfoCard>
+        )}
+        {isRateLimited && (
+          <InfoCard variant='warn'>
+            <HandRaisedIcon className='w-6 h-6 pr-2' />
+            <span>Whoa, hold your horses there. Please slow down.</span>
+          </InfoCard>
+        )}
         <Label htmlFor='email'>Email</Label>
-        <Input id='email' type='email' name='email' ref={emailRef} disabled={disabled} readOnly={disabled} />
+        <Input
+          id='email'
+          type='email'
+          name='email'
+          ref={emailRef}
+          disabled={disabled}
+          readOnly={disabled}
+        />
         {isNewUser && (
           <>
             <Label htmlFor='name'>Name</Label>
-            <Input id='name' type='text' name='name' ref={nameRef} disabled={disabled} readOnly={disabled} />
+            <Input
+              id='name'
+              type='text'
+              name='name'
+              ref={nameRef}
+              disabled={disabled}
+              readOnly={disabled}
+            />
           </>
         )}
         <Button

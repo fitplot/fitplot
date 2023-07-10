@@ -67,8 +67,8 @@ export default function Home() {
         </Button>
         <H1 className='text-6xl md:text-7xl tracking-tighter font-extrabold'>
           <span className='bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-emerald-700'>
-            Track.
-          </span>{' '}
+            Track.&nbsp;
+          </span>
           Transform. Triumph.
         </H1>
         <Paragraph
@@ -124,7 +124,7 @@ export default function Home() {
           <br />
           <br />
           We didn&apos;t entirely know what we were doing, but we wrote down
-          everything we did: incline bench, bench, fly&apos;s, tricep
+          everything we did: bench press, incline bench, chest flys, tricep
           extentions, and Eric failed to do a pull-up.
           <br />
           <br />
