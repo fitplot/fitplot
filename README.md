@@ -41,4 +41,4 @@ Make a copy of the `.env.example` file in the project root. Name your local copy
 - Built on [Headless UI](https://headlessui.com/)
 - App servers on [Fly.io](https://fly.io/)
 - [Fathom](https://usefathom.com/) ethical analytics
-- [React-Query](https://tanstack.com/query/v3/) api fetching and caching
+- [React-Query](https://tanstack.com/query/) api fetching and caching
