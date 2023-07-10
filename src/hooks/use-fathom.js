@@ -6,9 +6,7 @@ export default function useFathom() {
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!process.env.FATHOM_TRACKING_CODE) return () => undefined;
-
-    Fathom.load(process.env.FATHOM_TRACKING_CODE, {
+    Fathom.load('EZMLUALZ', {
       includedDomains: ['fitplot.io'],
     });
 
