@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 import Page, { PageContextProvider } from '../components/page';
 import useAppLayout from '../hooks/use-app-layout';
+import useFathom from '../hooks/use-fathom';
 import queryClient from '../lib/query-client';
 
 dayjs.extend(relativeTime);
@@ -16,6 +17,7 @@ dayjs.extend(calendar);
 
 function App({ Component, pageProps }) {
   useAppLayout();
+  useFathom();
 
   return (
     <QueryClientProvider client={queryClient}>
