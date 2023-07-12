@@ -78,12 +78,12 @@ export default function Timeline() {
 
 function TimelineRow({ group }) {
   return (
-    <a className='flex hover:bg-white' href='/#'>
+    <div className='flex hover:bg-white'>
       <div className='flex-1 flex'>
         <TimelineBlock group={group} />
         <Summary group={group} />
       </div>
-    </a>
+    </div>
   );
 }
 
