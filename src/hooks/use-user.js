@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
 export default function useUser(options = {}) {
   const router = useRouter();

@@ -1,10 +1,10 @@
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 import Button from '../button';
 import { usePageContext } from '../page';
 import { H3, Paragraph } from '../typography';
-import { useRouter } from 'next/router';
 
 export default function Welcome() {
   usePageContext({ title: 'Welcome ' });
