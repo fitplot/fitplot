@@ -4,7 +4,7 @@ import { useWindowSize } from 'react-use';
 export default function useAppLayout() {
   const { height } = useWindowSize();
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (height && height > 0) {
       const heightPx = `${height}px`;
 

@@ -2,8 +2,9 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 const variants = {
-  default: 'bg-slate-200 hover:bg-slate-300',
-  primary: 'text-white bg-emerald-700 hover:bg-emerald-800',
+  default:
+    'border border-slate-500 bg-gradient-to-br from-slate-100 to-slate-300 hover:bg-slate-300 active:bg-info-300',
+  primary: 'text-white bg-primary-500 hover:bg-primary-800',
 };
 
 export default function Button({

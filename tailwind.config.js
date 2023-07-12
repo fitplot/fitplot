@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   content: ['./src/pages/**/*.{js,jsx}', './src/components/**/*.{js,jsx}'],
@@ -13,6 +14,14 @@ module.exports = {
       },
       translate: {
         '9/10': '90%',
+      },
+      colors: {
+        primary: colors.emerald,
+        secondary: colors.violet,
+        success: colors.emerald,
+        destructive: colors.rose,
+        info: colors.indigo,
+        warn: colors.amber,
       },
     },
   },

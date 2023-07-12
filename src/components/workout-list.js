@@ -6,14 +6,14 @@ import relative from '../lib/date';
 import { H5, Paragraph } from './typography';
 
 export default function WorkoutList({ className, workouts }) {
-  if (workouts === undefined || workouts === null) return null;
+  if (!workouts) return null;
 
   return (
     <ul className={clsx(className, 'flex flex-col space-y-2')}>
       {workouts.length > 0 ? (
         workouts.map((workout) => (
-          <li>
-            <Workout key={workout.id} workout={workout} />
+          <li key={workout.id}>
+            <Workout workout={workout} />
           </li>
         ))
       ) : (

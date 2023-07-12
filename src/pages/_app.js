@@ -1,12 +1,12 @@
 import '../main.css';
 
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/calendar';
 import calendar from 'dayjs/plugin/relativeTime';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import Head from 'next/head';
-import { QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 
 import Page, { PageContextProvider } from '../components/page';
 import useAppLayout from '../hooks/use-app-layout';

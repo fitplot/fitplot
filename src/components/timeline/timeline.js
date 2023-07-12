@@ -1,15 +1,31 @@
-import { ChevronRightIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import React from 'react';
+import { useIntersection } from 'react-use';
 
-import Button from '../button';
 import useWorkouts from '../../hooks/use-workouts';
 import LoadingIcon from '../loading-icon';
+import { usePageContext } from '../page';
 
 export default function Timeline() {
-  const { data: workouts, isLoading } = useWorkouts();
+  usePageContext({ title: 'Timeline' });
+
+  const {
+    data: workouts,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useWorkouts();
+
+  const ref = React.useRef(null);
+  const intersection = useIntersection(ref, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1,
+  });
 
   const groups = React.useMemo(() => {
     if (!workouts) return [];
@@ -22,48 +38,64 @@ export default function Timeline() {
       .map(([week, workoutsInWeek]) => {
         const arbitrary = dayjs(workoutsInWeek[0].createdAt);
 
-        const isCurrent = dayjs().isBefore(arbitrary.add(1, 'week'));
+        const active = dayjs().isBefore(arbitrary.add(1, 'week'));
 
         return {
           week,
           date: arbitrary.startOf('week'),
           workouts: workoutsInWeek,
+          active,
         };
       })
       .sort((a, b) => (dayjs(a.date).isBefore(dayjs(b.date)) ? 1 : -1));
   }, [workouts]);
 
-  if (isLoading)
-    return (
-      <div className='flex-1 flex flex-col justify-center items-center'>
-        <LoadingIcon className='w-12 h-12' />
-      </div>
-    );
+  React.useEffect(() => {
+    if (
+      !isLoading &&
+      !isFetchingNextPage &&
+      hasNextPage &&
+      intersection &&
+      intersection.intersectionRatio > 0
+    ) {
+      fetchNextPage();
+    }
+  }, [isLoading, isFetchingNextPage, hasNextPage, intersection, fetchNextPage]);
 
   return (
     <div className='flex-1 flex flex-col'>
       {groups.map((group) => (
-        <Group group={group} />
+        <TimelineRow key={group.week} group={group} />
       ))}
+      {/* Watch bottom of list for infinite scroll */}
+      <div ref={ref} className='border-b border-red-500' />
+      {isFetchingNextPage && (
+        <LoadingIcon className='w-6 h-6 mt-2 self-center' />
+      )}
     </div>
   );
 }
 
-function Group({ group }) {
+function TimelineRow({ group }) {
   return (
-    <a className='flex hover:bg-white' href='#'>
+    <a className='flex hover:bg-white' href='/#'>
       <div className='flex-1 flex'>
-        <TimelinePoint group={group} />
+        <TimelineBlock group={group} />
         <Summary group={group} />
       </div>
     </a>
   );
 }
 
-function TimelinePoint({ group }) {
+function TimelineBlock({ group }) {
   return (
     <div className='h-full shrink-0 w-10 md:w-16 relative'>
-      <div className='absolute w-px right-0 top-[5px] bottom-[4px] bg-gray-200' />
+      <div
+        className={clsx('absolute w-px right-0 top-[5px] bottom-[4px]', {
+          'bg-gray-200': !group.active,
+          'bg-secondary-500': group.active,
+        })}
+      />
       <div className='flex items-center justify-end absolute right-[-4px] bottom-[-20px] h-[40px]'>
         {group.date && (
           <span className='text-xs text-slate-500 text-right'>
@@ -72,35 +104,65 @@ function TimelinePoint({ group }) {
             {dayjs(group.date).format('D')}
           </span>
         )}
-        <Bullet />
+        <TimelinePoint active={group.active} />
       </div>
     </div>
   );
 }
 
-function Bullet() {
-  return <div className='w-[9px] h-[9px] rounded-full ml-2 md:ml-8 border' />;
+function TimelinePoint({ active }) {
+  return (
+    <div
+      className={clsx('w-[9px] h-[9px] rounded-full ml-2 md:ml-8 border', {
+        'bg-secondary-500 border-secondary-500': active,
+      })}
+    />
+  );
 }
 
 function Summary({ group }) {
-  const total = group.workouts.length;
-
-  const completed = group.workouts.filter(({ completedAt }) =>
-    Boolean(completedAt),
-  ).length;
-
   return (
-    <div className='flex-1 flex items-center gap-2 mb-[1px] ml-10 border-b py-6'>
+    <div className='flex-1 flex items-center gap-2 mb-[1px] ml-6 md:ml-10 border-b py-6'>
       <ChevronRightIcon className='w-4 h-4 inline-block' />
       <span className='flex-1 font-medium'>Week {group.week}</span>
-      <div className='flex items-center gap-4'>
-        <span className='text-sm'>
-          Completed{' '}
-          <span className='font-medium'>
-            {completed}/{total}
-          </span>
-        </span>
-      </div>
+      <WeekDots className='flex' workouts={group.workouts} />
     </div>
+  );
+}
+
+function WeekDots({ workouts, className }) {
+  const workoutsByDayOfWeek = React.useMemo(() => {
+    if (!workouts) return [];
+
+    return _.groupBy(workouts, ({ createdAt }) => dayjs(createdAt).day());
+  }, [workouts]);
+
+  return (
+    <div className={clsx(className, 'flex items-center gap-2')}>
+      {[0, 1, 2, 3, 4, 5, 6].map((day) => {
+        const count = workoutsByDayOfWeek[day]
+          ? workoutsByDayOfWeek[day].length
+          : 0;
+        return (
+          <div
+            key={day}
+            className='flex w-[8px] h-[8px] items-center justify-center'
+          >
+            <WeekdayDot count={count} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function WeekdayDot({ count }) {
+  return (
+    <div
+      className={clsx('rounded-full', {
+        'w-[6px] h-[6px] bg-slate-200': count === 0,
+        'w-[9px] h-[9px] bg-emerald-500': count > 0,
+      })}
+    />
   );
 }

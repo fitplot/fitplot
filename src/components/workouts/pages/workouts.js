@@ -1,26 +1,32 @@
-import dayjs from 'dayjs';
-import _ from 'lodash';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useToggle } from 'react-use';
+import { useIntersection, useToggle } from 'react-use';
 
 import useWorkouts from '../../../hooks/use-workouts';
 import Button from '../../button';
 import LoadingIcon from '../../loading-icon';
 import { usePageContext } from '../../page';
-import { H1 } from '../../typography';
 import WorkoutList from '../../workout-list';
 import AddWorkout from '../overlays/add-workout';
-import WorkoutsMoreActions, {
-  WORKOUTS_ORDERBY,
-} from '../overlays/workouts-more-actions';
+import WorkoutsMoreActions from '../overlays/workouts-more-actions';
 
 export default function WorkoutsPage() {
   const { query } = useRouter();
-  const { data: workouts, isLoading } = useWorkouts();
+  const {
+    data: workouts,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useWorkouts();
 
-  const [orderBy, setOrderBy] = React.useState(WORKOUTS_ORDERBY.Recent);
+  const ref = React.useRef(null);
+  const intersection = useIntersection(ref, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1,
+  });
 
   const [showAddWorkout, toggleAddWorkout] = useToggle('now' in query);
   const [showMoreActions, toggleMoreActions] = useToggle(false);
@@ -31,36 +37,37 @@ export default function WorkoutsPage() {
   );
 
   usePageContext({
-    title: 'My Workouts',
+    title: 'Workouts',
     onMoreAction,
   });
 
-  const orderedWorkouts = React.useMemo(() => {
-    if (!workouts) return [];
-
-    switch (orderBy.key) {
-      case WORKOUTS_ORDERBY.Name.key:
-        return _.sortBy([...workouts], ['name']);
-      case WORKOUTS_ORDERBY.Recent.key:
-      default:
-        return [...workouts].sort((a, b) =>
-          dayjs(a.createdAt).isBefore(dayjs(b.createdAt)) ? 1 : -1,
-        );
+  React.useEffect(() => {
+    if (
+      !isLoading &&
+      !isFetchingNextPage &&
+      hasNextPage &&
+      intersection &&
+      intersection.intersectionRatio > 0
+    ) {
+      fetchNextPage();
     }
-  }, [orderBy, workouts]);
+  }, [isLoading, isFetchingNextPage, hasNextPage, intersection, fetchNextPage]);
 
   return (
     <>
       <Head>
         <title>Workouts</title>
       </Head>
-      <div className='flex flex-1 flex-col space-y-8'>
-        <Button onClick={() => toggleAddWorkout(true)}>New Workout</Button>
-        <H1>All Workouts</H1>
-        {isLoading && (
-          <LoadingIcon className='h-12 w-12 self-center justify-self-center' />
+      <div className='flex flex-1 flex-col'>
+        <Button className='mb-2' onClick={() => toggleAddWorkout(true)}>
+          New Workout
+        </Button>
+        <WorkoutList className='mb-2' workouts={workouts} />
+        {/* Watch bottom of list for infinite scroll */}
+        <div ref={ref} className='border-b border-red-500' />
+        {isFetchingNextPage && (
+          <LoadingIcon className='w-6 h-6 mt-2 self-center' />
         )}
-        {!isLoading && <WorkoutList workouts={orderedWorkouts} />}
       </div>
       <AddWorkout
         open={showAddWorkout}
@@ -69,8 +76,6 @@ export default function WorkoutsPage() {
       <WorkoutsMoreActions
         open={showMoreActions}
         onClose={() => toggleMoreActions(false)}
-        orderBy={orderBy}
-        setOrderBy={setOrderBy}
         totalWorkouts={workouts ? workouts.length : undefined}
       />
     </>

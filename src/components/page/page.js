@@ -9,11 +9,11 @@ export default function Page({ children, user }) {
   const [isMenuToggled, toggleMenu] = useToggle();
 
   return (
-    <div className='h-full overflow-hidden overscroll-none'>
+    <>
       {Boolean(user) && <SideBar user={user} toggleMenu={() => toggleMenu()} />}
       <div
         className={clsx(
-          'flex h-full flex-col overflow-hidden overscroll-none break-words bg-gray-50 shadow-xl transition-transform duration-300 ease-in-out',
+          'flex h-full flex-col overflow-hidden overscroll-none break-words transition-translate duration-200 ease-in bg-white',
           {
             'translate-x-3/4': isMenuToggled,
             'translate-x-0': !isMenuToggled,
@@ -25,7 +25,7 @@ export default function Page({ children, user }) {
           {children}
         </main>
       </div>
-    </div>
+    </>
   );
 }
 
