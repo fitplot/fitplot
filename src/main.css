@@ -6,4 +6,10 @@
   html {
     -webkit-tap-highlight-color: transparent;
   }
+
+  html,
+  body,
+  #__next {
+    overflow: hidden;
+  }
 }

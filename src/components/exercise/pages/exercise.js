@@ -28,7 +28,7 @@ export default function Exercise() {
 
   if (isLoading)
     return (
-      <div className='flex flex-col grow justify-center items-center'>
+      <div className='flex-1 flex flex-col justify-center items-center'>
         <LoadingIcon className='w-12 h-12' />
       </div>
     );
