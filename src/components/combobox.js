@@ -29,7 +29,7 @@ export default function CustomCombobox({
       return options.filter((option) =>
         (field ? option[field] : option)
           .toLowerCase()
-          .includes(query.toLowerCase())
+          .includes(query.toLowerCase()),
       );
     }
 
@@ -40,9 +40,10 @@ export default function CustomCombobox({
     () =>
       options.some(
         (option) =>
-          query.toLowerCase() === (field ? option[field] : option).toLowerCase()
+          query.toLowerCase() ===
+          (field ? option[field] : option).toLowerCase(),
       ),
-    [options, query, field]
+    [options, query, field],
   );
 
   return (

@@ -20,7 +20,7 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
 
   const { data: previousSets } = usePreviousSetsForExercise(
     exercise.id,
-    workoutId
+    workoutId,
   );
   const mutation = useCreateSets();
 
@@ -34,15 +34,15 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
     (e) => {
       const rawInput = e.target.value;
       updateSets(
-        fitcode(rawInput.trim(), { workoutId, exerciseId: exercise.id })
+        fitcode(rawInput.trim(), { workoutId, exerciseId: exercise.id }),
       );
     },
-    [updateSets, workoutId, exercise]
+    [updateSets, workoutId, exercise],
   );
 
   const onChange = React.useCallback(
     (e) => _.throttle(preview, 250, { leading: false })(e),
-    [preview]
+    [preview],
   );
 
   const submit = async () => {

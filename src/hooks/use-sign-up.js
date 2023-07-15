@@ -11,6 +11,6 @@ export default function useSignUp(options) {
         },
         body: JSON.stringify({ email, firstName }),
       }).then((response) => (response.ok ? response.json() : response)),
-    options
+    options,
   );
 }

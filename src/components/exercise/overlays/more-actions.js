@@ -76,7 +76,7 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
 
   const orderedExercises = React.useMemo(
     () => (exercises ? _.sortBy([...exercises], ['name']) : []),
-    [exercises]
+    [exercises],
   );
 
   return (

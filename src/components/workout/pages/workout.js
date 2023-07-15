@@ -37,7 +37,7 @@ export default function WorkoutPage() {
 
   const onMoreAction = React.useCallback(
     () => toggleWorkoutActions(true),
-    [toggleWorkoutActions]
+    [toggleWorkoutActions],
   );
 
   usePageContext({ title: 'Workout', onMoreAction });
@@ -85,7 +85,7 @@ export default function WorkoutPage() {
     if (!exercises) return {};
 
     return Object.fromEntries(
-      exercises.map((exercise) => [exercise.id, exercise])
+      exercises.map((exercise) => [exercise.id, exercise]),
     );
   }, [exercises]);
 

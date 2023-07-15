@@ -7,7 +7,7 @@ export function useExercise(exerciseId) {
   return useQuery(
     ['exercise', exerciseId],
     () => fetch(`/api/exercise/${exerciseId}`).then((res) => res.json()),
-    { enabled: Boolean(exerciseId) }
+    { enabled: Boolean(exerciseId) },
   );
 }
 
@@ -26,7 +26,7 @@ export function useUpdateExercise() {
         queryClient.invalidateQueries(['exercise', exercise.id]);
         queryClient.invalidateQueries('exercises');
       },
-    }
+    },
   );
 }
 
@@ -50,6 +50,6 @@ export function useDeleteExercise(options) {
         queryClient.invalidateQueries('exercises');
       },
       ...options,
-    }
+    },
   );
 }

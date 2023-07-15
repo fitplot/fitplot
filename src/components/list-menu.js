@@ -33,7 +33,7 @@ export const ListMenuItem = React.forwardRef(
         {children}
       </li>
     );
-  }
+  },
 );
 
 export const ListMenuTextInput = React.forwardRef(
@@ -46,7 +46,7 @@ export const ListMenuTextInput = React.forwardRef(
         className='p-4 w-full placeholder:text-gray-500 disabled:text-gray-400 bg-slate-100'
       />
     </li>
-  )
+  ),
 );
 
 export function ListMenuGroup({ className, title, children }) {

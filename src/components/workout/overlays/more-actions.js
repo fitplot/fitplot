@@ -75,7 +75,7 @@ export default function MoreActions({ workout = {}, open, onClose }) {
                     <CheckIcon
                       className={clsx(
                         { 'text-green-500': Boolean(completedAt) },
-                        'inline-block w-6 h-6'
+                        'inline-block w-6 h-6',
                       )}
                     />
                   )}

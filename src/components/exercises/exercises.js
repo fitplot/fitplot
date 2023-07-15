@@ -20,7 +20,7 @@ export default function ExercisesPage() {
 
   const orderedExercises = React.useMemo(
     () => (exercises ? _.sortBy([...exercises], ['name']) : []),
-    [exercises]
+    [exercises],
   );
 
   const onSelect = React.useCallback(
@@ -28,7 +28,7 @@ export default function ExercisesPage() {
       toggleIsRedirecting(true);
       router.push(`/exercise/${exercise.id}`);
     },
-    [router, toggleIsRedirecting]
+    [router, toggleIsRedirecting],
   );
 
   const isLoading = isLoadingExercises || isRedirecting;

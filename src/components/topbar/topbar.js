@@ -35,7 +35,7 @@ function TopBarButton({ className, Icon, ...props }) {
       {...props}
       className={clsx(
         'flex justify-center items-center w-10 h-full',
-        className
+        className,
       )}
       type='button'
     >
