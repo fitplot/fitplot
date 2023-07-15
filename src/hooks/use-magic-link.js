@@ -1,5 +1,5 @@
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useMutation } from 'react-query';
 
 export default function useMagicLink() {
   const router = useRouter();

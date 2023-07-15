@@ -41,7 +41,11 @@ export default function SignIn() {
   const signUpMutation = useSignUp({
     onSuccess: () => {
       setIsRedirecting(true);
-      router.push('/dashboard');
+      if (isNewUser) {
+        router.push('/welcome');
+      } else {
+        router.push('/dashboard');
+      }
     },
   });
 
@@ -110,6 +114,7 @@ export default function SignIn() {
         )}
         <Button
           className='flex justify-center items-center'
+          variant='primary'
           disabled={disabled}
           onClick={() => submit()}
         >

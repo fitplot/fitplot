@@ -1,10 +1,10 @@
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import queryClient from '../lib/query-client';
 
 export function useExercises(options = {}) {
   return useQuery(
-    'exercises',
+    ['exercises'],
     () => fetch('/api/exercises').then((res) => res.json()),
     options,
   );

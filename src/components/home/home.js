@@ -65,9 +65,9 @@ export default function Home() {
           Star us on GitHub
           <StarIcon className='w-6 pl-2 inline-block text-yellow-500' />
         </Button>
-        <H1 className='text-6xl md:text-7xl tracking-tighter font-extrabold'>
-          <span className='bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-emerald-700'>
-            Track.&nbsp;
+        <H1 className='max-w-full text-6xl md:text-7xl tracking-tighter font-extrabold'>
+          <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-secondary-600'>
+            Track.{' '}
           </span>
           Transform. Triumph.
         </H1>
