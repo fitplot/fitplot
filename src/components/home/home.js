@@ -104,7 +104,7 @@ export default function Home() {
         <Paragraph>Log your workouts and keep a pulse on progress.</Paragraph>
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-7 lg:grid-rows-2'>
           {features.map((feature) => (
-            <HomeFeature {...feature} />
+            <HomeFeature key={feature.title} {...feature} />
           ))}
         </div>
       </section>

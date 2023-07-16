@@ -1,9 +1,11 @@
 import { QueryClient } from '@tanstack/react-query';
 
-export default new QueryClient({
+const client = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Number.POSITIVE_INFINITY,
     },
   },
 });
+
+export default client;

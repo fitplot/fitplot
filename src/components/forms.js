@@ -12,7 +12,7 @@ function Label({ className, ...labelProps }) {
   /* eslint-enable jsx-a11y/label-has-associated-control */
 }
 
-const Input = React.forwardRef((props, ref) => {
+const Input = React.forwardRef(function Input(props, ref) {
   const className = clsx(
     'py-8 px-11 w-full text-lg font-medium placeholder:text-gray-500 disabled:text-gray-400 bg-slate-100',
     props.className,

@@ -34,7 +34,7 @@ function fitcode(rawInput = '', base = {}) {
       count += 1;
     }
   } else {
-    input.split(SET_DELIM).forEach((volumeAndAmount) => {
+    for (const volumeAndAmount of input.split(SET_DELIM)) {
       let [volume, amount] = volumeAndAmount.split(AMOUNT_DELIM);
 
       if (amount === undefined) {
@@ -49,7 +49,7 @@ function fitcode(rawInput = '', base = {}) {
         unit: 'lbs',
         ...base,
       });
-    });
+    }
   }
 
   return sets;

@@ -17,7 +17,10 @@ export default function useWorkouts() {
     paginated &&
     paginated.pages &&
     // eslint-disable-next-line unicorn/no-array-reduce
-    paginated.pages.reduce((acc, page) => [...acc, ...page.workouts], []);
+    paginated.pages.reduce(
+      (accumulator, page) => [...accumulator, ...page.workouts],
+      [],
+    );
 
   return {
     data,
