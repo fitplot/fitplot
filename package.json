@@ -7,7 +7,7 @@
     "start": "next start",
     "test": "echo \"No test suite.\" && exit 0",
     "lint": "eslint --cache .",
-    "format": "prettier --write .",
+    "format": "prettier --check .",
     "prepare": "husky install"
   },
   "dependencies": {
