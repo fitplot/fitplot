@@ -70,12 +70,12 @@ export default function MoreActions({ workout = {}, open, onClose }) {
               >
                 <div className='flex flex-1 space-x-2'>
                   {updateMutation.isLoading ? (
-                    <LoadingIcon className='w-5 h-5' />
+                    <LoadingIcon className='h-5 w-5' />
                   ) : (
                     <CheckIcon
                       className={clsx(
                         { 'text-green-500': Boolean(completedAt) },
-                        'inline-block w-6 h-6',
+                        'inline-block h-6 w-6'
                       )}
                     />
                   )}
@@ -86,7 +86,7 @@ export default function MoreActions({ workout = {}, open, onClose }) {
             <ListMenuGroup>
               <ListMenuItem className='text-slate-500'>
                 <div className='flex flex-1 space-x-2'>
-                  <ClockIcon className='w-6 h-6' />
+                  <ClockIcon className='h-6 w-6' />
                   <span>Started on</span>
                 </div>
                 <div className='mt-auto'>
@@ -95,7 +95,7 @@ export default function MoreActions({ workout = {}, open, onClose }) {
               </ListMenuItem>
               <ListMenuItem className='text-slate-500'>
                 <div className='flex flex-1 space-x-2'>
-                  <ClockIcon className='inline-block w-6 h-6' />
+                  <ClockIcon className='inline-block h-6 w-6' />
                   <span>Last updated on</span>
                 </div>
                 <div className='mt-auto'>
@@ -105,7 +105,7 @@ export default function MoreActions({ workout = {}, open, onClose }) {
               {Boolean(completedAt) && (
                 <ListMenuItem className='text-slate-500'>
                   <div className='flex flex-1 space-x-2'>
-                    <ClockIcon className='inline-block w-6 h-6' />
+                    <ClockIcon className='inline-block h-6 w-6' />
                     <span>Completed on</span>
                   </div>
                   <div className='mt-auto'>
@@ -120,7 +120,7 @@ export default function MoreActions({ workout = {}, open, onClose }) {
                 className='text-red-500'
               >
                 <div className='flex flex-1 items-center space-x-2'>
-                  <TrashIcon className='w-6 h-6' />
+                  <TrashIcon className='h-6 w-6' />
                   <span>Delete</span>
                 </div>
               </ListMenuItem>
@@ -133,7 +133,7 @@ export default function MoreActions({ workout = {}, open, onClose }) {
         onClose={() => toggleRenameWorkout(false)}
         initialFocus={inputRef}
       >
-        <div className='flex flex-col p-4 space-y-4'>
+        <div className='flex flex-col space-y-4 p-4'>
           <div className='flex flex-wrap'>
             <Label htmlFor='workout-name'>Rename this workout</Label>
           </div>
@@ -150,9 +150,9 @@ export default function MoreActions({ workout = {}, open, onClose }) {
             onClick={() => submitRename()}
           >
             {updateMutation.isLoading ? (
-              <LoadingIcon className='w-5 h-5' />
+              <LoadingIcon className='h-5 w-5' />
             ) : (
-              <CheckIcon className='inline-block w-6 h-6' />
+              <CheckIcon className='inline-block h-6 w-6' />
             )}
           </Button>
         </div>
@@ -161,21 +161,21 @@ export default function MoreActions({ workout = {}, open, onClose }) {
         open={showDeleteWorkout}
         onClose={() => toggleDeleteWorkout(false)}
       >
-        <div className='flex flex-col p-4 space-y-4'>
+        <div className='flex flex-col space-y-4 p-4'>
           <div className='flex flex-wrap'>
             <Label htmlFor='workout-name'>
               Are you sure you want to delete this workout?
             </Label>
           </div>
           <Button
-            className='flex justify-center items-center text-white bg-red-500'
+            className='flex items-center justify-center bg-red-500 text-white'
             disabled={deleteMutation.isLoading}
             onClick={() => submitDelete()}
           >
             {deleteMutation.isLoading ? (
-              <LoadingIcon className='w-6 h-6' />
+              <LoadingIcon className='h-6 w-6' />
             ) : (
-              <TrashIcon className='w-6 h-6' />
+              <TrashIcon className='h-6 w-6' />
             )}
           </Button>
         </div>

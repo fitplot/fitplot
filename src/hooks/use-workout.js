@@ -6,7 +6,7 @@ export function useWorkout(workoutId) {
   return useQuery(
     ['workout', workoutId],
     () => fetch(`/api/workout/${workoutId}`).then((res) => res.json()),
-    { enabled: !!workoutId },
+    { enabled: !!workoutId }
   );
 }
 
@@ -26,7 +26,7 @@ export function useCreateWorkout({ onSuccess }) {
         queryClient.invalidateQueries(['workout', workout.id]);
         await onSuccess(workout);
       },
-    },
+    }
   );
 }
 
@@ -45,7 +45,7 @@ export function useUpdateWorkout() {
         queryClient.invalidateQueries('workouts');
         queryClient.invalidateQueries(['workout', workout.id]);
       },
-    },
+    }
   );
 }
 
@@ -60,6 +60,6 @@ export function useDeleteWorkout() {
         queryClient.invalidateQueries('workouts');
         queryClient.invalidateQueries(['workout', workout.id]);
       },
-    },
+    }
   );
 }

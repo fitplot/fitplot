@@ -6,7 +6,7 @@ export function useExercises(options = {}) {
   return useQuery(
     ['exercises'],
     () => fetch('/api/exercises').then((res) => res.json()),
-    options,
+    options
   );
 }
 
@@ -24,6 +24,6 @@ export function useCreateExercise() {
       onSuccess: () => {
         queryClient.invalidateQueries('exercises');
       },
-    },
+    }
   );
 }

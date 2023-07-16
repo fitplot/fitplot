@@ -20,7 +20,7 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
 
   const { data: previousSets } = usePreviousSetsForExercise(
     exercise.id,
-    workoutId,
+    workoutId
   );
   const mutation = useCreateSets();
 
@@ -34,15 +34,15 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
     (e) => {
       const rawInput = e.target.value;
       updateSets(
-        fitcode(rawInput.trim(), { workoutId, exerciseId: exercise.id }),
+        fitcode(rawInput.trim(), { workoutId, exerciseId: exercise.id })
       );
     },
-    [updateSets, workoutId, exercise],
+    [updateSets, workoutId, exercise]
   );
 
   const onChange = React.useCallback(
     (e) => _.throttle(preview, 250, { leading: false })(e),
-    [preview],
+    [preview]
   );
 
   const submit = async () => {
@@ -58,11 +58,11 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
       title='Add Sets'
       initialFocus={inputRef}
     >
-      <div className='flex flex-col p-4 space-y-4'>
+      <div className='flex flex-col space-y-4 p-4'>
         <H2>{exercise?.name}</H2>
         {previousFitcode && (
-          <div className='flex items-center p-4 space-x-4 bg-slate-200 rounded'>
-            <InformationCircleIcon className='w-6 h-6 text-blue-500' />
+          <div className='flex items-center space-x-4 rounded bg-slate-200 p-4'>
+            <InformationCircleIcon className='h-6 w-6 text-blue-500' />
             <div className='grow p-2'>
               <div className='text-sm text-slate-500'>
                 <span>Last time you did this exercise for</span>
@@ -91,7 +91,7 @@ export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
           disabled={!(sets && sets.length > 0)}
           onClick={submit}
         >
-          <CheckIcon className='inline-block w-6 h-6' />
+          <CheckIcon className='inline-block h-6 w-6' />
         </Button>
       </div>
     </Overlay>

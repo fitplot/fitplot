@@ -29,29 +29,29 @@ export default function Overlay({
         onClose={onClose}
         initialFocus={initialFocus}
       >
-        <div className='flex overflow-hidden flex-col w-full h-full divide-y'>
+        <div className='flex h-full w-full flex-col divide-y overflow-hidden'>
           <Dialog.Title
             as='div'
-            className='flex relative grow-0 shrink-0 justify-center items-stretch h-12 text-lg'
+            className='relative flex h-12 shrink-0 grow-0 items-stretch justify-center text-lg'
           >
             <div className='flex flex-1 items-center' />
             <H6
               as='h2'
-              className='flex flex-1 justify-center items-center whitespace-nowrap'
+              className='flex flex-1 items-center justify-center whitespace-nowrap'
             >
               {title}
             </H6>
-            <div className='flex flex-1 justify-end items-center'>
+            <div className='flex flex-1 items-center justify-end'>
               <button
                 type='button'
-                className='px-4 h-full font-medium'
+                className='h-full px-4 font-medium'
                 onClick={onClose}
               >
-                <XMarkIcon className='w-6 h-6' />
+                <XMarkIcon className='h-6 w-6' />
               </button>
             </div>
           </Dialog.Title>
-          <div className='flex overflow-y-auto flex-col grow'>{children}</div>
+          <div className='flex grow flex-col overflow-y-auto'>{children}</div>
         </div>
       </Dialog>
     </Transition>

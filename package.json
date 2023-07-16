@@ -37,7 +37,7 @@
     "eslint-plugin-unicorn": "^48.0.0",
     "husky": "^7.0.0",
     "postcss": "^8.3.11",
-    "prettier": "^3.0.0",
+    "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0"
   },
   "volta": {
@@ -94,5 +94,13 @@
         }
       ]
     }
+  },
+  "prettier": {
+    "editorconfig": true,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
   }
 }

@@ -63,7 +63,7 @@ function HeadCell({ children, className }) {
     <div
       className={clsx(
         className,
-        'bg-slate-50 text-xs font-medium uppercase text-slate-500',
+        'bg-slate-50 text-xs font-medium uppercase text-slate-500'
       )}
     >
       {children}
@@ -76,7 +76,7 @@ function Cell({ children, className }) {
     <div
       className={clsx(
         className,
-        'bg-slate-100 text-sm font-medium text-slate-900',
+        'bg-slate-100 text-sm font-medium text-slate-900'
       )}
     >
       {children}

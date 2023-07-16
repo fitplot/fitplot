@@ -16,6 +16,6 @@ export default function useUser(options = {}) {
         if (error.status === 401) router.push('/sign-in');
       },
       ...options,
-    },
+    }
   );
 }

@@ -20,9 +20,9 @@ export default function AddExercise({ open, onClose }) {
 
   return (
     <Overlay title='Add Exercise' open={open} onClose={onClose}>
-      {isLoading && <LoadingIcon className='w-5 h-5' />}
+      {isLoading && <LoadingIcon className='h-5 w-5' />}
       {!isLoading && (
-        <div className='flex flex-col p-4 space-y-4 h-full'>
+        <div className='flex h-full flex-col space-y-4 p-4'>
           <Combobox
             options={exercises}
             field='name'

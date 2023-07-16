@@ -43,7 +43,7 @@ export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
   return (
     <>
       <Overlay open={open} onClose={onClose} title='Edit Set'>
-        <div className='flex flex-col p-4 space-y-4'>
+        <div className='flex flex-col space-y-4 p-4'>
           <div className='p-4 font-medium text-gray-900'>{exercise.name}</div>
           <div className='flex flex-wrap'>
             <Label htmlFor='volume'>Volume</Label>
@@ -69,7 +69,7 @@ export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
               disabled={updateMutation.isLoading}
               onClick={() => toggleDeleteWorkout(true)}
             >
-              <TrashIcon className='w-6 h-6' />
+              <TrashIcon className='h-6 w-6' />
             </Button>
             <Button
               className='flex flex-1 justify-center'
@@ -77,9 +77,9 @@ export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
               onClick={() => submitUpdate()}
             >
               {updateMutation.isLoading ? (
-                <LoadingIcon className='inline-block w-6 h-6' />
+                <LoadingIcon className='inline-block h-6 w-6' />
               ) : (
-                <CheckIcon className='inline-block w-6 h-6' />
+                <CheckIcon className='inline-block h-6 w-6' />
               )}
             </Button>
           </div>
@@ -89,21 +89,21 @@ export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
         open={showDeleteWorkout}
         onClose={() => toggleDeleteWorkout(false)}
       >
-        <div className='flex flex-col p-4 space-y-4'>
+        <div className='flex flex-col space-y-4 p-4'>
           <div className='flex flex-wrap'>
             <Label htmlFor='workout-name'>
               Are you sure you want to delete this set?
             </Label>
           </div>
           <Button
-            className='flex justify-center items-center text-white bg-red-500'
+            className='flex items-center justify-center bg-red-500 text-white'
             disabled={deleteMutation.isLoading}
             onClick={() => submitDelete()}
           >
             {deleteMutation.isLoading ? (
-              <LoadingIcon className='w-6 h-6' />
+              <LoadingIcon className='h-6 w-6' />
             ) : (
-              <TrashIcon className='w-6 h-6' />
+              <TrashIcon className='h-6 w-6' />
             )}
           </Button>
         </div>

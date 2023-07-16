@@ -26,7 +26,7 @@ export default function AddWorkout({ open, onClose }) {
 
   return (
     <Overlay open={open} onClose={onClose} title='Add Workout'>
-      <div className='flex flex-col p-4 space-y-4'>
+      <div className='flex flex-col space-y-4 p-4'>
         <div className='flex flex-wrap'>
           <Label htmlFor='workout-name'>Name this workout</Label>
         </div>
@@ -37,9 +37,9 @@ export default function AddWorkout({ open, onClose }) {
           onClick={() => submit()}
         >
           {mutation.isLoading ? (
-            <LoadingIcon className='inline-block w-6 h-6' />
+            <LoadingIcon className='inline-block h-6 w-6' />
           ) : (
-            <CheckIcon className='inline-block w-6 h-6' />
+            <CheckIcon className='inline-block h-6 w-6' />
           )}
         </Button>
       </div>

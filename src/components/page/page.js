@@ -13,11 +13,11 @@ export default function Page({ children, user }) {
       {Boolean(user) && <SideBar user={user} toggleMenu={() => toggleMenu()} />}
       <div
         className={clsx(
-          'flex h-full flex-col overflow-hidden overscroll-none break-words transition-translate duration-200 ease-in bg-white',
+          'transition-translate flex h-full flex-col overflow-hidden overscroll-none break-words bg-white duration-200 ease-in',
           {
             'translate-x-3/4': isMenuToggled,
             'translate-x-0': !isMenuToggled,
-          },
+          }
         )}
       >
         <TopBar noop={Boolean(!user)} onToggleMenu={() => toggleMenu()} />
@@ -48,7 +48,7 @@ export function PageContextProvider({ children }) {
         onMoreAction,
       });
     },
-    [setValue],
+    [setValue]
   );
 
   const reset = React.useCallback(() => {
@@ -65,7 +65,7 @@ export function PageContextProvider({ children }) {
       set,
       reset,
     }),
-    [set, reset, value],
+    [set, reset, value]
   );
 
   return (

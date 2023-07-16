@@ -31,7 +31,7 @@ export default function Timeline() {
     if (!workouts) return [];
 
     const workoutsByWeek = _.groupBy(workouts, ({ createdAt }) =>
-      dayjs(createdAt).week(),
+      dayjs(createdAt).week()
     );
 
     return Object.entries(workoutsByWeek)
@@ -63,14 +63,14 @@ export default function Timeline() {
   }, [isLoading, isFetchingNextPage, hasNextPage, intersection, fetchNextPage]);
 
   return (
-    <div className='flex-1 flex flex-col'>
+    <div className='flex flex-1 flex-col'>
       {groups.map((group) => (
         <TimelineRow key={group.week} group={group} />
       ))}
       {/* Watch bottom of list for infinite scroll */}
       <div ref={ref} className='border-b border-red-500' />
       {isFetchingNextPage && (
-        <LoadingIcon className='w-6 h-6 mt-2 self-center' />
+        <LoadingIcon className='mt-2 h-6 w-6 self-center' />
       )}
     </div>
   );
@@ -79,7 +79,7 @@ export default function Timeline() {
 function TimelineRow({ group }) {
   return (
     <div className='flex hover:bg-white'>
-      <div className='flex-1 flex'>
+      <div className='flex flex-1'>
         <TimelineBlock group={group} />
         <Summary group={group} />
       </div>
@@ -89,16 +89,16 @@ function TimelineRow({ group }) {
 
 function TimelineBlock({ group }) {
   return (
-    <div className='h-full shrink-0 w-10 md:w-16 relative'>
+    <div className='relative h-full w-10 shrink-0 md:w-16'>
       <div
-        className={clsx('absolute w-px right-0 top-[5px] bottom-[4px]', {
+        className={clsx('absolute right-0 top-[5px] bottom-[4px] w-px', {
           'bg-gray-200': !group.active,
           'bg-secondary-500': group.active,
         })}
       />
-      <div className='flex items-center justify-end absolute right-[-4px] bottom-[-20px] h-[40px]'>
+      <div className='absolute right-[-4px] bottom-[-20px] flex h-[40px] items-center justify-end'>
         {group.date && (
-          <span className='text-xs text-slate-500 text-right'>
+          <span className='text-right text-xs text-slate-500'>
             {dayjs(group.date).format('MMM')}
             <br />
             {dayjs(group.date).format('D')}
@@ -113,8 +113,8 @@ function TimelineBlock({ group }) {
 function TimelinePoint({ active }) {
   return (
     <div
-      className={clsx('w-[9px] h-[9px] rounded-full ml-2 md:ml-8 border', {
-        'bg-secondary-500 border-secondary-500': active,
+      className={clsx('ml-2 h-[9px] w-[9px] rounded-full border md:ml-8', {
+        'border-secondary-500 bg-secondary-500': active,
       })}
     />
   );
@@ -122,8 +122,8 @@ function TimelinePoint({ active }) {
 
 function Summary({ group }) {
   return (
-    <div className='flex-1 flex items-center gap-2 mb-[1px] ml-6 md:ml-10 border-b py-6'>
-      <ChevronRightIcon className='w-4 h-4 inline-block' />
+    <div className='mb-[1px] ml-6 flex flex-1 items-center gap-2 border-b py-6 md:ml-10'>
+      <ChevronRightIcon className='inline-block h-4 w-4' />
       <span className='flex-1 font-medium'>Week {group.week}</span>
       <WeekDots className='flex' workouts={group.workouts} />
     </div>
@@ -146,7 +146,7 @@ function WeekDots({ workouts, className }) {
         return (
           <div
             key={day}
-            className='flex w-[8px] h-[8px] items-center justify-center'
+            className='flex h-[8px] w-[8px] items-center justify-center'
           >
             <WeekdayDot count={count} />
           </div>
@@ -160,8 +160,8 @@ function WeekdayDot({ count }) {
   return (
     <div
       className={clsx('rounded-full', {
-        'w-[6px] h-[6px] bg-slate-200': count === 0,
-        'w-[9px] h-[9px] bg-emerald-500': count > 0,
+        'h-[6px] w-[6px] bg-slate-200': count === 0,
+        'h-[9px] w-[9px] bg-emerald-500': count > 0,
       })}
     />
   );

@@ -15,7 +15,7 @@ function Label({ className, ...labelProps }) {
 const Input = React.forwardRef(function Input(props, ref) {
   const className = clsx(
     'py-8 px-11 w-full text-lg font-medium placeholder:text-gray-500 disabled:text-gray-400 bg-slate-100',
-    props.className,
+    props.className
   );
 
   if (props.type === 'textarea') {

@@ -23,7 +23,7 @@ export default function Button({
         'bg-slate-100 cursor-not-allowed': props.disabled,
         rounded: className && !className.includes('rounded'),
       },
-      className,
+      className
     ),
   };
 

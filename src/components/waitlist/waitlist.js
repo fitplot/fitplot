@@ -45,9 +45,9 @@ export default function Waitlist() {
   const disabled = isLoading;
 
   return (
-    <div className='flex-1 flex flex-col mx-auto items-center container'>
-      <section className='flex-1 flex flex-col space-y-8 text-center items-center pt-28'>
-        <H1 className='tracking-tighter font-extrabold'>
+    <div className='container mx-auto flex flex-1 flex-col items-center'>
+      <section className='flex flex-1 flex-col items-center space-y-8 pt-28 text-center'>
+        <H1 className='font-extrabold tracking-tighter'>
           <Balancer>
             Join the waitlist and transform your fitness productivity.
           </Balancer>
@@ -58,7 +58,7 @@ export default function Waitlist() {
         </Paragraph>
         {isComplete && (
           <InfoCard variant='success'>
-            <SparklesIcon className='w-6 h-6 pr-2' />
+            <SparklesIcon className='h-6 w-6 pr-2' />
             <span>
               We sent you a magic link. Please check your email inbox.
             </span>
@@ -66,11 +66,11 @@ export default function Waitlist() {
         )}
         {isRateLimited && (
           <InfoCard variant='warn'>
-            <HandRaisedIcon className='w-6 h-6 pr-2' />
+            <HandRaisedIcon className='h-6 w-6 pr-2' />
             <span>Whoa, hold your horses there. Please slow down.</span>
           </InfoCard>
         )}
-        <div className='flex flex-col gap-4 w-full text-left max-w-lg'>
+        <div className='flex w-full max-w-lg flex-col gap-4 text-left'>
           <Label htmlFor='email'>Email</Label>
           <Input
             id='email'
@@ -100,7 +100,7 @@ export default function Waitlist() {
             ) : (
               <span>
                 Secure Your Spot
-                <ArrowRightIcon className='pl-2 inline-block h-6' />
+                <ArrowRightIcon className='inline-block h-6 pl-2' />
               </span>
             )}
           </Button>

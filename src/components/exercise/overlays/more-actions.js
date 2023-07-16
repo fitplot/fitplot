@@ -76,7 +76,7 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
 
   const orderedExercises = React.useMemo(
     () => (exercises ? _.sortBy([...exercises], ['name']) : []),
-    [exercises],
+    [exercises]
   );
 
   return (
@@ -94,7 +94,7 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
           <ListMenuGroup>
             <ListMenuItem className='text-slate-500'>
               <div className='flex flex-1 space-x-2'>
-                <ClockIcon className='w-6 h-6' />
+                <ClockIcon className='h-6 w-6' />
                 <span>Created on</span>
               </div>
               <div className='mt-auto'>
@@ -103,7 +103,7 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
             </ListMenuItem>
             <ListMenuItem className='text-slate-500'>
               <div className='flex flex-1 space-x-2'>
-                <ClockIcon className='inline-block w-6 h-6' />
+                <ClockIcon className='inline-block h-6 w-6' />
                 <span>Last updated on</span>
               </div>
               <div className='mt-auto'>
@@ -117,7 +117,7 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
               className='text-red-500'
             >
               <div className='flex flex-1 items-center space-x-2'>
-                <TrashIcon className='w-6 h-6' />
+                <TrashIcon className='h-6 w-6' />
                 <span>Delete</span>
               </div>
             </ListMenuItem>
@@ -128,7 +128,7 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
         open={showRenameExercise}
         onClose={() => toggleRenameExercise(false)}
       >
-        <div className='flex flex-col p-4 space-y-4'>
+        <div className='flex flex-col space-y-4 p-4'>
           <div className='flex flex-wrap'>
             <Label htmlFor='exercise-name'>Rename this workout</Label>
           </div>
@@ -145,9 +145,9 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
             onClick={() => submitRename()}
           >
             {updateMutation.isLoading ? (
-              <LoadingIcon className='w-5 h-5' />
+              <LoadingIcon className='h-5 w-5' />
             ) : (
-              <CheckIcon className='inline-block w-6 h-6' />
+              <CheckIcon className='inline-block h-6 w-6' />
             )}
           </Button>
         </div>
@@ -156,19 +156,19 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
         open={showDeleteExercise}
         onClose={() => toggleDeleteExercise(false)}
       >
-        <div className='flex flex-col p-4 space-y-4'>
+        <div className='flex flex-col space-y-4 p-4'>
           <div className='flex flex-wrap'>
             <Label>Are you sure you want to delete this exercise?</Label>
           </div>
           <Button
-            className='flex justify-center items-center text-white bg-red-500'
+            className='flex items-center justify-center bg-red-500 text-white'
             disabled={deleteMutation.isLoading}
             onClick={() => submitDelete()}
           >
             {deleteMutation.isLoading ? (
-              <LoadingIcon className='w-6 h-6' />
+              <LoadingIcon className='h-6 w-6' />
             ) : (
-              <TrashIcon className='w-6 h-6' />
+              <TrashIcon className='h-6 w-6' />
             )}
           </Button>
         </div>
@@ -177,7 +177,7 @@ export default function MoreActions({ open, onClose, exercise = {} }) {
         open={showReassignExercise}
         onClose={() => toggleReassignExercise(false)}
       >
-        <div className='flex flex-col p-4 space-y-4'>
+        <div className='flex flex-col space-y-4 p-4'>
           <div className='flex flex-wrap'>
             <Paragraph>
               This exercise has sets. You will need to pick another exercise to

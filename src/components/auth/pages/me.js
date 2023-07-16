@@ -12,16 +12,16 @@ export default function Me({ user }) {
   });
 
   return (
-    <div className='flex flex-col flex-1 space-y-4'>
+    <div className='flex flex-1 flex-col space-y-4'>
       <H1>{user.firstName}</H1>
       <Label htmlFor='email'>Email</Label>
       <Input type='text' id='email' readOnly disabled value={user.email} />
       <Button
-        className='flex justify-center items-center'
+        className='flex items-center justify-center'
         disabled={mutation.isLoading}
         onClick={() => mutation.mutate()}
       >
-        {mutation.isLoading ? <LoadingIcon className='w-6 h-6' /> : 'Sign Out'}
+        {mutation.isLoading ? <LoadingIcon className='h-6 w-6' /> : 'Sign Out'}
       </Button>
     </div>
   );

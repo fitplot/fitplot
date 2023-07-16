@@ -7,7 +7,7 @@ export default function TopBar({ noop, onToggleMenu }) {
   const { title, onMoreAction } = usePageContextValues();
 
   return (
-    <div className='flex justify-between items-center px-1 h-12 bg-slate-50 border-b'>
+    <div className='flex h-12 items-center justify-between border-b bg-slate-50 px-1'>
       {!noop && (
         <TopBarButton
           Icon={Bars3Icon}
@@ -15,7 +15,7 @@ export default function TopBar({ noop, onToggleMenu }) {
           onClick={onToggleMenu}
         />
       )}
-      <div className='flex grow justify-center items-center'>
+      <div className='flex grow items-center justify-center'>
         <span className='font-medium'>{title}</span>
       </div>
       {!noop && onMoreAction && (
@@ -34,12 +34,12 @@ function TopBarButton({ className, Icon, ...props }) {
     <button
       {...props}
       className={clsx(
-        'flex justify-center items-center w-10 h-full',
-        className,
+        'flex h-full w-10 items-center justify-center',
+        className
       )}
       type='button'
     >
-      <Icon className='w-6 h-6' />
+      <Icon className='h-6 w-6' />
     </button>
   );
 }

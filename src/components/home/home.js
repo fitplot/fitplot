@@ -22,51 +22,51 @@ export default function Home() {
       title: 'Log Your Workouts',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      icon: <PencilSquareIcon className='w-6 inline-block' />,
+      icon: <PencilSquareIcon className='inline-block w-6' />,
       className: 'md:col-span-2',
     },
     {
       title: 'Data is Progress',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      icon: <ChartBarIcon className='w-6 inline-block' />,
+      icon: <ChartBarIcon className='inline-block w-6' />,
       className: 'md:col-span-3',
     },
     {
       title: 'Progressive Overload',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      icon: <ChartBarIcon className='w-6 inline-block' />,
+      icon: <ChartBarIcon className='inline-block w-6' />,
       className: 'md:col-span-2 md:row-span-2',
     },
     {
       title: 'Open Source',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      icon: <BookOpenIcon className='w-6 inline-block' />,
+      icon: <BookOpenIcon className='inline-block w-6' />,
       className: 'md:col-span-3',
     },
     {
       title: 'Open Source',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      icon: <BookOpenIcon className='w-6 inline-block' />,
+      icon: <BookOpenIcon className='inline-block w-6' />,
       className: 'md:col-span-2',
     },
   ];
 
   return (
-    <div className='flex-1 flex flex-col gap-20 md:gap-36'>
+    <div className='flex flex-1 flex-col gap-20 md:gap-36'>
       <header className='flex flex-col items-center justify-center gap-6 pt-28 text-center'>
         <Button
           href='https://github.com/nexus-fitness/nexus'
-          className='flex justify-center rounded-full py-0 leading-loose border border-slate-300 text-sm'
+          className='flex justify-center rounded-full border border-slate-300 py-0 text-sm leading-loose'
         >
           Star us on GitHub
-          <StarIcon className='w-6 pl-2 inline-block text-yellow-500' />
+          <StarIcon className='inline-block w-6 pl-2 text-yellow-500' />
         </Button>
-        <H1 className='max-w-full text-6xl md:text-7xl tracking-tighter font-extrabold'>
-          <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-secondary-600'>
+        <H1 className='max-w-full text-6xl font-extrabold tracking-tighter md:text-7xl'>
+          <span className='bg-gradient-to-r from-primary-400 to-secondary-600 bg-clip-text text-transparent'>
             Track.{' '}
           </span>
           Transform. Triumph.
@@ -79,10 +79,10 @@ export default function Home() {
             Never leave progress on the table. Track your fitness journey.
           </Balancer>
         </Paragraph>
-        <div className='flex flex-col w-full gap-4 md:flex-row md:justify-center'>
+        <div className='flex w-full flex-col gap-4 md:flex-row md:justify-center'>
           <Button href='#features' className='block'>
             Features
-            <ArrowDownIcon className='inline-block pl-2 w-6' />
+            <ArrowDownIcon className='inline-block w-6 pl-2' />
           </Button>
           <Button
             variant='primary'
@@ -90,15 +90,15 @@ export default function Home() {
             href='/waitlist'
           >
             Join the waitlist
-            <ArrowRightIcon className='inline-block pl-2 w-6' />
+            <ArrowRightIcon className='inline-block w-6 pl-2' />
           </Button>
         </div>
       </header>
       <section
         id='features'
-        className='flex flex-col container mx-auto gap-6 text-center'
+        className='container mx-auto flex flex-col gap-6 text-center'
       >
-        <H1 className='text-5xl md:text-6xl tracking-tighter font-extrabold'>
+        <H1 className='text-5xl font-extrabold tracking-tighter md:text-6xl'>
           <Balancer>Notetaking built for fitness.</Balancer>
         </H1>
         <Paragraph>Log your workouts and keep a pulse on progress.</Paragraph>
@@ -108,8 +108,8 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className='flex flex-col container mx-auto items-center gap-6'>
-        <H1 className='text-5xl md:text-6xl tracking-tighter font-extrabold text-center'>
+      <section className='container mx-auto flex flex-col items-center gap-6'>
+        <H1 className='text-center text-5xl font-extrabold tracking-tighter md:text-6xl'>
           <Balancer>Our Story</Balancer>
         </H1>
         <Paragraph className='md:max-w-xl'>
@@ -150,7 +150,7 @@ export default function Home() {
         </Paragraph>
       </section>
       <section className='flex flex-col gap-6 text-center'>
-        <H1 className='text-5xl md:text-6xl tracking-tighter font-extrabold'>
+        <H1 className='text-5xl font-extrabold tracking-tighter md:text-6xl'>
           <Balancer>FAQ</Balancer>
         </H1>
         <Paragraph>Coming Soon&trade;</Paragraph>
@@ -185,7 +185,7 @@ function HomeFeature({ title, className, icon = null, description = '' }) {
     <div
       className={clsx(
         className,
-        'text-left bg-gradient-to-br flex flex-col gap-4 bg-slate-100 border rounded from-slate-50 to-slate-100 p-8',
+        'flex flex-col gap-4 rounded border bg-slate-100 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-left'
       )}
     >
       {icon && <span className='pr-2'>{icon}</span>}

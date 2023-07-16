@@ -31,7 +31,7 @@ function Workout({ workout = {} }) {
   return (
     <Link
       href={`/workout/${id}`}
-      className='flex bg-white border border-slate-200'
+      className='flex border border-slate-200 bg-white'
     >
       <div className='grow p-2'>
         <div>

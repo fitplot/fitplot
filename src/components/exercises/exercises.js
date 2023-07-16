@@ -20,7 +20,7 @@ export default function ExercisesPage() {
 
   const orderedExercises = React.useMemo(
     () => (exercises ? _.sortBy([...exercises], ['name']) : []),
-    [exercises],
+    [exercises]
   );
 
   const onSelect = React.useCallback(
@@ -28,15 +28,15 @@ export default function ExercisesPage() {
       toggleIsRedirecting(true);
       router.push(`/exercise/${exercise.id}`);
     },
-    [router, toggleIsRedirecting],
+    [router, toggleIsRedirecting]
   );
 
   const isLoading = isLoadingExercises || isRedirecting;
 
   if (isLoading)
     return (
-      <div className='flex flex-col grow space-y-2'>
-        <LoadingIcon className='self-center w-12 h-12' />
+      <div className='flex grow flex-col space-y-2'>
+        <LoadingIcon className='h-12 w-12 self-center' />
       </div>
     );
 
@@ -45,7 +45,7 @@ export default function ExercisesPage() {
       <Head>
         <title>Exercises</title>
       </Head>
-      <div className='flex flex-col flex-1 h-full'>
+      <div className='flex h-full flex-1 flex-col'>
         <Combobox
           placeholder='Search exercises'
           options={orderedExercises}

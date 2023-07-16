@@ -30,16 +30,16 @@ export default function SideBar({ user, toggleMenu }) {
   };
 
   return (
-    <div className='flex overflow-y-auto fixed top-0 left-0 flex-col w-9/12 h-full bg-slate-100'>
-      <HeaderBar user={user} navigate={navigate} className='grow-0 shrink-0' />
-      <MainMenu navigate={navigate} className='grow my-4' />
+    <div className='fixed top-0 left-0 flex h-full w-9/12 flex-col overflow-y-auto bg-slate-100'>
+      <HeaderBar user={user} navigate={navigate} className='shrink-0 grow-0' />
+      <MainMenu navigate={navigate} className='my-4 grow' />
     </div>
   );
 }
 
 function HeaderBar({ user, navigate, className }) {
   return (
-    <div className={clsx('flex justify-center px-1 h-12 border-b', className)}>
+    <div className={clsx('flex h-12 justify-center border-b px-1', className)}>
       <ActiveUser user={user} navigate={navigate} className='grow' />
       <SideBarButton Icon={BellIcon} />
     </div>
@@ -51,12 +51,12 @@ function ActiveUser({ user, navigate, className }) {
     <button
       type='button'
       className={clsx(
-        'flex justify-center items-center space-x-2 h-full',
-        className,
+        'flex h-full items-center justify-center space-x-2',
+        className
       )}
       onClick={() => navigate('/me')}
     >
-      <UserIcon className='inline-block w-6 h-6' />
+      <UserIcon className='inline-block h-6 w-6' />
       <span>{user.firstName}</span>
     </button>
   );
@@ -67,12 +67,12 @@ function SideBarButton({ Icon, className, ...props }) {
     <button
       {...props}
       className={clsx(
-        'flex justify-center items-center w-10 h-full',
-        className,
+        'flex h-full w-10 items-center justify-center',
+        className
       )}
       type='button'
     >
-      <Icon className='w-6 h-6' />
+      <Icon className='h-6 w-6' />
     </button>
   );
 }
@@ -83,8 +83,8 @@ function MainMenu({ className, navigate }) {
       {links.map((link) => (
         <MainMenuLink key={link.title} navigate={navigate} {...link} />
       ))}
-      <ListMenuItem className='space-x-2 text-slate-500 bg-transparent'>
-        <CogIcon className='w-6 h-6' />
+      <ListMenuItem className='space-x-2 bg-transparent text-slate-500'>
+        <CogIcon className='h-6 w-6' />
         <span>Build {getBuildId()}</span>
       </ListMenuItem>
     </ListMenu>

@@ -78,7 +78,7 @@ export default function SignIn() {
       <div className='flex flex-col space-y-4'>
         {isComplete && (
           <InfoCard variant='success'>
-            <SparklesIcon className='w-6 h-6 pr-2' />
+            <SparklesIcon className='h-6 w-6 pr-2' />
             <span>
               We sent you a magic link. Please check your email inbox.
             </span>
@@ -86,7 +86,7 @@ export default function SignIn() {
         )}
         {isRateLimited && (
           <InfoCard variant='warn'>
-            <HandRaisedIcon className='w-6 h-6 pr-2' />
+            <HandRaisedIcon className='h-6 w-6 pr-2' />
             <span>Whoa, hold your horses there. Please slow down.</span>
           </InfoCard>
         )}
@@ -113,15 +113,15 @@ export default function SignIn() {
           </>
         )}
         <Button
-          className='flex justify-center items-center'
+          className='flex items-center justify-center'
           variant='primary'
           disabled={disabled}
           onClick={() => submit()}
         >
           {isLoading ? (
-            <LoadingIcon className='w-6 h-6' />
+            <LoadingIcon className='h-6 w-6' />
           ) : (
-            <CheckIcon className='w-6 h-6' />
+            <CheckIcon className='h-6 w-6' />
           )}
         </Button>
       </div>

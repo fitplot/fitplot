@@ -11,13 +11,13 @@ export function ListMenu({ className, children }) {
 // TODO: FIX: the `divide-y` borders between list items and groups are interacting pretty wonky
 export const ListMenuItem = React.forwardRef(function ListMenuItem(
   { className, onClick, children },
-  ref,
+  ref
 ) {
   if (onClick)
     return (
       <li className='flex'>
         <button
-          className={clsx('flex grow p-4 font-medium bg-white', className)}
+          className={clsx('flex grow bg-white p-4 font-medium', className)}
           ref={ref}
           type='button'
           onClick={onClick}
@@ -28,7 +28,7 @@ export const ListMenuItem = React.forwardRef(function ListMenuItem(
     );
 
   return (
-    <li className={clsx('flex items-center p-4 bg-white', className)} ref={ref}>
+    <li className={clsx('flex items-center bg-white p-4', className)} ref={ref}>
       {children}
     </li>
   );
@@ -36,7 +36,7 @@ export const ListMenuItem = React.forwardRef(function ListMenuItem(
 
 export const ListMenuTextInput = React.forwardRef(function ListMenuTextInput(
   { className, ...props },
-  ref,
+  ref
 ) {
   return (
     <li className={clsx('bg-white', className)}>
@@ -44,7 +44,7 @@ export const ListMenuTextInput = React.forwardRef(function ListMenuTextInput(
         type='text'
         ref={ref}
         {...props}
-        className='p-4 w-full placeholder:text-gray-500 disabled:text-gray-400 bg-slate-100'
+        className='w-full bg-slate-100 p-4 placeholder:text-gray-500 disabled:text-gray-400'
       />
     </li>
   );

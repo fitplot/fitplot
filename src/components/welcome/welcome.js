@@ -13,13 +13,13 @@ export default function Welcome() {
   const [theme, setTheme] = React.useState('light');
 
   return (
-    <div className='flex-1 items-center justify-center flex flex-col'>
-      <div className='flex flex-col gap-8 md:max-w-xl text-center'>
+    <div className='flex flex-1 flex-col items-center justify-center'>
+      <div className='flex flex-col gap-8 text-center md:max-w-xl'>
         <H3 as='h1'>Choose your style</H3>
         <Paragraph>
           You can change your mind later in your preferences.
         </Paragraph>
-        <fieldset className='flex rounded-lg border overflow-hidden'>
+        <fieldset className='flex overflow-hidden rounded-lg border'>
           <legend className='sr-only'>Select a theme</legend>
           <ThemeToggle
             value='light'
@@ -52,9 +52,9 @@ function ThemeToggle({ value, label, name, isSelected, onChange, bgColor }) {
   return (
     <label
       htmlFor={id}
-      className={clsx('flex-1 flex flex-col p-6 items-center justify-center', {
+      className={clsx('flex flex-1 flex-col items-center justify-center p-6', {
         'bg-slate-100': isSelected,
-        'bg-white cursor-pointer hover:bg-slate-50': !isSelected,
+        'cursor-pointer bg-white hover:bg-slate-50': !isSelected,
       })}
     >
       <input
@@ -62,12 +62,12 @@ function ThemeToggle({ value, label, name, isSelected, onChange, bgColor }) {
         type='radio'
         name={name}
         value={value}
-        className='invisible w-0 h-0'
+        className='invisible h-0 w-0'
         onChange={onChange}
       />
       <div className='flex flex-col gap-2'>
         <div
-          className={clsx(bgColor, 'w-12 h-12 rounded-full border-4', {
+          className={clsx(bgColor, 'h-12 w-12 rounded-full border-4', {
             'border-emerald-600': isSelected,
           })}
         >

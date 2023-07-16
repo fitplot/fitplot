@@ -29,7 +29,7 @@ export default function CustomCombobox({
       return options.filter((option) =>
         (field ? option[field] : option)
           .toLowerCase()
-          .includes(query.toLowerCase()),
+          .includes(query.toLowerCase())
       );
     }
 
@@ -40,10 +40,9 @@ export default function CustomCombobox({
     () =>
       options.some(
         (option) =>
-          query.toLowerCase() ===
-          (field ? option[field] : option).toLowerCase(),
+          query.toLowerCase() === (field ? option[field] : option).toLowerCase()
       ),
-    [options, query, field],
+    [options, query, field]
   );
 
   return (
@@ -55,7 +54,7 @@ export default function CustomCombobox({
         displayValue={(option) => (field ? option[field] : option)}
       />
       <Combobox.Options
-        className='flex overflow-y-auto flex-col grow pt-2 pb-4 bg-slate-100 divide-y'
+        className='flex grow flex-col divide-y overflow-y-auto bg-slate-100 pt-2 pb-4'
         static={defaultFilter === ComboboxDefault.All}
       >
         <ListMenuGroup

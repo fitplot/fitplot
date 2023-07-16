@@ -33,7 +33,7 @@ export default function WorkoutsPage() {
 
   const onMoreAction = React.useCallback(
     () => toggleMoreActions(true),
-    [toggleMoreActions],
+    [toggleMoreActions]
   );
 
   usePageContext({
@@ -66,7 +66,7 @@ export default function WorkoutsPage() {
         {/* Watch bottom of list for infinite scroll */}
         <div ref={ref} className='border-b border-red-500' />
         {isFetchingNextPage && (
-          <LoadingIcon className='w-6 h-6 mt-2 self-center' />
+          <LoadingIcon className='mt-2 h-6 w-6 self-center' />
         )}
       </div>
       <AddWorkout

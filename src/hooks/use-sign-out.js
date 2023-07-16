@@ -12,6 +12,6 @@ export default function useSignOut(options) {
 
         return response;
       }),
-    options,
+    options
   );
 }

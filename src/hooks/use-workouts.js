@@ -7,10 +7,10 @@ export default function useWorkouts() {
       const search = new URLSearchParams();
       if (cursor) search.set('cursor', cursor);
       return fetch(`/api/workouts?${search.toString()}`).then((res) =>
-        res.json(),
+        res.json()
       );
     },
-    { getNextPageParam: (lastPage) => lastPage.cursor },
+    { getNextPageParam: (lastPage) => lastPage.cursor }
   );
 
   const data =
@@ -19,7 +19,7 @@ export default function useWorkouts() {
     // eslint-disable-next-line unicorn/no-array-reduce
     paginated.pages.reduce(
       (accumulator, page) => [...accumulator, ...page.workouts],
-      [],
+      []
     );
 
   return {

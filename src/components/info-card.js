@@ -17,9 +17,9 @@ export default function InfoCard({
   return (
     <div
       className={clsx(
-        'flex items-center p-4 mb-4 text-sm rounded-lg',
+        'mb-4 flex items-center rounded-lg p-4 text-sm',
         style,
-        className,
+        className
       )}
       role='alert'
       {...props}
