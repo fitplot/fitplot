@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { URLSearchParams } from 'next/dist/compiled/@edge-runtime/primitives/url';
 
 import queryClient from '../lib/query-client';
 

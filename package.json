@@ -13,9 +13,11 @@
   "dependencies": {
     "@headlessui/react": "^1.7.11",
     "@heroicons/react": "^2.0.15",
+    "@sentry/nextjs": "^7.58.1",
     "@tanstack/react-query": "^4.29.19",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.7",
+    "dotenv": "^16.3.1",
     "fathom-client": "^3.5.0",
     "lodash": "^4.17.21",
     "next": "^13.1.6",
