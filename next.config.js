@@ -39,6 +39,8 @@ module.exports = withSentryConfig(
 
     org: 'fitplot',
     project: 'fitplot',
+
+    authToken: process.env.SENTRY_AUTH_TOKEN,
   },
   {
     // For all available options, see:
