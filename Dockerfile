@@ -42,7 +42,9 @@ COPY --from=deps /app/node_modules /app/node_modules
 
 # app code changes all the time
 ADD . .
-RUN npm run build
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
+    SENTRY_AUTH_TOKEN="$(cat /run/secrets/SENTRY_AUTH_TOKEN)" \
+    npm run build
 
 # build smaller image for running
 FROM base
