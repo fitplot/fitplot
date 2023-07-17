@@ -1,5 +1,11 @@
 # base node image
-FROM node:18-bullseye-slim as base
+FROM node:18-bookworm-slim as base
+
+# set for base and all layer that inherit from it
+ENV NODE_ENV production
+
+# Install openssl and certs for Sentry CLI
+RUN apt-get update && apt-get install -y openssl ca-certificates
 
 # install all node_modules, including dev
 FROM base as deps
@@ -8,7 +14,7 @@ RUN mkdir /app/
 WORKDIR /app/
 
 ADD package.json package-lock.json ./
-RUN npm install --production=false
+RUN npm install --include=dev
 
 # setup production node_modules
 FROM base as production-deps
@@ -40,8 +46,6 @@ RUN npm run build
 
 # build smaller image for running
 FROM base
-
-ENV NODE_ENV=production
 
 RUN mkdir /app/
 WORKDIR /app/
