@@ -10,6 +10,7 @@ import { usePageContext } from '../../page';
 import WorkoutList from '../../workout-list';
 import AddWorkout from '../overlays/add-workout';
 import WorkoutsMoreActions from '../overlays/workouts-more-actions';
+import clsx from 'clsx';
 
 export default function WorkoutsPage() {
   const { query } = useRouter();
@@ -37,7 +38,7 @@ export default function WorkoutsPage() {
   );
 
   usePageContext({
-    title: 'Workouts',
+    title: 'All Workouts',
     onMoreAction,
   });
 
@@ -59,12 +60,18 @@ export default function WorkoutsPage() {
         <title>Workouts</title>
       </Head>
       <div className='flex flex-1 flex-col'>
-        <Button className='mb-2' onClick={() => toggleAddWorkout(true)}>
-          New Workout
-        </Button>
-        <WorkoutList className='mb-2' workouts={workouts} />
+        <WorkoutList
+          className='mb-2'
+          workouts={workouts}
+          onCreate={() => toggleAddWorkout(true)}
+        />
         {/* Watch bottom of list for infinite scroll */}
-        <div ref={ref} className='border-b border-red-500' />
+        <div
+          ref={ref}
+          className={clsx({
+            'border-b border-red-500': process.env.NODE_ENV !== 'production',
+          })}
+        />
         {isFetchingNextPage && (
           <LoadingIcon className='mt-2 h-6 w-6 self-center' />
         )}

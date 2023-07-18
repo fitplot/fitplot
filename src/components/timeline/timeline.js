@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import { PlayCircleIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import _ from 'lodash';
@@ -8,6 +8,7 @@ import { useIntersection } from 'react-use';
 import useWorkouts from '../../hooks/use-workouts';
 import LoadingIcon from '../loading-icon';
 import { usePageContext } from '../page';
+import Link from 'next/link';
 
 export default function Timeline() {
   usePageContext({ title: 'Timeline' });
@@ -65,10 +66,15 @@ export default function Timeline() {
   return (
     <div className='flex flex-1 flex-col'>
       {groups.map((group) => (
-        <TimelineRow key={group.week} group={group} />
+        <Week key={group.week} group={group} />
       ))}
       {/* Watch bottom of list for infinite scroll */}
-      <div ref={ref} className='border-b border-red-500' />
+      <div
+        ref={ref}
+        className={clsx({
+          'border-b border-red-500': process.env.NODE_ENV !== 'production',
+        })}
+      />
       {isFetchingNextPage && (
         <LoadingIcon className='mt-2 h-6 w-6 self-center' />
       )}
@@ -76,18 +82,18 @@ export default function Timeline() {
   );
 }
 
-function TimelineRow({ group }) {
+function Week({ group }) {
   return (
-    <div className='flex hover:bg-white'>
+    <Link href='/workouts' className='flex hover:bg-white'>
       <div className='flex flex-1'>
-        <TimelineBlock group={group} />
+        <CalendarBlock group={group} />
         <Summary group={group} />
       </div>
-    </div>
+    </Link>
   );
 }
 
-function TimelineBlock({ group }) {
+function CalendarBlock({ group }) {
   return (
     <div className='relative h-full w-10 shrink-0 md:w-16'>
       <div
@@ -121,11 +127,36 @@ function TimelinePoint({ active }) {
 }
 
 function Summary({ group }) {
+  const Icon = group.active ? PlayCircleIcon : CheckCircleIcon;
+
+  const started = group.workouts.length;
+  const completed = group.workouts.filter(({ completedAt }) =>
+    Boolean(completedAt)
+  ).length;
   return (
-    <div className='mb-[1px] ml-6 flex flex-1 items-center gap-2 border-b py-6 md:ml-10'>
-      <ChevronRightIcon className='inline-block h-4 w-4' />
-      <span className='flex-1 font-medium'>Week {group.week}</span>
-      <WeekDots className='flex' workouts={group.workouts} />
+    <div className='mb-[1px] ml-6 flex flex-1 flex-col border-b'>
+      <div className='flex items-center gap-2 py-6 md:ml-10'>
+        <Icon
+          className={clsx('inline-block h-6 w-6', {
+            'text-slate-300': !group.active,
+            'text-secondary-500': group.active,
+          })}
+        />
+        <span className='flex-1 font-medium'>Week {group.week}</span>
+        <WeekDots className='flex' workouts={group.workouts} />
+      </div>
+      {Boolean(group.active) && (
+        <div className='flex flex-col divide-y text-xs'>
+          <div className='flex py-2'>
+            <div className='flex-1'>Started</div>
+            <div className='font-bold'>{started}</div>
+          </div>
+          <div className='flex py-2'>
+            <div className='flex-1'>Completed</div>
+            <div className='font-bold'>{completed}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

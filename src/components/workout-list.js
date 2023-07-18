@@ -1,25 +1,40 @@
-import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import Link from 'next/link';
+import React from 'react';
+import _ from 'lodash';
 
 import relative from '../lib/date';
-import { H5, Paragraph } from './typography';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
-export default function WorkoutList({ className, workouts }) {
+export default function WorkoutList({ className, workouts, onCreate }) {
   if (!workouts) return null;
 
+  const groups = _.groupBy(workouts, ({ completedAt }) =>
+    Boolean(completedAt) ? 'Completed' : 'In Progress'
+  );
+
   return (
-    <ul className={clsx(className, 'flex flex-col space-y-2')}>
-      {workouts.length > 0 ? (
-        workouts.map((workout) => (
-          <li key={workout.id}>
-            <Workout workout={workout} />
-          </li>
-        ))
-      ) : (
-        <Paragraph>No workout history.</Paragraph>
-      )}
-    </ul>
+    <>
+      {Object.entries(groups).map(([title, group]) => {
+        return (
+          <React.Fragment key={title}>
+            <div className='flex items-center bg-slate-100 p-2'>
+              <span className='flex-1 text-sm'>{title}</span>
+              <PlusIcon className='h-6 w-6' onClick={onCreate} />
+            </div>
+            <ul className='divide-y'>
+              {group.map((workout) => {
+                return (
+                  <li key={workout.id}>
+                    <Workout workout={workout} />
+                  </li>
+                );
+              })}
+            </ul>
+          </React.Fragment>
+        );
+      })}
+    </>
   );
 }
 
@@ -27,27 +42,21 @@ function Workout({ workout = {} }) {
   const { id, name, createdAt, completedAt } = workout;
 
   const date = relative(createdAt);
+  const completed = Boolean(completedAt);
 
   return (
-    <Link
-      href={`/workout/${id}`}
-      className='flex border border-slate-200 bg-white'
-    >
-      <div className='grow p-2'>
-        <div>
-          <H5 as='h2'>{name}</H5>
-        </div>
-        <div>
-          <span className='text-sm text-slate-500'>{date}</span>
-        </div>
+    <Link href={`/workout/${id}`} className='flex gap-4 border-slate-200'>
+      <div className='flex w-[9px] shrink-0 items-center justify-center'>
+        <div
+          className={clsx('rounded-full', {
+            'h-[6px] w-[6px] bg-slate-200': !completed,
+            'h-[9px] w-[9px] bg-emerald-500': completed,
+          })}
+        />
       </div>
-      {Boolean(completedAt) && (
-        <div className='flex shrink-0 items-center p-4'>
-          <CheckIcon className='h-6 w-6 text-emerald-500' />
-        </div>
-      )}
-      <div className='flex shrink-0 items-center p-2'>
-        <ChevronRightIcon className='h-6 w-6' />
+      <div className='flex grow items-center py-2'>
+        <span className='flex-1'>{name}</span>
+        <span className='text-xs text-slate-500'>{date}</span>
       </div>
     </Link>
   );

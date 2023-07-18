@@ -15,8 +15,8 @@ export default function TopBar({ noop, onToggleMenu }) {
           onClick={onToggleMenu}
         />
       )}
-      <div className='flex grow items-center justify-center'>
-        <span className='font-medium'>{title}</span>
+      <div className='flex grow items-center px-2'>
+        <span>{title}</span>
       </div>
       {!noop && onMoreAction && (
         <TopBarButton
