@@ -2,10 +2,33 @@ import clsx from 'clsx';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import SideBar from '../sidebar';
-import TopBar from '../topbar';
+import { MarketingNavbar, InAppNavbar } from './navbar';
+import SideBar from './sidebar';
 
-export default function Page({ children, user }) {
+export function MarketingLayout({ children, ...pageProps }) {
+  return <MarketingPage {...pageProps}>{children}</MarketingPage>;
+}
+
+function MarketingPage({ children, user }) {
+  return (
+    <div className='flex h-full flex-col overflow-hidden overscroll-none break-words bg-white duration-200 ease-in'>
+      <MarketingNavbar user={user} />
+      <main className='flex flex-1 flex-col overflow-y-auto overscroll-none p-4'>
+        {children}
+      </main>
+    </div>
+  );
+}
+
+export function InAppLayout({ children, ...pageProps }) {
+  return (
+    <PageContextProvider>
+      <InAppPage {...pageProps}>{children}</InAppPage>
+    </PageContextProvider>
+  );
+}
+
+function InAppPage({ children, user }) {
   const [isMenuToggled, toggleMenu] = useToggle();
 
   return (
@@ -20,7 +43,7 @@ export default function Page({ children, user }) {
           }
         )}
       >
-        <TopBar noop={Boolean(!user)} onToggleMenu={() => toggleMenu()} />
+        <InAppNavbar noop={Boolean(!user)} onToggleMenu={() => toggleMenu()} />
         <main className='flex flex-1 flex-col overflow-y-auto overscroll-none p-4'>
           {children}
         </main>
@@ -38,7 +61,7 @@ const INITIAL_PAGE_CONTEXT = {
 
 const PageContext = React.createContext(INITIAL_PAGE_CONTEXT);
 
-export function PageContextProvider({ children }) {
+function PageContextProvider({ children }) {
   const [value, setValue] = React.useState(INITIAL_PAGE_CONTEXT);
 
   const set = React.useCallback(

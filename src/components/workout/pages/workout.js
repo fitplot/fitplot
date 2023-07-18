@@ -1,4 +1,3 @@
-import { CheckIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -11,13 +10,14 @@ import { useWorkout } from '../../../hooks/use-workout';
 import Button from '../../button';
 import Card from '../../card';
 import LoadingIcon from '../../loading-icon';
-import { usePageContext } from '../../page';
+import { usePageContext } from '../../layouts';
 import SetsTable from '../../sets-table';
 import { H1, Paragraph } from '../../typography';
 import AddExercise from '../overlays/add-exercise';
 import AddSets from '../overlays/add-sets';
 import EditSets from '../overlays/edit-sets';
 import MoreActions from '../overlays/more-actions';
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
 
 export default function WorkoutPage() {
   const router = useRouter();
@@ -116,7 +116,7 @@ export default function WorkoutPage() {
           {isReadonly ? (
             <>
               <div className='flex-1'>{name}</div>
-              <CheckIcon className='h-6 w-6 text-green-500' />
+              <CheckCircleIcon className='h-6 w-6 text-green-500' />
             </>
           ) : (
             name

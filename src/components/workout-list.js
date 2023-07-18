@@ -45,7 +45,10 @@ function Workout({ workout = {} }) {
   const completed = Boolean(completedAt);
 
   return (
-    <Link href={`/workout/${id}`} className='flex gap-4 border-slate-200'>
+    <Link
+      href={`/workout/${id}`}
+      className='-mx-4 flex gap-4 border-slate-200 px-4 hover:bg-slate-50'
+    >
       <div className='flex w-[9px] shrink-0 items-center justify-center'>
         <div
           className={clsx('rounded-full', {

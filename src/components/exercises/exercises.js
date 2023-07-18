@@ -7,7 +7,7 @@ import { useToggle } from 'react-use';
 import { useExercises } from '../../hooks/use-exercises';
 import Combobox from '../combobox';
 import LoadingIcon from '../loading-icon';
-import { usePageContext } from '../page';
+import { usePageContext } from '../layouts';
 
 export default function ExercisesPage() {
   const router = useRouter();

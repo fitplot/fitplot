@@ -4,9 +4,8 @@ import React from 'react';
 import { useIntersection, useToggle } from 'react-use';
 
 import useWorkouts from '../../../hooks/use-workouts';
-import Button from '../../button';
 import LoadingIcon from '../../loading-icon';
-import { usePageContext } from '../../page';
+import { usePageContext } from '../../layouts';
 import WorkoutList from '../../workout-list';
 import AddWorkout from '../overlays/add-workout';
 import WorkoutsMoreActions from '../overlays/workouts-more-actions';

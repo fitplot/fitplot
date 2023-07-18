@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import Button from '../button';
-import { usePageContext } from '../page';
+import { usePageContext } from '../layouts';
 import { H3, Paragraph } from '../typography';
 
 export default function Welcome() {

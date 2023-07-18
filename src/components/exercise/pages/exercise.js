@@ -5,7 +5,7 @@ import { useToggle } from 'react-use';
 
 import { useExercise } from '../../../hooks/use-exercise';
 import LoadingIcon from '../../loading-icon';
-import { usePageContext } from '../../page';
+import { usePageContext } from '../../layouts';
 import { Paragraph } from '../../typography';
 import MoreActions from '../overlays/more-actions';
 

@@ -7,7 +7,7 @@ import { useIntersection } from 'react-use';
 
 import useWorkouts from '../../hooks/use-workouts';
 import LoadingIcon from '../loading-icon';
-import { usePageContext } from '../page';
+import { usePageContext } from '../layouts';
 import Link from 'next/link';
 
 export default function Timeline() {

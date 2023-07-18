@@ -12,12 +12,10 @@ import Button from '../button';
 import { Input, Label } from '../forms';
 import InfoCard from '../info-card';
 import LoadingIcon from '../loading-icon';
-import { usePageContext } from '../page';
+import { MarketingLayout, usePageContext } from '../layouts';
 import { H1, Paragraph } from '../typography';
 
 export default function Waitlist() {
-  usePageContext({ title: 'Waitlist' });
-
   const emailRef = React.useRef();
   const nameRef = React.useRef();
   const [isComplete, setIsComplete] = useToggle(false);
@@ -109,3 +107,5 @@ export default function Waitlist() {
     </div>
   );
 }
+
+Waitlist.getLayout = () => MarketingLayout;

@@ -1,4 +1,4 @@
-import { ClockIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { CheckIcon, TrashIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -72,7 +72,7 @@ export default function MoreActions({ workout = {}, open, onClose }) {
                   {updateMutation.isLoading ? (
                     <LoadingIcon className='h-5 w-5' />
                   ) : (
-                    <CheckIcon
+                    <CheckCircleIcon
                       className={clsx(
                         { 'text-green-500': Boolean(completedAt) },
                         'inline-block h-6 w-6'

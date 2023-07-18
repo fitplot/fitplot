@@ -1,26 +1,34 @@
-export default async function withUser({ req }) {
-  try {
-    const user = await fetch(`${process.env.SERVICE_URL}/api/me`, {
-      headers: {
-        Cookie: req.headers.cookie,
-      },
-    }).then((response) => (response.ok ? response.json() : null));
+export default function withUser({ required = true } = {}) {
+  return async function getServerSideProps({ req }) {
+    try {
+      const user = await getUser({ req });
 
-    if (!user) {
+      if (required && !user) {
+        return {
+          redirect: {
+            destination: '/sign-in',
+            permanent: false,
+          },
+        };
+      }
+
       return {
-        redirect: {
-          destination: '/sign-in',
-          permanent: false,
-        },
+        props: { user },
+      };
+    } catch {
+      return {
+        notFound: true,
       };
     }
+  };
+}
 
-    return {
-      props: { user },
-    };
-  } catch {
-    return {
-      notFound: true,
-    };
-  }
+async function getUser({ req }) {
+  const user = await fetch(`${process.env.SERVICE_URL}/api/me`, {
+    headers: {
+      Cookie: req.headers.cookie,
+    },
+  }).then((response) => (response.ok ? response.json() : null));
+
+  return user;
 }

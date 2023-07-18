@@ -11,12 +11,10 @@ import dayjs from 'dayjs';
 import Balancer from 'react-wrap-balancer';
 
 import Button from '../button';
-import { usePageContext } from '../page';
+import { MarketingLayout } from '../layouts';
 import { H1, H3, Paragraph } from '../typography';
 
-export default function Home() {
-  usePageContext({ title: 'FitPlot' });
-
+export default function Home({ user }) {
   const features = [
     {
       title: 'Log Your Workouts',
@@ -87,9 +85,9 @@ export default function Home() {
           <Button
             variant='primary'
             className='block flex justify-center'
-            href='/waitlist'
+            href={user ? '/dashboard' : '/waitlist'}
           >
-            Join the waitlist
+            {user ? 'Open App' : 'Join the waitlist'}
             <ArrowRightIcon className='inline-block w-6 pl-2' />
           </Button>
         </div>
@@ -155,14 +153,26 @@ export default function Home() {
         </H1>
         <Paragraph>Coming Soon&trade;</Paragraph>
       </section>
-      <h1 className='mt-36 text-center text-4xl font-extrabold tracking-tighter md:text-6xl'>
+      <section className='-mx-4 flex flex-col gap-6 bg-secondary-500 px-4 py-28 text-white'>
+        <H1 className='text-5xl font-extrabold tracking-tighter md:text-6xl'>
+          <Balancer>Waitlist</Balancer>
+        </H1>
+        <Paragraph>Be the first to know.</Paragraph>
+        <Button size='lg' variant='outline' href='/waitlist'>
+          Join the Waitlist <ArrowRightIcon className='inline-block h-6 w-6' />
+        </Button>
+      </section>
+      <H1
+        as='h2'
+        className='mt-36 text-center text-4xl font-extrabold tracking-tighter md:text-6xl'
+      >
         {/* TODO: rotate text: `on the court.` `at the track.` `at the finish line.` */}
         See you in the gym.
         <br />
         <span role='img' aria-label='face blowing a kiss'>
           💪
         </span>
-      </h1>
+      </H1>
       <footer className='my-8 text-center'>
         <Paragraph>
           &copy; Copyright{' '}
@@ -199,3 +209,5 @@ function HomeFeature({ title, className, icon = null, description = '' }) {
     </div>
   );
 }
+
+Home.getLayout = () => MarketingLayout;

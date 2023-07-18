@@ -11,7 +11,7 @@ import Button from '../../button';
 import { Input, Label } from '../../forms';
 import InfoCard from '../../info-card';
 import LoadingIcon from '../../loading-icon';
-import { usePageContext } from '../../page';
+import { usePageContext } from '../../layouts';
 
 export default function SignIn() {
   const router = useRouter();
