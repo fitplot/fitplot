@@ -18,7 +18,7 @@ export default function WorkoutList({ className, workouts, onCreate }) {
       {Object.entries(groups).map(([title, group]) => {
         return (
           <React.Fragment key={title}>
-            <div className='flex items-center bg-slate-100 p-2'>
+            <div className='-mx-4 flex items-center bg-slate-100 px-4 py-2'>
               <span className='flex-1 text-sm'>{title}</span>
               <PlusIcon className='h-6 w-6' onClick={onCreate} />
             </div>
