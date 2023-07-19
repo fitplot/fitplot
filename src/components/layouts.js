@@ -36,7 +36,7 @@ function InAppPage({ children, user }) {
       {Boolean(user) && <SideBar user={user} toggleMenu={() => toggleMenu()} />}
       <div
         className={clsx(
-          'transition-translate flex h-full flex-col overflow-hidden overscroll-none break-words bg-white duration-200 ease-in',
+          'transition-translate flex h-full flex-col overflow-hidden overscroll-none break-words bg-white drop-shadow duration-200 ease-in',
           {
             'translate-x-3/4': isMenuToggled,
             'translate-x-0': !isMenuToggled,
@@ -44,7 +44,7 @@ function InAppPage({ children, user }) {
         )}
       >
         <InAppNavbar noop={Boolean(!user)} onToggleMenu={() => toggleMenu()} />
-        <main className='flex flex-1 flex-col overflow-y-auto overscroll-none p-4'>
+        <main className='flex flex-1 flex-col overflow-y-auto overscroll-none px-4'>
           {children}
         </main>
       </div>

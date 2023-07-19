@@ -15,7 +15,7 @@ export default function ExercisesPage() {
   const [isRedirecting, toggleIsRedirecting] = useToggle(false);
 
   usePageContext({
-    title: 'My Exercises',
+    title: 'All Exercises',
   });
 
   const orderedExercises = React.useMemo(
@@ -45,7 +45,7 @@ export default function ExercisesPage() {
       <Head>
         <title>Exercises</title>
       </Head>
-      <div className='flex h-full flex-1 flex-col'>
+      <div className='-mx-4 flex h-full flex-1 flex-col'>
         <Combobox
           placeholder='Search exercises'
           options={orderedExercises}

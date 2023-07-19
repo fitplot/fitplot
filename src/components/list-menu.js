@@ -17,7 +17,10 @@ export const ListMenuItem = React.forwardRef(function ListMenuItem(
     return (
       <li className='flex'>
         <button
-          className={clsx('flex grow bg-white p-4 font-medium', className)}
+          className={clsx(
+            'flex grow bg-white px-4 py-2 font-medium',
+            className
+          )}
           ref={ref}
           type='button'
           onClick={onClick}
@@ -28,7 +31,10 @@ export const ListMenuItem = React.forwardRef(function ListMenuItem(
     );
 
   return (
-    <li className={clsx('flex items-center bg-white p-4', className)} ref={ref}>
+    <li
+      className={clsx('flex items-center bg-white px-4 py-2', className)}
+      ref={ref}
+    >
       {children}
     </li>
   );
@@ -39,7 +45,7 @@ export const ListMenuTextInput = React.forwardRef(function ListMenuTextInput(
   ref
 ) {
   return (
-    <li className={clsx('bg-white', className)}>
+    <li className={clsx('bg-white p-4', className)}>
       <input
         type='text'
         ref={ref}
@@ -53,8 +59,8 @@ export const ListMenuTextInput = React.forwardRef(function ListMenuTextInput(
 export function ListMenuGroup({ className, title, children }) {
   if (title) {
     return (
-      <div className={clsx('flex flex-col divide-y pt-4', className)}>
-        <div className='mb-2 flex text-ellipsis whitespace-nowrap px-4 text-xs font-medium uppercase'>
+      <div className={clsx('flex flex-col divide-y', className)}>
+        <div className='flex text-ellipsis whitespace-nowrap py-2 px-4 text-sm uppercase'>
           {title}
         </div>
         {children}

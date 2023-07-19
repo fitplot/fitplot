@@ -1,12 +1,10 @@
 import { Combobox } from '@headlessui/react';
 import React from 'react';
 
-import {
-  ListMenu,
-  ListMenuGroup,
-  ListMenuItem,
-  ListMenuTextInput,
-} from './list-menu';
+import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
+
+import { Input } from './forms';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 export const ComboboxDefault = {
   All: 'all',
@@ -46,10 +44,12 @@ export default function CustomCombobox({
   );
 
   return (
-    <Combobox as={ListMenu} className='h-full'>
+    <Combobox as={ListMenu} className='h-full bg-slate-100'>
       <Combobox.Input
-        as={ListMenuTextInput}
+        as={Input}
         placeholder={placeholder}
+        icon={<MagnifyingGlassIcon className='h-6 w-6' />}
+        className='m-4'
         onChange={(event) => setQuery(event.target.value)}
         displayValue={(option) => (field ? option[field] : option)}
       />

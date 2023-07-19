@@ -19,7 +19,7 @@ export default function WorkoutList({ className, workouts, onCreate }) {
         return (
           <React.Fragment key={title}>
             <div className='-mx-4 flex items-center bg-slate-100 px-4 py-2'>
-              <span className='flex-1 text-sm'>{title}</span>
+              <span className='flex-1 text-sm uppercase'>{title}</span>
               <PlusIcon className='h-6 w-6' onClick={onCreate} />
             </div>
             <ul className='divide-y'>
