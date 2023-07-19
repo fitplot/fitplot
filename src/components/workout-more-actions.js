@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import { useDeleteWorkout, useUpdateWorkout } from '../../../hooks/use-workout';
-import Button from '../../button';
-import { Input, Label } from '../../forms';
-import { ListMenu, ListMenuGroup, ListMenuItem } from '../../list-menu';
-import LoadingIcon from '../../loading-icon';
-import Overlay from '../../overlay';
+import { useDeleteWorkout, useUpdateWorkout } from '../hooks/use-workout';
+import Button from './button';
+import { Input, Label } from './forms';
+import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
+import LoadingIcon from './loading-icon';
+import Overlay from './overlay';
 
-export default function MoreActions({ workout = {}, open, onClose }) {
+export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
   const router = useRouter();
 
   const { name, createdAt, updatedAt, completedAt } = workout;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import Overlay from '../../overlay';
-import SetsTable from '../../sets-table';
 import EditSet from './edit-set';
+import Overlay from './overlay';
+import SetsTable from './sets-table';
 
 export default function EditSets({ exercise, sets = [], open, onClose }) {
   const [showEditSet, toggleEditSet] = useToggle(false);

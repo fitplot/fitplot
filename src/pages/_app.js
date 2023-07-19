@@ -8,10 +8,10 @@ import calendar from 'dayjs/plugin/relativeTime';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import Head from 'next/head';
 
+import { InAppLayout } from '../components/layouts';
 import useAppLayout from '../hooks/use-app-layout';
 import useFathom from '../hooks/use-fathom';
 import queryClient from '../lib/query-client';
-import { InAppLayout } from '../components/layouts';
 
 dayjs.extend(relativeTime);
 dayjs.extend(calendar);

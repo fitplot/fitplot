@@ -2,11 +2,11 @@ import { CheckIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { useCreateWorkout } from '../../../hooks/use-workout';
-import Button from '../../button';
-import { Input, Label } from '../../forms';
-import LoadingIcon from '../../loading-icon';
-import Overlay from '../../overlay';
+import { useCreateWorkout } from '../hooks/use-workout';
+import Button from './button';
+import { Input, Label } from './forms';
+import LoadingIcon from './loading-icon';
+import Overlay from './overlay';
 
 export default function AddWorkout({ open, onClose }) {
   const inputRef = React.useRef(null);

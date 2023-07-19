@@ -6,20 +6,17 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import {
-  useDeleteExercise,
-  useUpdateExercise,
-} from '../../../hooks/use-exercise';
-import { useExercises } from '../../../hooks/use-exercises';
-import Button from '../../button';
-import Combobox from '../../combobox';
-import { Input, Label } from '../../forms';
-import { ListMenu, ListMenuGroup, ListMenuItem } from '../../list-menu';
-import LoadingIcon from '../../loading-icon';
-import Overlay from '../../overlay';
-import { Paragraph } from '../../typography';
+import { useDeleteExercise, useUpdateExercise } from '../hooks/use-exercise';
+import { useExercises } from '../hooks/use-exercises';
+import Button from './button';
+import Combobox from './combobox';
+import { Input, Label } from './forms';
+import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
+import LoadingIcon from './loading-icon';
+import Overlay from './overlay';
+import { Paragraph } from './typography';
 
-export default function MoreActions({ open, onClose, exercise = {} }) {
+export default function ExerciseMoreActions({ open, onClose, exercise = {} }) {
   const router = useRouter();
 
   const inputRef = React.useRef(null);

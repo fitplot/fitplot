@@ -1,10 +1,9 @@
 import { Combobox } from '@headlessui/react';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 
-import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
-
 import { Input } from './forms';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
 
 export const ComboboxDefault = {
   All: 'all',

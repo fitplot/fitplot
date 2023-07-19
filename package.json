@@ -36,6 +36,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-lodash": "^7.3.0",
     "eslint-plugin-only-error": "^1.0.2",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unicorn": "^48.0.0",
     "husky": "^7.0.0",
     "postcss": "^8.3.11",
@@ -68,10 +69,12 @@
     "plugins": [
       "import",
       "lodash",
+      "simple-import-sort",
       "only-error",
       "unicorn"
     ],
     "rules": {
+      "import/order": "error",
       "lodash/prefer-lodash-method": "off",
       "lodash/prefer-lodash-typecheck": "off",
       "unicorn/no-null": "off",

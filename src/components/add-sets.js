@@ -3,16 +3,13 @@ import { CheckIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 import React from 'react';
 
-import {
-  useCreateSets,
-  usePreviousSetsForExercise,
-} from '../../../hooks/use-sets';
-import fitcode from '../../../lib/fitcode';
-import Button from '../../button';
-import { Input, Label } from '../../forms';
-import Overlay from '../../overlay';
-import SetsTable from '../../sets-table';
-import { H2 } from '../../typography';
+import { useCreateSets, usePreviousSetsForExercise } from '../hooks/use-sets';
+import fitcode from '../lib/fitcode';
+import Button from './button';
+import { Input, Label } from './forms';
+import Overlay from './overlay';
+import SetsTable from './sets-table';
+import { H2 } from './typography';
 
 export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
   const [sets, updateSets] = React.useState(null);

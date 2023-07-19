@@ -1,10 +1,10 @@
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Bars3Icon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
-
-import { usePageContextValues } from '../layouts';
 import Link from 'next/link';
-import Button from '../button';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
+
+import Button from './button';
+import { usePageContextValues } from './layouts';
 
 export function MarketingNavbar({ user }) {
   return (
