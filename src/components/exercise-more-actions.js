@@ -8,13 +8,13 @@ import { useToggle } from 'react-use';
 
 import { useDeleteExercise, useUpdateExercise } from '../hooks/use-exercise';
 import { useExercises } from '../hooks/use-exercises';
-import Button from './button';
 import Combobox from './combobox';
 import { Input, Label } from './forms';
 import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
 import LoadingIcon from './loading-icon';
 import Overlay from './overlay';
 import { Paragraph } from './typography';
+import { Button } from '@/components/ui/button';
 
 export default function ExerciseMoreActions({ open, onClose, exercise = {} }) {
   const router = useRouter();

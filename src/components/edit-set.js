@@ -3,10 +3,10 @@ import React from 'react';
 import { useToggle } from 'react-use';
 
 import { useDeleteSet, useUpdateSet } from '../hooks/use-sets';
-import Button from './button';
 import { Input, Label } from './forms';
 import LoadingIcon from './loading-icon';
 import Overlay from './overlay';
+import { Button } from '@/components/ui/button';
 
 export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
   const amountRef = React.createRef();

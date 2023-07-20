@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import { useCreateWorkout } from '../hooks/use-workout';
-import Button from './button';
 import { Input, Label } from './forms';
 import LoadingIcon from './loading-icon';
 import Overlay from './overlay';
+import { Button } from '@/components/ui/button';
 
 export default function AddWorkout({ open, onClose }) {
   const inputRef = React.useRef(null);

@@ -7,7 +7,6 @@ import { useToggle } from 'react-use';
 
 import AddExercise from '../../components/add-exercise';
 import AddSets from '../../components/add-sets';
-import Button from '../../components/button';
 import Card from '../../components/card';
 import EditSets from '../../components/edit-sets';
 import { usePageContext } from '../../components/layouts';
@@ -19,6 +18,7 @@ import { useExercises } from '../../hooks/use-exercises';
 import { useSets } from '../../hooks/use-sets';
 import { useWorkout } from '../../hooks/use-workout';
 import withUser from '../../lib/with-user';
+import { Button } from '@/components/ui/button';
 
 export default function WorkoutPage() {
   const router = useRouter();

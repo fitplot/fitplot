@@ -100,7 +100,7 @@ function CalendarBlock({ group }) {
       <div
         className={clsx('absolute right-0 top-[5px] bottom-[4px] w-px', {
           'bg-gray-200': !group.active,
-          'bg-secondary-500': group.active,
+          'bg-primary-500': group.active,
         })}
       />
       <div className='absolute right-[-4px] bottom-[-20px] flex h-[40px] items-center justify-end'>
@@ -121,7 +121,7 @@ function TimelinePoint({ active }) {
   return (
     <div
       className={clsx('ml-2 h-[9px] w-[9px] rounded-full border md:ml-8', {
-        'border-secondary-500 bg-secondary-500': active,
+        'border-primary-500 bg-primary-500': active,
       })}
     />
   );
@@ -140,7 +140,7 @@ function Summary({ group }) {
         <Icon
           className={clsx('inline-block h-6 w-6', {
             'text-slate-300': !group.active,
-            'text-secondary-500': group.active,
+            'text-primary-500': group.active,
           })}
         />
         <span className='flex-1 font-medium'>Week {group.week}</span>

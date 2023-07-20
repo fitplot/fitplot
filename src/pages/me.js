@@ -1,9 +1,9 @@
-import Button from '../components/button';
 import { Input, Label } from '../components/forms';
 import LoadingIcon from '../components/loading-icon';
 import { H1 } from '../components/typography';
 import useSignOut from '../hooks/use-sign-out';
 import withUser from '../lib/with-user';
+import { Button } from '@/components/ui/button';
 
 export default function Me({ user }) {
   const mutation = useSignOut({

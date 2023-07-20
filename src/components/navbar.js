@@ -1,28 +1,35 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Bars3Icon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
-import Link from 'next/link';
 
-import Button from './button';
 import { usePageContextValues } from './layouts';
+import { Button } from '@/components/ui/button';
 
 export function MarketingNavbar({ user }) {
   return (
-    <nav className='fixed flex h-[48px] w-full items-center px-8 backdrop-blur-md'>
-      <Link href='/' className='font-medium'>
+    <nav className='fixed flex h-[48px] w-full items-center justify-between px-8 backdrop-blur-md'>
+      <Button variant='link' href='/' className='font-medium'>
         FitPlot
-      </Link>
-      <div className='flex flex-1 justify-center'>
-        <ul className='inline flex gap-4 rounded-full border bg-white px-6 py-1 md:gap-6'>
-          <Link href='/'>Home</Link>
-          <Link href='/#features'>Features</Link>
-          {!user && <Link href='/waitlist'>Waitlist</Link>}
+      </Button>
+      <div className='flex'>
+        <ul className='inline flex gap-4 rounded-full border bg-white px-6 md:gap-6'>
+          <Button variant='link' href='/'>
+            Home
+          </Button>
+          <Button variant='link' href='/#features'>
+            Features
+          </Button>
+          {!user && (
+            <Button variant='link' href='/waitlist'>
+              Waitlist
+            </Button>
+          )}
         </ul>
       </div>
       <div className='flex'>
         {user ? (
           <Button href='/dashboard' variant='outline' size='sm'>
-            App <ArrowRightIcon className='ml-2 inline-block h-4 w-4' />
+            Open App <ArrowRightIcon className='ml-2 inline-block h-4 w-4' />
           </Button>
         ) : (
           <Button href='/waitlist' variant='outline' size='sm'>

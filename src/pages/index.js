@@ -10,10 +10,10 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Balancer from 'react-wrap-balancer';
 
-import Button from '../components/button';
 import { MarketingLayout } from '../components/layouts';
 import { H1, H3, Paragraph } from '../components/typography';
 import withUser from '../lib/with-user';
+import { Button } from '@/components/ui/button';
 
 export default function Home({ user }) {
   const features = [
@@ -46,7 +46,7 @@ export default function Home({ user }) {
       className: 'md:col-span-3',
     },
     {
-      title: 'Open Source',
+      title: 'Data Driven',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       icon: <BookOpenIcon className='inline-block w-6' />,
@@ -58,8 +58,9 @@ export default function Home({ user }) {
     <div className='flex flex-1 flex-col gap-20 md:gap-36'>
       <header className='flex flex-col items-center justify-center gap-6 pt-28 text-center'>
         <Button
+          variant='outline'
           href='https://github.com/nexus-fitness/nexus'
-          className='flex justify-center rounded-full border border-slate-300 py-0 text-sm leading-loose'
+          className='rounded-full leading-loose'
         >
           Star us on GitHub
           <StarIcon className='inline-block w-6 pl-2 text-yellow-500' />
@@ -79,13 +80,13 @@ export default function Home({ user }) {
           </Balancer>
         </Paragraph>
         <div className='flex w-full flex-col gap-4 md:flex-row md:justify-center'>
-          <Button href='#features' className='block'>
+          <Button size='lg' variant='secondary' href='#features'>
             Features
             <ArrowDownIcon className='inline-block w-6 pl-2' />
           </Button>
           <Button
+            size='lg'
             variant='primary'
-            className='block flex justify-center'
             href={user ? '/dashboard' : '/waitlist'}
           >
             {user ? 'Open App' : 'Join the waitlist'}
@@ -155,11 +156,11 @@ export default function Home({ user }) {
         <Paragraph>Coming Soon&trade;</Paragraph>
       </section>
       <section className='-mx-4 flex flex-col gap-6 bg-secondary-500 px-4 py-28 text-white'>
-        <H1 className='text-5xl font-extrabold tracking-tighter md:text-6xl'>
+        <H1 className='text-5xl font-extrabold tracking-tighter text-white md:text-6xl'>
           <Balancer>Waitlist</Balancer>
         </H1>
         <Paragraph>Be the first to know.</Paragraph>
-        <Button size='lg' variant='outline' href='/waitlist'>
+        <Button size='lg' variant='primary' href='/waitlist'>
           Join the Waitlist <ArrowRightIcon className='inline-block h-6 w-6' />
         </Button>
       </section>
