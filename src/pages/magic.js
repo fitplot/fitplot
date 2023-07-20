@@ -2,7 +2,7 @@ import { SparklesIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import useMagicLink from '../hooks/use-magic-link';
+import useMagicLink from '@/hooks/use-magic-link';
 
 export default function Magic() {
   const router = useRouter();

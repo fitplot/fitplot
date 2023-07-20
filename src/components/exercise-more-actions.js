@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import { useDeleteExercise, useUpdateExercise } from '../hooks/use-exercise';
-import { useExercises } from '../hooks/use-exercises';
-import Combobox from './combobox';
-import { Input, Label } from './forms';
-import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
-import LoadingIcon from './loading-icon';
-import Overlay from './overlay';
-import { Paragraph } from './typography';
+import { useDeleteExercise, useUpdateExercise } from '@/hooks/use-exercise';
+import { useExercises } from '@/hooks/use-exercises';
+import Combobox from '@/components/combobox';
+import { Input, Label } from '@/components/forms';
+import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
+import LoadingIcon from '@/components/loading-icon';
+import Overlay from '@/components/overlay';
+import { Paragraph } from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
 export default function ExerciseMoreActions({ open, onClose, exercise = {} }) {

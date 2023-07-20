@@ -3,8 +3,8 @@ import { CogIcon, UserIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
-import { getBuildId } from '../lib/server';
-import { ListMenu, ListMenuItem } from './list-menu';
+import { getBuildId } from '@/lib/server';
+import { ListMenu, ListMenuItem } from '@/components/list-menu';
 
 const links = [
   {

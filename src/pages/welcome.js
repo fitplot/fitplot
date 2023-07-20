@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { usePageContext } from '../components/layouts';
-import { H3, Paragraph } from '../components/typography';
+import { usePageContext } from '@/components/layouts';
+import { H3, Paragraph } from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
 export default function Welcome() {

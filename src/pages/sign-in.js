@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import { Input, Label } from '../components/forms';
-import InfoCard from '../components/info-card';
-import { usePageContext } from '../components/layouts';
-import LoadingIcon from '../components/loading-icon';
-import useSignIn from '../hooks/use-sign-in';
-import useSignUp from '../hooks/use-sign-up';
+import { Input, Label } from '@/components/forms';
+import InfoCard from '@/components/info-card';
+import { usePageContext } from '@/components/layouts';
+import LoadingIcon from '@/components/loading-icon';
+import useSignIn from '@/hooks/use-sign-in';
+import useSignUp from '@/hooks/use-sign-up';
 import { Button } from '@/components/ui/button';
 
 export default function SignIn() {

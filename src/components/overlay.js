@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import React from 'react';
 
-import { H6 } from './typography';
+import { H6 } from '@/components/typography';
 
 export default function Overlay({
   title,

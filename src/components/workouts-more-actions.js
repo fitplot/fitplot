@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ListMenu, ListMenuGroup, ListMenuItem } from './list-menu';
-import Overlay from './overlay';
+import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
+import Overlay from '@/components/overlay';
 
 export default function WorkoutsMoreActions({ open, onClose, totalWorkouts }) {
   return (

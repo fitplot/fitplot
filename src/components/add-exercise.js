@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { useCreateExercise, useExercises } from '../hooks/use-exercises';
-import Combobox from './combobox';
-import LoadingIcon from './loading-icon';
-import Overlay from './overlay';
+import { useCreateExercise, useExercises } from '@/hooks/use-exercises';
+import Combobox from '@/components/combobox';
+import LoadingIcon from '@/components/loading-icon';
+import Overlay from '@/components/overlay';
 
 export default function AddExercise({ open, onClose }) {
   const { data: exercises, ...query } = useExercises();

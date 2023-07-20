@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Bars3Icon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 
-import { usePageContextValues } from './layouts';
+import { usePageContextValues } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
 
 export function MarketingNavbar({ user }) {

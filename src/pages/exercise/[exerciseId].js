@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import ExerciseMoreActions from '../../components/exercise-more-actions';
-import { usePageContext } from '../../components/layouts';
-import LoadingIcon from '../../components/loading-icon';
-import { Paragraph } from '../../components/typography';
-import { useExercise } from '../../hooks/use-exercise';
-import withUser from '../../lib/with-user';
+import ExerciseMoreActions from '@/components/exercise-more-actions';
+import { usePageContext } from '@/components/layouts';
+import LoadingIcon from '@/components/loading-icon';
+import { Paragraph } from '@/components/typography';
+import { useExercise } from '@/hooks/use-exercise';
+import withUser from '@/lib/with-user';
 
 export default function Exercise() {
   const router = useRouter();

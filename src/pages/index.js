@@ -10,9 +10,9 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Balancer from 'react-wrap-balancer';
 
-import { MarketingLayout } from '../components/layouts';
-import { H1, H3, Paragraph } from '../components/typography';
-import withUser from '../lib/with-user';
+import { MarketingLayout } from '@/components/layouts';
+import { H1, H3, Paragraph } from '@/components/typography';
+import withUser from '@/lib/with-user';
 import { Button } from '@/components/ui/button';
 
 export default function Home({ user }) {
@@ -155,14 +155,22 @@ export default function Home({ user }) {
         </H1>
         <Paragraph>Coming Soon&trade;</Paragraph>
       </section>
-      <section className='-mx-4 flex flex-col gap-6 bg-secondary-500 px-4 py-28 text-white'>
-        <H1 className='text-5xl font-extrabold tracking-tighter text-white md:text-6xl'>
-          <Balancer>Waitlist</Balancer>
-        </H1>
-        <Paragraph>Be the first to know.</Paragraph>
-        <Button size='lg' variant='primary' href='/waitlist'>
-          Join the Waitlist <ArrowRightIcon className='inline-block h-6 w-6' />
-        </Button>
+      <section className='-mx-4  bg-secondary-500 px-4 py-28 text-white'>
+        <div className='container mx-auto flex flex-col gap-6'>
+          <H1 className='text-5xl font-extrabold tracking-tighter text-white md:text-6xl'>
+            <Balancer>Waitlist</Balancer>
+          </H1>
+          <Paragraph>Be the first to know.</Paragraph>
+          <Button
+            size='lg'
+            variant='primary'
+            href='/waitlist'
+            className='w-full'
+          >
+            Join the Waitlist{' '}
+            <ArrowRightIcon className='inline-block h-6 w-6' />
+          </Button>
+        </div>
       </section>
       <H1
         as='h2'

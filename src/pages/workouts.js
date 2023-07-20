@@ -4,13 +4,13 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useIntersection, useToggle } from 'react-use';
 
-import AddWorkout from '../components/add-workout';
-import { usePageContext } from '../components/layouts';
-import LoadingIcon from '../components/loading-icon';
-import WorkoutList from '../components/workout-list';
-import WorkoutsMoreActions from '../components/workouts-more-actions';
-import useWorkouts from '../hooks/use-workouts';
-import withUser from '../lib/with-user';
+import AddWorkout from '@/components/add-workout';
+import { usePageContext } from '@/components/layouts';
+import LoadingIcon from '@/components/loading-icon';
+import WorkoutList from '@/components/workout-list';
+import WorkoutsMoreActions from '@/components/workouts-more-actions';
+import useWorkouts from '@/hooks/use-workouts';
+import withUser from '@/lib/with-user';
 
 export default function WorkoutsPage() {
   const { query } = useRouter();

@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import { InAppNavbar, MarketingNavbar } from './navbar';
-import SideBar from './sidebar';
+import { InAppNavbar, MarketingNavbar } from '@/components/navbar';
+import SideBar from '@/components/sidebar';
 
 export function MarketingLayout({ children, ...pageProps }) {
   return <MarketingPage {...pageProps}>{children}</MarketingPage>;

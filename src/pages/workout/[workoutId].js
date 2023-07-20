@@ -5,19 +5,18 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import AddExercise from '../../components/add-exercise';
-import AddSets from '../../components/add-sets';
-import Card from '../../components/card';
-import EditSets from '../../components/edit-sets';
-import { usePageContext } from '../../components/layouts';
-import LoadingIcon from '../../components/loading-icon';
-import SetsTable from '../../components/sets-table';
-import { H1, Paragraph } from '../../components/typography';
-import MoreActions from '../../components/workout-more-actions';
-import { useExercises } from '../../hooks/use-exercises';
-import { useSets } from '../../hooks/use-sets';
-import { useWorkout } from '../../hooks/use-workout';
-import withUser from '../../lib/with-user';
+import AddExercise from '@/components/add-exercise';
+import AddSets from '@/components/add-sets';
+import EditSets from '@/components/edit-sets';
+import { usePageContext } from '@/components/layouts';
+import LoadingIcon from '@/components/loading-icon';
+import SetsTable from '@/components/sets-table';
+import { H1, Paragraph } from '@/components/typography';
+import MoreActions from '@/components/workout-more-actions';
+import { useExercises } from '@/hooks/use-exercises';
+import { useSets } from '@/hooks/use-sets';
+import { useWorkout } from '@/hooks/use-workout';
+import withUser from '@/lib/with-user';
 import { Button } from '@/components/ui/button';
 
 export default function WorkoutPage() {
@@ -127,7 +126,7 @@ export default function WorkoutPage() {
         {Object.entries(setsByExercise).map(([exerciseId, setsForExercise]) => {
           const exercise = exercisesById[exerciseId];
           return (
-            <Card
+            <div
               key={exerciseId}
               className='border border-gray-200 bg-slate-200'
             >
@@ -151,7 +150,7 @@ export default function WorkoutPage() {
                   </Button>
                 </div>
               )}
-            </Card>
+            </div>
           );
         })}
         {!isReadonly && (

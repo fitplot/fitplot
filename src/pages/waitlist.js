@@ -7,13 +7,13 @@ import React from 'react';
 import { useToggle } from 'react-use';
 import Balancer from 'react-wrap-balancer';
 
-import { Input, Label } from '../components/forms';
-import InfoCard from '../components/info-card';
-import { MarketingLayout } from '../components/layouts';
-import LoadingIcon from '../components/loading-icon';
-import { H1, Paragraph } from '../components/typography';
-import useAddToWaitlist from '../hooks/use-waitlist';
-import withUser from '../lib/with-user';
+import { Input, Label } from '@/components/forms';
+import InfoCard from '@/components/info-card';
+import { MarketingLayout } from '@/components/layouts';
+import LoadingIcon from '@/components/loading-icon';
+import { H1, Paragraph } from '@/components/typography';
+import useAddToWaitlist from '@/hooks/use-waitlist';
+import withUser from '@/lib/with-user';
 import { Button } from '@/components/ui/button';
 
 export default function Waitlist() {

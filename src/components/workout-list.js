@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Link from 'next/link';
 import React from 'react';
 
-import relative from '../lib/date';
+import relative from '@/lib/date';
 
 export default function WorkoutList({ className, workouts, onCreate }) {
   if (!workouts) return null;

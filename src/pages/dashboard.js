@@ -6,10 +6,10 @@ import Link from 'next/link';
 import React from 'react';
 import { useIntersection } from 'react-use';
 
-import { usePageContext } from '../components/layouts';
-import LoadingIcon from '../components/loading-icon';
-import useWorkouts from '../hooks/use-workouts';
-import withUser from '../lib/with-user';
+import { usePageContext } from '@/components/layouts';
+import LoadingIcon from '@/components/loading-icon';
+import useWorkouts from '@/hooks/use-workouts';
+import withUser from '@/lib/with-user';
 
 export default function Timeline() {
   usePageContext({ title: 'Timeline' });

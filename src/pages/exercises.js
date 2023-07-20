@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useToggle } from 'react-use';
 
-import Combobox from '../components/combobox';
-import { usePageContext } from '../components/layouts';
-import LoadingIcon from '../components/loading-icon';
-import { useExercises } from '../hooks/use-exercises';
-import withUser from '../lib/with-user';
+import Combobox from '@/components/combobox';
+import { usePageContext } from '@/components/layouts';
+import LoadingIcon from '@/components/loading-icon';
+import { useExercises } from '@/hooks/use-exercises';
+import withUser from '@/lib/with-user';
 
 export default function ExercisesPage() {
   const router = useRouter();
