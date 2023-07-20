@@ -1,10 +1,11 @@
 import { BellIcon } from '@heroicons/react/24/outline';
-import { CogIcon, UserIcon } from '@heroicons/react/24/solid';
+import { CogIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
 import { getBuildId } from '@/lib/server';
 import { ListMenu, ListMenuItem } from '@/components/list-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const links = [
   {
@@ -47,16 +48,18 @@ function HeaderBar({ user, navigate, className }) {
 }
 
 function ActiveUser({ user, navigate, className }) {
+  const initial = user.firstName ? user.firstName.slice(0, 1) : '';
   return (
     <button
       type='button'
-      className={clsx(
-        'flex h-full items-center justify-center space-x-2',
-        className
-      )}
+      className={clsx('flex h-full items-center space-x-2', className)}
       onClick={() => navigate('/me')}
     >
-      <UserIcon className='inline-block h-6 w-6' />
+      <Avatar>
+        <AvatarFallback className='bg-primary-500 text-white'>
+          {initial}
+        </AvatarFallback>
+      </Avatar>
       <span>{user.firstName}</span>
     </button>
   );
