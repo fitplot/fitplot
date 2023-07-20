@@ -7,7 +7,8 @@ import React from 'react';
 import { useToggle } from 'react-use';
 
 import { useDeleteWorkout, useUpdateWorkout } from '@/hooks/use-workout';
-import { Input, Label } from '@/components/forms';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/forms';
 import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';

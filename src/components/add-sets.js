@@ -5,7 +5,8 @@ import React from 'react';
 
 import { useCreateSets, usePreviousSetsForExercise } from '@/hooks/use-sets';
 import fitcode from '@/lib/fitcode';
-import { Input, Label } from '@/components/forms';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/forms';
 import Overlay from '@/components/overlay';
 import SetsTable from '@/components/sets-table';
 import { H2 } from '@/components/typography';

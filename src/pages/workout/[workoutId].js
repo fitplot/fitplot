@@ -137,12 +137,14 @@ export default function WorkoutPage() {
               {!isReadonly && (
                 <div className='flex'>
                   <Button
-                    className='w-1/2 bg-slate-200 text-inherit'
+                    variant='ghost'
+                    className='w-1/2'
                     onClick={() => editExercise(exerciseId)}
                   >
                     Edit
                   </Button>
                   <Button
+                    variant='ghost'
                     className='w-1/2'
                     onClick={() => addSetToExercise(exerciseId)}
                   >

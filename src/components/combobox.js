@@ -1,8 +1,7 @@
 import { Combobox } from '@headlessui/react';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 
-import { Input } from '@/components/forms';
+import { Input } from '@/components/ui/input';
 import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
 
 export const ComboboxDefault = {
@@ -47,8 +46,6 @@ export default function CustomCombobox({
       <Combobox.Input
         as={Input}
         placeholder={placeholder}
-        icon={<MagnifyingGlassIcon className='h-6 w-6' />}
-        className='m-4'
         onChange={(event) => setQuery(event.target.value)}
         displayValue={(option) => (field ? option[field] : option)}
       />

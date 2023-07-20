@@ -3,7 +3,8 @@ import React from 'react';
 import { useToggle } from 'react-use';
 
 import { useDeleteSet, useUpdateSet } from '@/hooks/use-sets';
-import { Input, Label } from '@/components/forms';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/forms';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';
 import { Button } from '@/components/ui/button';
