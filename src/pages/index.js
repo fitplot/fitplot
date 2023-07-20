@@ -8,6 +8,12 @@ import { H1, Paragraph } from '@/components/typography';
 import withUser from '@/lib/with-user';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/ui/accordion';
 
 export default function Home({ user }) {
   const features = [
@@ -137,11 +143,30 @@ export default function Home({ user }) {
           share. This is our journey, together.
         </Paragraph>
       </section>
-      <section className='flex flex-col gap-6 text-center'>
-        <H1 className='text-5xl font-extrabold tracking-tighter md:text-6xl'>
+      <section className='flex flex-col gap-6 '>
+        <H1 className='text-center text-5xl font-extrabold tracking-tighter md:text-6xl '>
           <Balancer>FAQ</Balancer>
         </H1>
-        <Paragraph>Coming Soon&trade;</Paragraph>
+        <Accordion className='w-full md:mx-auto md:max-w-xl'>
+          <AccordionItem value='item-1'>
+            <AccordionTrigger>FAQ One</AccordionTrigger>
+            <AccordionContent>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value='item-2'>
+            <AccordionTrigger>FAQ Two</AccordionTrigger>
+            <AccordionContent>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value='item-3'>
+            <AccordionTrigger>FAQ Three</AccordionTrigger>
+            <AccordionContent>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </section>
       <section className='-mx-4  bg-secondary-500 px-4 py-28 text-white'>
         <div className='container mx-auto flex flex-col gap-6'>
