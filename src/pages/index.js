@@ -1,19 +1,13 @@
-import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  BookOpenIcon,
-  ChartBarIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/outline';
+import { ArrowDownIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
-import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Balancer from 'react-wrap-balancer';
 
 import { MarketingLayout } from '@/components/layouts';
-import { H1, H3, Paragraph } from '@/components/typography';
+import { H1, Paragraph } from '@/components/typography';
 import withUser from '@/lib/with-user';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function Home({ user }) {
   const features = [
@@ -21,35 +15,30 @@ export default function Home({ user }) {
       title: 'Log Your Workouts',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      icon: <PencilSquareIcon className='inline-block w-6' />,
       className: 'md:col-span-2',
     },
     {
       title: 'Data is Progress',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      icon: <ChartBarIcon className='inline-block w-6' />,
       className: 'md:col-span-3',
     },
     {
       title: 'Progressive Overload',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      icon: <ChartBarIcon className='inline-block w-6' />,
       className: 'md:col-span-2 md:row-span-2',
     },
     {
       title: 'Open Source',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      icon: <BookOpenIcon className='inline-block w-6' />,
       className: 'md:col-span-3',
     },
     {
       title: 'Data Driven',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      icon: <BookOpenIcon className='inline-block w-6' />,
       className: 'md:col-span-2',
     },
   ];
@@ -94,14 +83,13 @@ export default function Home({ user }) {
           </Button>
         </div>
       </header>
-      <section
-        id='features'
-        className='container mx-auto flex flex-col gap-6 text-center'
-      >
-        <H1 className='text-5xl font-extrabold tracking-tighter md:text-6xl'>
+      <section id='features' className='container mx-auto flex flex-col gap-6'>
+        <H1 className='text-center text-5xl font-extrabold tracking-tighter md:text-6xl'>
           <Balancer>Notetaking built for fitness.</Balancer>
         </H1>
-        <Paragraph>Log your workouts and keep a pulse on progress.</Paragraph>
+        <Paragraph className='text-center'>
+          Log your workouts and keep a pulse on progress.
+        </Paragraph>
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-7 lg:grid-rows-2'>
           {features.map((feature) => (
             <HomeFeature key={feature.title} {...feature} />
@@ -200,23 +188,19 @@ export default function Home({ user }) {
   );
 }
 
-function HomeFeature({ title, className, icon = null, description = '' }) {
+function HomeFeature({ title, className, description = '' }) {
   return (
-    <div
-      className={clsx(
-        className,
-        'flex flex-col gap-4 rounded border bg-slate-100 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-left'
-      )}
-    >
-      {icon && <span className='pr-2'>{icon}</span>}
-      <H3 as='h2' className=' font-extrabold'>
-        {title}
-      </H3>
-
+    <Card className={className}>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent></CardContent>
       {description && (
-        <Paragraph className='text-sm leading-loose'>{description}</Paragraph>
+        <CardContent>
+          <Paragraph className='text-sm leading-loose'>{description}</Paragraph>
+        </CardContent>
       )}
-    </div>
+    </Card>
   );
 }
 
