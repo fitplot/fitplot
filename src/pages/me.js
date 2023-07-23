@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/forms';
+import { Label } from '@/components/ui/label';
 import LoadingIcon from '@/components/loading-icon';
 import { H1 } from '@/components/typography';
 import useSignOut from '@/hooks/use-sign-out';

@@ -4,7 +4,7 @@ import React from 'react';
 
 import { useCreateWorkout } from '@/hooks/use-workout';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/forms';
+import { Label } from '@/components/ui/label';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';
 import { Button } from '@/components/ui/button';

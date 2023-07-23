@@ -8,7 +8,7 @@ import { useToggle } from 'react-use';
 import Balancer from 'react-wrap-balancer';
 
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/forms';
+import { Label } from '@/components/ui/label';
 import InfoCard from '@/components/info-card';
 import { MarketingLayout } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';

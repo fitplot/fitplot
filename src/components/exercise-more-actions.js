@@ -10,7 +10,7 @@ import { useDeleteExercise, useUpdateExercise } from '@/hooks/use-exercise';
 import { useExercises } from '@/hooks/use-exercises';
 import Combobox from '@/components/combobox';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/forms';
+import { Label } from '@/components/ui/label';
 import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';
