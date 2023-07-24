@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 import useMagicLink from '@/hooks/use-magic-link';
+import { MarketingLayout } from '@/components/layouts';
 
 export default function Magic() {
   const router = useRouter();
