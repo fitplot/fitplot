@@ -1,7 +1,7 @@
+import React from 'react';
 import _ from 'lodash';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useToggle } from 'react-use';
 
 import Combobox from '@/components/combobox';

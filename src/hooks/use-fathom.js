@@ -1,6 +1,6 @@
+import React from 'react';
 import * as Fathom from 'fathom-client';
 import { useRouter } from 'next/router';
-import React from 'react';
 
 export default function useFathom() {
   const router = useRouter();

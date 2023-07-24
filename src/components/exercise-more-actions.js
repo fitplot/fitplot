@@ -1,21 +1,21 @@
+import React from 'react';
 import { ClockIcon } from '@heroicons/react/24/outline';
 import { CheckIcon, TrashIcon } from '@heroicons/react/24/solid';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useToggle } from 'react-use';
 
-import { useDeleteExercise, useUpdateExercise } from '@/hooks/use-exercise';
-import { useExercises } from '@/hooks/use-exercises';
 import Combobox from '@/components/combobox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';
 import { Paragraph } from '@/components/typography';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useDeleteExercise, useUpdateExercise } from '@/hooks/use-exercise';
+import { useExercises } from '@/hooks/use-exercises';
 
 export default function ExerciseMoreActions({ open, onClose, exercise = {} }) {
   const router = useRouter();

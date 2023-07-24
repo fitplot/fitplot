@@ -1,7 +1,7 @@
+import React from 'react';
 import clsx from 'clsx';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useIntersection, useToggle } from 'react-use';
 
 import AddWorkout from '@/components/add-workout';

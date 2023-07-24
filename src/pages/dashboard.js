@@ -1,9 +1,9 @@
+import React from 'react';
 import { CheckCircleIcon, PlayCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import Link from 'next/link';
-import React from 'react';
 import { useIntersection } from 'react-use';
 
 import { usePageContext } from '@/components/layouts';

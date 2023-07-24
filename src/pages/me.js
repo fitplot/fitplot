@@ -1,10 +1,10 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import LoadingIcon from '@/components/loading-icon';
 import { H1 } from '@/components/typography';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import useSignOut from '@/hooks/use-sign-out';
 import withUser from '@/lib/with-user';
-import { Button } from '@/components/ui/button';
 
 export default function Me({ user }) {
   const mutation = useSignOut({

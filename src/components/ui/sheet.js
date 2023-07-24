@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva } from 'class-variance-authority';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import { cn } from '@/lib/utils';
 

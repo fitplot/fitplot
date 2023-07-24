@@ -1,6 +1,6 @@
+import React from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import React from 'react';
 
 import { H2 } from '@/components/typography';
 

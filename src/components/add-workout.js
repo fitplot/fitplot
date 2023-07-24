@@ -1,13 +1,13 @@
+import React from 'react';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
-import React from 'react';
 
-import { useCreateWorkout } from '@/hooks/use-workout';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useCreateWorkout } from '@/hooks/use-workout';
 
 export default function AddWorkout({ open, onClose }) {
   const inputRef = React.useRef(null);

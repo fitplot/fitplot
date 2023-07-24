@@ -1,18 +1,18 @@
+import React from 'react';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { CheckIcon, TrashIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useToggle } from 'react-use';
 
-import { useDeleteWorkout, useUpdateWorkout } from '@/hooks/use-workout';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useDeleteWorkout, useUpdateWorkout } from '@/hooks/use-workout';
 
 export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
   const router = useRouter();

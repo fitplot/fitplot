@@ -37,12 +37,12 @@
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.45.0",
     "eslint-config-next": "^13.4.10",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-lodash": "^7.3.0",
     "eslint-plugin-only-error": "^1.0.2",
     "eslint-plugin-unicorn": "^48.0.0",
@@ -75,13 +75,11 @@
       "prettier"
     ],
     "plugins": [
-      "import",
       "lodash",
       "only-error",
       "unicorn"
     ],
     "rules": {
-      "import/order": "error",
       "lodash/prefer-lodash-method": "off",
       "lodash/prefer-lodash-typecheck": "off",
       "unicorn/no-null": "off",
@@ -139,7 +137,19 @@
     "singleQuote": true,
     "jsxSingleQuote": true,
     "plugins": [
-      "prettier-plugin-tailwindcss"
+      "prettier-plugin-tailwindcss",
+      "@ianvs/prettier-plugin-sort-imports"
+    ],
+    "importOrder": [
+      "^(react/(.*)$)|^(react$)",
+      "<THIRD_PARTY_MODULES>",
+      "",
+      "^@/components/(.*)$",
+      "^@/hooks/(.*)$",
+      "^@/lib/(.*)$",
+      "^@/pages/(.*)$",
+      "",
+      "^[./]"
     ]
   }
 }

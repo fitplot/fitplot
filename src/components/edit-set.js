@@ -1,13 +1,13 @@
-import { CheckIcon, TrashIcon } from '@heroicons/react/24/solid';
 import React from 'react';
+import { CheckIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { useToggle } from 'react-use';
 
-import { useDeleteSet, useUpdateSet } from '@/hooks/use-sets';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import LoadingIcon from '@/components/loading-icon';
 import Overlay from '@/components/overlay';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useDeleteSet, useUpdateSet } from '@/hooks/use-sets';
 
 export default function EditSet({ open, onClose, exercise = {}, set = {} }) {
   const amountRef = React.createRef();

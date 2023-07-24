@@ -1,21 +1,21 @@
+import React from 'react';
 import {
   ArrowRightIcon,
   HandRaisedIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline';
-import React from 'react';
 import { useToggle } from 'react-use';
 import Balancer from 'react-wrap-balancer';
 
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import InfoCard from '@/components/info-card';
 import { MarketingLayout } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';
 import { H1, Paragraph } from '@/components/typography';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import useAddToWaitlist from '@/hooks/use-waitlist';
 import withUser from '@/lib/with-user';
-import { Button } from '@/components/ui/button';
 
 export default function Waitlist() {
   const emailRef = React.useRef();

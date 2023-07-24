@@ -47,7 +47,7 @@ export function InAppNavbar({ noop }) {
   const { title, onMoreAction } = usePageContextValues();
 
   return (
-    <div className='flex h-12 items-center justify-between border-b bg-slate-50 px-1'>
+    <header className='flex min-h-[57px] items-center justify-between border-b bg-slate-50 px-1'>
       {!noop && (
         <SheetTrigger asChild>
           <TopBarButton Icon={Bars3Icon} className='shrink-0' />
@@ -63,7 +63,7 @@ export function InAppNavbar({ noop }) {
           onClick={() => onMoreAction()}
         />
       )}
-    </div>
+    </header>
   );
 }
 

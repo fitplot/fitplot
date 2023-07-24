@@ -1,16 +1,16 @@
+import React from 'react';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
-import React from 'react';
 
-import { useCreateSets, usePreviousSetsForExercise } from '@/hooks/use-sets';
-import fitcode from '@/lib/fitcode';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import Overlay from '@/components/overlay';
 import SetsTable from '@/components/sets-table';
 import { H2 } from '@/components/typography';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useCreateSets, usePreviousSetsForExercise } from '@/hooks/use-sets';
+import fitcode from '@/lib/fitcode';
 
 export default function AddSets({ open, onClose, workoutId, exercise = {} }) {
   const [sets, updateSets] = React.useState(null);

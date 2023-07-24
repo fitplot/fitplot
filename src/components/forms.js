@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import clsx from 'clsx';
 
 export function Label({ className, ...labelProps }) {
   /* eslint-disable jsx-a11y/label-has-associated-control */

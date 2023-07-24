@@ -5,15 +5,15 @@ import Balancer from 'react-wrap-balancer';
 
 import { MarketingLayout } from '@/components/layouts';
 import { H1, Paragraph } from '@/components/typography';
-import withUser from '@/lib/with-user';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
 } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import withUser from '@/lib/with-user';
 
 export default function Home({ user }) {
   const features = [

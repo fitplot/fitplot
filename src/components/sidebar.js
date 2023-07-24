@@ -5,10 +5,10 @@ import {
 } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 
-import { getBuildId } from '@/lib/server';
-import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { SheetContent } from '@/components/ui/sheet';
+import { getBuildId } from '@/lib/server';
 
 const links = [
   {

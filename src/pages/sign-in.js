@@ -1,18 +1,18 @@
+import React from 'react';
 import { HandRaisedIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useToggle } from 'react-use';
 
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import InfoCard from '@/components/info-card';
 import { usePageContext } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import useSignIn from '@/hooks/use-sign-in';
 import useSignUp from '@/hooks/use-sign-up';
-import { Button } from '@/components/ui/button';
 
 export default function SignIn() {
   const router = useRouter();

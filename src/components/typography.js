@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import clsx from 'clsx';
 
 const FONT_SIZES = {
   h1: 'text-4xl md:text-5xl',

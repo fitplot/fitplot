@@ -1,6 +1,6 @@
+import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useToggle } from 'react-use';
 
 import ExerciseMoreActions from '@/components/exercise-more-actions';

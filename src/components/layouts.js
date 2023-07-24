@@ -2,8 +2,8 @@ import React from 'react';
 import { useToggle } from 'react-use';
 
 import { InAppNavbar, MarketingNavbar } from '@/components/navbar';
-import { Sheet } from '@/components/ui/sheet';
 import SideBar from '@/components/sidebar';
+import { Sheet } from '@/components/ui/sheet';
 
 export function MarketingLayout({ children, ...pageProps }) {
   return <MarketingPage {...pageProps}>{children}</MarketingPage>;

@@ -1,8 +1,8 @@
+import React from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import _ from 'lodash';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useToggle } from 'react-use';
 
 import AddExercise from '@/components/add-exercise';
@@ -12,12 +12,12 @@ import { usePageContext } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';
 import SetsTable from '@/components/sets-table';
 import { H1, Paragraph } from '@/components/typography';
+import { Button } from '@/components/ui/button';
 import MoreActions from '@/components/workout-more-actions';
 import { useExercises } from '@/hooks/use-exercises';
 import { useSets } from '@/hooks/use-sets';
 import { useWorkout } from '@/hooks/use-workout';
 import withUser from '@/lib/with-user';
-import { Button } from '@/components/ui/button';
 
 export default function WorkoutPage() {
   const router = useRouter();

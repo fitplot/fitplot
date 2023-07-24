@@ -1,8 +1,8 @@
-import { Combobox } from '@headlessui/react';
 import React from 'react';
+import { Combobox } from '@headlessui/react';
 
-import { Input } from '@/components/ui/input';
 import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
+import { Input } from '@/components/ui/input';
 
 export const ComboboxDefault = {
   All: 'all',
