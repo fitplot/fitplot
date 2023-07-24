@@ -31,7 +31,7 @@ const links = [
 export default function SideBar({ user, close }) {
   return (
     <SheetContent side='left' className='w-[220px] p-0'>
-      <nav className='flex h-full flex-col pt-8 pb-16'>
+      <nav className='flex h-full flex-col pb-16 pt-8'>
         <SidebarTopControls user={user} close={close} />
         <MainMenu links={links} close={close} />
         <div className='flex items-center gap-2 px-4 text-sm font-medium'>
@@ -70,7 +70,7 @@ function ActiveUser({ user, close }) {
       size='sm'
       variant='ghost'
       className={clsx('justify-start gap-2', {
-        'dark:bg-slate-800 bg-slate-100': active,
+        'bg-slate-100 dark:bg-slate-800': active,
       })}
       onClick={close}
     >
@@ -97,7 +97,7 @@ function MainMenu({ links, close }) {
             size='sm'
             variant='ghost'
             className={clsx('justify-start gap-2', {
-              'dark:bg-slate-800 bg-slate-100': active,
+              'bg-slate-100 dark:bg-slate-800': active,
             })}
             onClick={close}
           >

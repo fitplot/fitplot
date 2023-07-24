@@ -98,12 +98,12 @@ function CalendarBlock({ group }) {
   return (
     <div className='relative h-full w-10 shrink-0 md:w-16'>
       <div
-        className={clsx('absolute right-0 top-[5px] bottom-[4px] w-px', {
+        className={clsx('absolute bottom-[4px] right-0 top-[5px] w-px', {
           'bg-gray-200': !group.active,
           'bg-primary-500': group.active,
         })}
       />
-      <div className='absolute right-[-4px] bottom-[-20px] flex h-[40px] items-center justify-end'>
+      <div className='absolute bottom-[-20px] right-[-4px] flex h-[40px] items-center justify-end'>
         {group.date && (
           <span className='text-right text-xs text-slate-500'>
             {dayjs(group.date).format('MMM')}

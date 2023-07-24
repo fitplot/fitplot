@@ -12,8 +12,8 @@ export default function SetsTable({
   return (
     <div className={clsx(className, 'flex flex-col divide-y')}>
       <div className='flex'>
-        <HeadCell className='flex-1 py-3 px-6'>Volume</HeadCell>
-        <HeadCell className='flex-1 py-3 px-6'>Amount</HeadCell>
+        <HeadCell className='flex-1 px-6 py-3'>Volume</HeadCell>
+        <HeadCell className='flex-1 px-6 py-3'>Amount</HeadCell>
         {isActionable ? <HeadCell className='w-10' /> : null}
       </div>
       {sets.map((set) => (
@@ -45,8 +45,8 @@ function Set({ isActionable, onAction, set }) {
 
   return (
     <Container onActionFn={onAction} className='flex'>
-      <Cell className='flex-1 py-4 px-6'>{volume}</Cell>
-      <Cell className='flex-1 py-4 px-6'>
+      <Cell className='flex-1 px-6 py-4'>{volume}</Cell>
+      <Cell className='flex-1 px-6 py-4'>
         {amount ? `${amount} ${unit}` : null}
       </Cell>
       {isActionable ? (

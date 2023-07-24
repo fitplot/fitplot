@@ -60,7 +60,7 @@ export function ListMenuGroup({ className, title, children }) {
   if (title) {
     return (
       <div className={clsx('flex flex-col divide-y', className)}>
-        <div className='flex text-ellipsis whitespace-nowrap py-2 px-4 text-sm uppercase'>
+        <div className='flex text-ellipsis whitespace-nowrap px-4 py-2 text-sm uppercase'>
           {title}
         </div>
         {children}

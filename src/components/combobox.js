@@ -50,7 +50,7 @@ export default function CustomCombobox({
         displayValue={(option) => (field ? option[field] : option)}
       />
       <Combobox.Options
-        className='flex grow flex-col divide-y overflow-y-auto bg-slate-100 pt-2 pb-4'
+        className='flex grow flex-col divide-y overflow-y-auto bg-slate-100 pb-4 pt-2'
         static={defaultFilter === ComboboxDefault.All}
       >
         <ListMenuGroup
