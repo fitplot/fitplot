@@ -1,103 +1,115 @@
-import { BellIcon } from '@heroicons/react/24/outline';
-import { CogIcon } from '@heroicons/react/24/solid';
+import {
+  Cog8ToothIcon,
+  HomeIcon,
+  Squares2X2Icon,
+} from '@heroicons/react/24/solid';
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
 
 import { getBuildId } from '@/lib/server';
-import { ListMenu, ListMenuItem } from '@/components/list-menu';
+import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { SheetContent } from '@/components/ui/sheet';
 
 const links = [
   {
     title: 'Dashboard',
     href: '/dashboard',
+    Icon: HomeIcon,
   },
   {
     title: 'Workouts',
     href: '/workouts',
+    Icon: Squares2X2Icon,
   },
   {
     title: 'Exercises',
     href: '/exercises',
+    Icon: Squares2X2Icon,
   },
 ];
 
-export default function SideBar({ user, toggleMenu }) {
-  const router = useRouter();
-
-  const navigate = (to) => {
-    router.push(to);
-    toggleMenu();
-  };
-
+export default function SideBar({ user, close }) {
   return (
-    <div className='fixed top-0 left-0 flex h-full w-9/12 flex-col overflow-y-auto bg-slate-100'>
-      <HeaderBar user={user} navigate={navigate} className='shrink-0 grow-0' />
-      <MainMenu navigate={navigate} className='my-4 grow' />
+    <SheetContent side='left' className='w-[220px] p-0'>
+      <nav className='flex h-full flex-col pt-8 pb-16'>
+        <SidebarTopControls user={user} close={close} />
+        <MainMenu links={links} close={close} />
+        <div className='flex items-center gap-2 px-4 text-sm font-medium'>
+          <Cog8ToothIcon className='h-4 w-4' />
+          <span>Build {getBuildId()}</span>
+        </div>
+      </nav>
+    </SheetContent>
+  );
+}
+
+function SidebarTopControls({ user, close }) {
+  return (
+    <div className='flex flex-col gap-2 p-4'>
+      <ActiveUser user={user} close={close} />
+      <Button
+        href='/workouts?new'
+        size='sm'
+        variant='primary'
+        className='justify-start gap-2'
+        onClick={close}
+      >
+        Workout Now
+      </Button>
     </div>
   );
 }
 
-function HeaderBar({ user, navigate, className }) {
-  return (
-    <div className={clsx('flex h-12 justify-center border-b px-1', className)}>
-      <ActiveUser user={user} navigate={navigate} className='grow' />
-      <SideBarButton Icon={BellIcon} />
-    </div>
-  );
-}
-
-function ActiveUser({ user, navigate, className }) {
+function ActiveUser({ user, close }) {
   const initial = user.firstName ? user.firstName.slice(0, 1) : '';
+  const active = window.location.pathname === '/me';
+
   return (
-    <button
-      type='button'
-      className={clsx('flex h-full items-center space-x-2', className)}
-      onClick={() => navigate('/me')}
+    <Button
+      href='/me'
+      size='sm'
+      variant='ghost'
+      className={clsx('justify-start gap-2', {
+        'dark:bg-slate-800 bg-slate-100': active,
+      })}
+      onClick={close}
     >
-      <Avatar>
-        <AvatarFallback className='bg-primary-500 text-white'>
+      <Avatar className='h-6 w-6'>
+        <AvatarFallback className='bg-primary-500 text-xs text-white'>
           {initial}
         </AvatarFallback>
       </Avatar>
       <span>{user.firstName}</span>
-    </button>
+    </Button>
   );
 }
 
-function SideBarButton({ Icon, className, ...props }) {
+function MainMenu({ links, close }) {
   return (
-    <button
-      {...props}
-      className={clsx(
-        'flex h-full w-10 items-center justify-center',
-        className
-      )}
-      type='button'
-    >
-      <Icon className='h-6 w-6' />
-    </button>
-  );
-}
+    <div className='flex flex-1 flex-col px-4'>
+      {links.map(({ title, href, Icon }, index) => {
+        const active = window.location.pathname === href;
 
-function MainMenu({ className, navigate }) {
-  return (
-    <ListMenu className={clsx('divide-y', className)}>
-      {links.map((link) => (
-        <MainMenuLink key={link.title} navigate={navigate} {...link} />
-      ))}
-      <ListMenuItem className='space-x-2 bg-transparent text-slate-500'>
-        <CogIcon className='h-6 w-6' />
-        <span>Build {getBuildId()}</span>
-      </ListMenuItem>
-    </ListMenu>
-  );
-}
-
-function MainMenuLink({ navigate, title, href }) {
-  return (
-    <ListMenuItem onClick={() => navigate(href)} className='bg-transparent'>
-      {title}
-    </ListMenuItem>
+        return (
+          <Button
+            key={index}
+            href={href}
+            size='sm'
+            variant='ghost'
+            className={clsx('justify-start gap-2', {
+              'dark:bg-slate-800 bg-slate-100': active,
+            })}
+            onClick={close}
+          >
+            {Icon && (
+              <span>
+                <Icon className='h-4 w-4' />
+              </span>
+            )}
+            <span>{title}</span>
+          </Button>
+        );
+      })}
+    </div>
   );
 }

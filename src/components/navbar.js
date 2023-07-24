@@ -4,6 +4,7 @@ import clsx from 'clsx';
 
 import { usePageContextValues } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
+import { SheetTrigger } from '@/components/ui/sheet';
 
 export function MarketingNavbar({ user }) {
   return (
@@ -42,17 +43,15 @@ export function MarketingNavbar({ user }) {
   );
 }
 
-export function InAppNavbar({ noop, onToggleMenu }) {
+export function InAppNavbar({ noop }) {
   const { title, onMoreAction } = usePageContextValues();
 
   return (
     <div className='flex h-12 items-center justify-between border-b bg-slate-50 px-1'>
       {!noop && (
-        <TopBarButton
-          Icon={Bars3Icon}
-          className='shrink-0'
-          onClick={onToggleMenu}
-        />
+        <SheetTrigger asChild>
+          <TopBarButton Icon={Bars3Icon} className='shrink-0' />
+        </SheetTrigger>
       )}
       <div className='flex grow items-center px-2'>
         <span>{title}</span>

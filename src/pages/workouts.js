@@ -29,7 +29,7 @@ export default function WorkoutsPage() {
     threshold: 1,
   });
 
-  const [showAddWorkout, toggleAddWorkout] = useToggle('now' in query);
+  const [showAddWorkout, toggleAddWorkout] = useToggle(query.new !== undefined);
   const [showMoreActions, toggleMoreActions] = useToggle(false);
 
   const onMoreAction = React.useCallback(

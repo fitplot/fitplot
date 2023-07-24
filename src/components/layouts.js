@@ -1,8 +1,8 @@
-import clsx from 'clsx';
 import React from 'react';
 import { useToggle } from 'react-use';
 
 import { InAppNavbar, MarketingNavbar } from '@/components/navbar';
+import { Sheet } from '@/components/ui/sheet';
 import SideBar from '@/components/sidebar';
 
 export function MarketingLayout({ children, ...pageProps }) {
@@ -11,7 +11,7 @@ export function MarketingLayout({ children, ...pageProps }) {
 
 function MarketingPage({ children, user }) {
   return (
-    <div className='flex h-full flex-col overflow-hidden overscroll-none break-words bg-white duration-200 ease-in'>
+    <div className='flex h-full flex-col overflow-hidden overscroll-none break-words bg-white'>
       <MarketingNavbar user={user} />
       <main className='flex flex-1 flex-col overflow-y-auto overscroll-none p-4'>
         {children}
@@ -29,26 +29,18 @@ export function InAppLayout({ children, ...pageProps }) {
 }
 
 function InAppPage({ children, user }) {
-  const [isMenuToggled, toggleMenu] = useToggle();
+  const [isOpen, setOpen] = useToggle(false);
 
   return (
-    <>
-      {Boolean(user) && <SideBar user={user} toggleMenu={() => toggleMenu()} />}
-      <div
-        className={clsx(
-          'transition-translate flex h-full flex-col overflow-hidden overscroll-none break-words bg-white drop-shadow duration-200 ease-in',
-          {
-            'translate-x-3/4': isMenuToggled,
-            'translate-x-0': !isMenuToggled,
-          }
-        )}
-      >
-        <InAppNavbar noop={Boolean(!user)} onToggleMenu={() => toggleMenu()} />
+    <Sheet open={isOpen} onOpenChange={setOpen}>
+      {Boolean(user) && <SideBar user={user} close={() => setOpen(false)} />}
+      <div className='flex h-full flex-col overflow-hidden overscroll-none break-words bg-white'>
+        <InAppNavbar noop={Boolean(!user)} />
         <main className='flex flex-1 flex-col overflow-y-auto overscroll-none px-4'>
           {children}
         </main>
       </div>
-    </>
+    </Sheet>
   );
 }
 

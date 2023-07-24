@@ -37,10 +37,10 @@ export default function Timeline() {
     );
 
     return Object.entries(workoutsByWeek)
-      .map(([week, workoutsInWeek]) => {
+      .map(([key, workoutsInWeek]) => {
+        const week = +key;
         const arbitrary = dayjs(workoutsInWeek[0].createdAt);
-
-        const active = dayjs().isBefore(arbitrary.add(1, 'week'));
+        const active = dayjs().week() === week;
 
         return {
           week,
