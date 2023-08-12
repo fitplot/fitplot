@@ -59,8 +59,8 @@
     "eslint-plugin-unicorn": "^48.0.0",
     "jotai-devtools": "^0.6.1",
     "postcss": "^8.3.11",
-    "prettier": "^2.8.8",
-    "prettier-plugin-tailwindcss": "^0.3.0"
+    "prettier": "^3.0.1",
+    "prettier-plugin-tailwindcss": "^0.5.2"
   },
   "volta": {
     "node": "18.14.0"

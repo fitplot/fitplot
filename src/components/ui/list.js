@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 const List = React.forwardRef(({ className, ...props }, ref) => (
-  <div className='flex flex-col w-full overflow-auto'>
+  <div className='flex w-full flex-col overflow-auto'>
     <div
       ref={ref}
-      className={cn('w-full text-sm divide-y divide-slate-100', className)}
+      className={cn('w-full divide-y divide-slate-100 text-sm', className)}
       {...props}
     />
   </div>
@@ -19,8 +19,8 @@ const ListGroupLabel = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      'flex items-center gap-2 px-4 h-[44px] transition-colors bg-slate-50 dark:bg-slate-700',
-      className
+      'flex h-[44px] items-center gap-2 bg-slate-50 px-4 transition-colors dark:bg-slate-700',
+      className,
     )}
     {...props}
   />
@@ -34,13 +34,13 @@ const ListItem = React.forwardRef(
       <Comp
         ref={ref}
         className={cn(
-          'gap-2 flex items-center px-4 h-[44px] transition-colors hover:bg-slate-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800 focus:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-400',
-          className
+          'flex h-[44px] items-center gap-2 px-4 transition-colors hover:bg-slate-100/50 focus:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-400 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800',
+          className,
         )}
         {...props}
       />
     );
-  }
+  },
 );
 ListItem.displayName = 'ListItem';
 

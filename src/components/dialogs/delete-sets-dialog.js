@@ -39,7 +39,7 @@ export default function DeleteSetsDialog({ data = [] }) {
           Are you sure you want to delete {data.length} set(s)?
         </DialogDescription>
         <Button variant='destructive' onClick={remove}>
-          <TrashIcon className='w-4 h-4' />
+          <TrashIcon className='h-4 w-4' />
         </Button>
       </DialogContent>
     </Dialog>

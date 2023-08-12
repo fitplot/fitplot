@@ -18,7 +18,7 @@ export function useOpenable(key) {
       console.log('looking up openable', key) ||
       registry[key] ||
       (registry[key] = createOpenableAtom(key)),
-    [registry, key]
+    [registry, key],
   );
 
   const update = useSetAtom(openableAtom);
@@ -26,12 +26,12 @@ export function useOpenable(key) {
   const show = React.useCallback(
     (data) =>
       update((previous) => ({ open: true, data: data ?? previous.data })),
-    [update]
+    [update],
   );
 
   const hide = React.useCallback(
     () => update(() => ({ open: false, data: null })),
-    [update]
+    [update],
   );
 
   return { show, hide };
@@ -45,7 +45,7 @@ export function useOpenableModel(key) {
       console.log('looking up openable model', key) ||
       registry[key] ||
       (registry[key] = createOpenableAtom(key)),
-    [registry, key]
+    [registry, key],
   );
 
   const [openable, update] = useAtom(openableAtom);
@@ -53,7 +53,7 @@ export function useOpenableModel(key) {
   const toggle = React.useCallback(
     (value) =>
       update((previous) => ({ ...previous, open: value ?? !previous.open })),
-    [update]
+    [update],
   );
 
   return { ...openable, toggle };

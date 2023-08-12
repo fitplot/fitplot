@@ -95,7 +95,7 @@ export function VerticalLockup({ className, ...props }) {
       {...props}
     >
       <Logo className='w-[6em]' />
-      <Wordmark className='block -mt-[1em]' />
+      <Wordmark className='-mt-[1em] block' />
     </div>
   );
 }

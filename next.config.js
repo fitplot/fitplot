@@ -10,7 +10,7 @@ const nextConfig = {
     config.plugins.push(
       new webpack.DefinePlugin({
         'process.env.BUILD_ID': JSON.stringify(buildId),
-      })
+      }),
     );
     return config;
   },
@@ -65,5 +65,5 @@ const sentryNextjsOptions = {
 module.exports = withSentryConfig(
   nextConfig,
   sentryWebpackOptions,
-  sentryNextjsOptions
+  sentryNextjsOptions,
 );

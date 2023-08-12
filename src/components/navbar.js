@@ -14,11 +14,11 @@ const titleAtom = atomWithReset(null);
 
 export function MarketingNavbar({ user }) {
   return (
-    <header className='fixed top-0 left-0 right-0 md:[--header-height:48px]'>
-      <div className='after:absolute after:inset-x-0 after:top-[-1px] after:-bottom-1/2 after:[mask-image:linear-gradient(to_bottom,black_var(--header-height),transparent)] after:backdrop-blur-md' />
+    <header className='fixed left-0 right-0 top-0 md:[--header-height:48px]'>
+      <div className='after:absolute after:inset-x-0 after:-bottom-1/2 after:top-[-1px] after:backdrop-blur-md after:[mask-image:linear-gradient(to_bottom,black_var(--header-height),transparent)]' />
       <nav>
         <div className='md:hidden'></div>
-        <div className='[height:var(--header-height)] relative hidden md:flex container mx-auto items-center border-b'>
+        <div className='container relative mx-auto hidden items-center border-b [height:var(--header-height)] md:flex'>
           <Lockup href='/' className='text-xl' />
           {Boolean(user) && (
             <Button
@@ -55,15 +55,15 @@ export function InAppNavbar() {
   const isCollapsed = React.useMemo(() => width < 768, [width]);
 
   return (
-    <header className='flex min-h-[57px] items-center justify-between border-b bg-slate-50 px-2 gap-2'>
+    <header className='flex min-h-[57px] items-center justify-between gap-2 border-b bg-slate-50 px-2'>
       {isCollapsed && (
         <SheetTrigger asChild>
           <Button variant='ghost'>
-            <Bars3Icon className='w-4 h-4' />
+            <Bars3Icon className='h-4 w-4' />
           </Button>
         </SheetTrigger>
       )}
-      <div className='flex flex-1 overflow-hidden items-center text-sm'>
+      <div className='flex flex-1 items-center overflow-hidden text-sm'>
         {title}
       </div>
       {content}

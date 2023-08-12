@@ -23,7 +23,7 @@ function Title({ variant = 'primary', size, as, className, ...props }) {
         'pb-2',
         FONT_SIZES[size],
         TITLE_COLORS[variant],
-        className
+        className,
       )}
       {...props}
     />

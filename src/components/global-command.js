@@ -56,13 +56,13 @@ export default function GlobalCommand() {
           <CommandItem
             onSelect={() => model.toggle(false) || router.push('/dashboard')}
           >
-            <ArrowRightCircleIcon className='w-4 h-4' />
+            <ArrowRightCircleIcon className='h-4 w-4' />
             <span>Go to dashboard</span>
           </CommandItem>
           <CommandItem
             onSelect={() => model.toggle(false) || router.push('/workouts')}
           >
-            <ArrowRightCircleIcon className='w-4 h-4' />
+            <ArrowRightCircleIcon className='h-4 w-4' />
             <span>Go to all workouts</span>
           </CommandItem>
         </CommandList>
@@ -94,7 +94,7 @@ function SetCommandList({ model, context: { type, data } = {} }) {
 
       model.toggle(false);
     },
-    [updateMutation, data, model]
+    [updateMutation, data, model],
   );
 
   const remove = React.useCallback(() => {
@@ -117,19 +117,19 @@ function SetCommandList({ model, context: { type, data } = {} }) {
       {
         value: 'volume',
         label: 'Change volume',
-        icon: <PencilIcon className='w-4 h-4' />,
+        icon: <PencilIcon className='h-4 w-4' />,
         onSelect: () => setAction('volume'),
       },
       {
         value: 'amount',
         label: 'Change amount',
-        icon: <PencilIcon className='w-4 h-4' />,
+        icon: <PencilIcon className='h-4 w-4' />,
         onSelect: () => setAction('amount'),
       },
       {
         value: 'delete',
         label: 'Delete workout(s)',
-        icon: <TrashIcon className='w-4 h-4' />,
+        icon: <TrashIcon className='h-4 w-4' />,
         onSelect: () => remove(),
       },
     ];
@@ -148,13 +148,13 @@ function SetCommandList({ model, context: { type, data } = {} }) {
         ))}
       {action === 'volume' && (
         <CommandItem onSelect={() => updateVolume(search)}>
-          <PencilIcon className='w-4 h-4' />
+          <PencilIcon className='h-4 w-4' />
           <span>Change volume</span>
         </CommandItem>
       )}
       {action === 'amount' && (
         <CommandItem onSelect={() => updateAmount(search)}>
-          <PencilIcon className='w-4 h-4' />
+          <PencilIcon className='h-4 w-4' />
           <span>Change amount</span>
         </CommandItem>
       )}
@@ -185,14 +185,14 @@ function WorkoutCommandList({ model, type, data }) {
 
       model.toggle(false);
     },
-    [data, updateMutation, model]
+    [data, updateMutation, model],
   );
 
   const updateStatus = React.useCallback(
     (completedAt) => {
       update({ completedAt });
     },
-    [update]
+    [update],
   );
 
   const remove = React.useCallback(async () => {
@@ -205,13 +205,13 @@ function WorkoutCommandList({ model, type, data }) {
       {
         value: 'status',
         label: 'Change status',
-        icon: <PencilIcon className='w-4 h-4' />,
+        icon: <PencilIcon className='h-4 w-4' />,
         onSelect: () => setAction('status'),
       },
       {
         value: 'delete',
         label: 'Delete workout(s)',
-        icon: <TrashIcon className='w-4 h-4' />,
+        icon: <TrashIcon className='h-4 w-4' />,
         onSelect: () => remove(),
       },
     ];
@@ -231,11 +231,11 @@ function WorkoutCommandList({ model, type, data }) {
       {action === 'status' && (
         <>
           <CommandItem onSelect={() => updateStatus(dayjs())}>
-            <PencilIcon className='w-4 h-4' />
+            <PencilIcon className='h-4 w-4' />
             <span>Completed</span>
           </CommandItem>
           <CommandItem onSelect={() => updateStatus(null)}>
-            <PencilIcon className='w-4 h-4' />
+            <PencilIcon className='h-4 w-4' />
             <span>In Progress</span>
           </CommandItem>
         </>

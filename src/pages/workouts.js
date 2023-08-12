@@ -72,7 +72,7 @@ export default function WorkoutsPage() {
         ),
       },
     ],
-    []
+    [],
   );
 
   const grouping = React.useMemo(() => ['status'], []);
@@ -129,8 +129,8 @@ export default function WorkoutsPage() {
 
   if (isLoading) {
     return (
-      <div className='h-full flex items-center justify-center'>
-        <LoadingIcon className='w-6 h-6' />
+      <div className='flex h-full items-center justify-center'>
+        <LoadingIcon className='h-6 w-6' />
       </div>
     );
   }
@@ -150,11 +150,11 @@ export default function WorkoutsPage() {
           className='items-center gap-2'
           onClick={() => addWorkoutDialog.show()}
         >
-          <PencilSquareIcon className='w-4 h-4' />
+          <PencilSquareIcon className='h-4 w-4' />
           <span>Workout</span>
         </Button>
       </Navbar.RightContent>
-      <div className='flex flex-1 flex-col mb-4 -mx-4'>
+      <div className='-mx-4 mb-4 flex flex-1 flex-col'>
         <List>
           {table.getRowModel().rows.map((row) => {
             const Component = row.depth === 0 ? ListGroupLabel : ListItem;
@@ -170,7 +170,7 @@ export default function WorkoutsPage() {
                     <React.Fragment key={cell.key}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </React.Fragment>
                   );

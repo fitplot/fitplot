@@ -71,14 +71,14 @@ export default function AddSetsDialog() {
   const filteredOptions = React.useMemo(() => {
     return query
       ? options.filter((option) =>
-          option.name.toLowerCase().includes(query.toLowerCase())
+          option.name.toLowerCase().includes(query.toLowerCase()),
         )
       : options.slice(0, 3);
   }, [options, query]);
 
   const hasExactMatch = React.useMemo(() => {
     return options.some(
-      (option) => option.name.toLowerCase() === query.toLowerCase()
+      (option) => option.name.toLowerCase() === query.toLowerCase(),
     );
   }, [options, query]);
 
@@ -87,7 +87,7 @@ export default function AddSetsDialog() {
 
   const { data: previousSets } = usePreviousSetsForExercise(
     exercise && exercise.id,
-    workout && workout.id
+    workout && workout.id,
   );
   const createSetsMutation = useCreateSets();
 
@@ -105,15 +105,15 @@ export default function AddSetsDialog() {
           workoutId: workout && workout.id,
           exerciseId: exercise && exercise.id,
           unit,
-        })
+        }),
       );
     },
-    [updateSets, exercise, unit]
+    [updateSets, exercise, unit],
   );
 
   const onChange = React.useCallback(
     (e) => _.throttle(preview, 250, { leading: false })(e),
-    [preview]
+    [preview],
   );
 
   const prefill = React.useCallback(() => {
@@ -132,7 +132,7 @@ export default function AddSetsDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
-      <DialogContent className='max-h-full overflow-y-scroll top-auto bottom-[0%] translate-y-0 data-[state=closed]:slide-out-to-bottom-[48%] data-[state=open]:slide-in-from-bottom-[48%]'>
+      <DialogContent className='bottom-[0%] top-auto max-h-full translate-y-0 overflow-y-scroll data-[state=closed]:slide-out-to-bottom-[48%] data-[state=open]:slide-in-from-bottom-[48%]'>
         <DialogHeader>Add an exercise</DialogHeader>
         <Popover
           open={isExercisePopoverOpen}
@@ -209,7 +209,7 @@ export default function AddSetsDialog() {
             </PopoverContent>
           </Popover>
         </div>
-        <div className='h-56 flex flex-col gap-4 text-sm'>
+        <div className='flex h-56 flex-col gap-4 text-sm'>
           <Label>Preview</Label>
           {Boolean(!sets && previousFitcode) && (
             <Alert>
@@ -234,7 +234,7 @@ export default function AddSetsDialog() {
             </span>
           )}
           {Boolean(sets) && (
-            <ScrollArea className='border rounded'>
+            <ScrollArea className='rounded border'>
               <span>TODO</span>
             </ScrollArea>
           )}

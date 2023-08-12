@@ -32,7 +32,7 @@ export default function Timeline() {
     if (!workouts) return [];
 
     const workoutsByWeek = _.groupBy(workouts, ({ createdAt }) =>
-      dayjs(createdAt).week()
+      dayjs(createdAt).week(),
     );
 
     return Object.entries(workoutsByWeek)
@@ -71,7 +71,7 @@ export default function Timeline() {
       <Navbar.Title>
         <span>Dashboard</span>
       </Navbar.Title>
-      <div className='flex flex-col flex-1'>
+      <div className='flex flex-1 flex-col'>
         {isLoading && <LoadingIcon className='place-self-center' />}
         {!isLoading && (
           <>
@@ -143,7 +143,7 @@ function Summary({ group }) {
 
   const started = group.workouts.length;
   const completed = group.workouts.filter(({ completedAt }) =>
-    Boolean(completedAt)
+    Boolean(completedAt),
   ).length;
   return (
     <div className='mb-[1px] ml-6 flex flex-1 flex-col border-b'>

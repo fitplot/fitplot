@@ -39,7 +39,7 @@ function InAppPage({ children, user }) {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <div className='flex h-full flex-col md:flex-row overflow-hidden overscroll-none'>
+      <div className='flex h-full flex-col overflow-hidden overscroll-none md:flex-row'>
         <SideBar user={user} close={() => setOpen(false)} />
         <div className='flex flex-1 flex-col overflow-hidden overscroll-none break-words bg-white'>
           <InAppNavbar />

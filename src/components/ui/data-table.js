@@ -44,7 +44,7 @@ export function DataTable({ columns, data, className, onChange }) {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );

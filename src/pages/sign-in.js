@@ -73,8 +73,8 @@ export default function SignIn() {
       <Head>
         <title>Sign-In</title>
       </Head>
-      <div className='h-full pt-24 container mx-auto flex flex-col items-center'>
-        <section className='flex flex-col gap-4 w-full md:w-96'>
+      <div className='container mx-auto flex h-full flex-col items-center pt-24'>
+        <section className='flex w-full flex-col gap-4 md:w-96'>
           <H1 className='font-extrabold'>Sign-In</H1>
           {isComplete && (
             <Alert>

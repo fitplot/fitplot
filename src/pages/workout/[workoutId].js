@@ -117,12 +117,12 @@ export default function WorkoutPage() {
                   <DropdownMenuItem
                     onClick={() => navigator.clipboard.writeText(code)}
                   >
-                    <ClipboardIcon className='h-4 w-4 mr-2' />
+                    <ClipboardIcon className='mr-2 h-4 w-4' />
                     Copy FitCode&trade;
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className='text-destructive-500'>
-                    <TrashIcon className='h-4 w-4 mr-2' />
+                    <TrashIcon className='mr-2 h-4 w-4' />
                     Delete this set
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -132,7 +132,7 @@ export default function WorkoutPage() {
         },
       },
     ],
-    []
+    [],
   );
 
   const grouping = React.useMemo(() => ['exercise'], []);
@@ -176,8 +176,8 @@ export default function WorkoutPage() {
 
   if (isLoading) {
     return (
-      <div className='h-full flex items-center justify-center'>
-        <LoadingIcon className='w-6 h-6' />
+      <div className='flex h-full items-center justify-center'>
+        <LoadingIcon className='h-6 w-6' />
       </div>
     );
   }
@@ -192,7 +192,7 @@ export default function WorkoutPage() {
         <WorkoutMoreActions workout={workout} />
       </Navbar.Title>
       <Navbar.RightContent>
-        <div className='flex gap-2 items-center'>
+        <div className='flex items-center gap-2'>
           {!isCompleted && (
             <Button
               size='sm'
@@ -200,13 +200,13 @@ export default function WorkoutPage() {
               className='items-center gap-2'
               onClick={() => addSetsDialog.show({ workout })}
             >
-              <PlusIcon className='w-4 h-4' />
+              <PlusIcon className='h-4 w-4' />
               <span>Exercise</span>
             </Button>
           )}
         </div>
       </Navbar.RightContent>
-      <div className='flex flex-1 flex-col mb-4 -mx-4'>
+      <div className='-mx-4 mb-4 flex flex-1 flex-col'>
         <List>
           {table.getRowModel().rows.map((row) => {
             const Component = row.depth === 0 ? ListGroupLabel : ListItem;
@@ -218,7 +218,7 @@ export default function WorkoutPage() {
                     <React.Fragment key={cell.key}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </React.Fragment>
                   );

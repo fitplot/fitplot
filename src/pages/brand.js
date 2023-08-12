@@ -16,7 +16,7 @@ import withUser from '@/lib/with-user';
 
 export default function BrandPage() {
   return (
-    <div className='flex flex-col gap-20 py-28 md:gap-36 container'>
+    <div className='container flex flex-col gap-20 py-28 md:gap-36'>
       <header>
         <VerticalLockup className='mx-auto text-6xl' />
       </header>
@@ -46,7 +46,7 @@ export default function BrandPage() {
           feel cramped or cluttered.
         </Paragraph>
         <Alert>
-          <ShieldExclamationIcon className='w-4 h-4' />
+          <ShieldExclamationIcon className='h-4 w-4' />
           <AlertDescription>
             The provided graphics are proprietary and protected. Do not alter
             these files in any way, display these graphis in a way that implies
@@ -66,14 +66,14 @@ export default function BrandPage() {
           contrast is sufficient between the three brand colors present in the
           logo and the background.
         </Paragraph>
-        <div className='grid grid-cols-1 md:grid-cols-3 md:flex-row gap-4 text-3xl'>
-          <Card className='flex place-content-center h-[200px] md:h-[300px] md:flex-1 text-black border'>
+        <div className='grid grid-cols-1 gap-4 text-3xl md:grid-cols-3 md:flex-row'>
+          <Card className='flex h-[200px] place-content-center border text-black md:h-[300px] md:flex-1'>
             <Lockup />
           </Card>
-          <Card className='flex place-content-center h-[200px] md:h-[300px] md:flex-1 text-black bg-gradient-to-b from-slate-50 to-slate-100'>
+          <Card className='flex h-[200px] place-content-center bg-gradient-to-b from-slate-50 to-slate-100 text-black md:h-[300px] md:flex-1'>
             <Lockup />
           </Card>
-          <Card className='flex place-content-center h-[200px] md:h-[300px] md:flex-1 text-white bg-slate-800'>
+          <Card className='flex h-[200px] place-content-center bg-slate-800 text-white md:h-[300px] md:flex-1'>
             <Lockup />
           </Card>
         </div>
@@ -85,34 +85,34 @@ export default function BrandPage() {
           cases the logo may be used alone without the wordmark. These cases are
           to be limited as the branded wordmark has stronger brand recognition.
         </Paragraph>
-        <div className='grid grid-cols-1 md:grid-cols-3 md:flex-row gap-4'>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white border'>
-            <div className='w-[200px] h-[200px]'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-3 md:flex-row'>
+          <Card className='flex h-[200px] items-center justify-center border text-white md:h-[300px] md:flex-1'>
+            <div className='h-[200px] w-[200px]'>
               <Logo />
             </div>
           </Card>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-gradient-to-b from-slate-50 to-slate-100'>
-            <div className='w-[200px] h-[200px]'>
+          <Card className='flex h-[200px] items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 text-white md:h-[300px] md:flex-1'>
+            <div className='h-[200px] w-[200px]'>
               <Logo />
             </div>
           </Card>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-slate-800'>
-            <div className='w-[200px] h-[200px]'>
+          <Card className='flex h-[200px] items-center justify-center bg-slate-800 text-white md:h-[300px] md:flex-1'>
+            <div className='h-[200px] w-[200px]'>
               <Logo />
             </div>
           </Card>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-primary-500'>
-            <div className='w-[200px] h-[200px]'>
+          <Card className='flex h-[200px] items-center justify-center bg-primary-500 text-white md:h-[300px] md:flex-1'>
+            <div className='h-[200px] w-[200px]'>
               <MonochromeLogo />
             </div>
           </Card>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-secondary-400'>
-            <div className='w-[200px] h-[200px]'>
+          <Card className='flex h-[200px] items-center justify-center bg-secondary-400 text-white md:h-[300px] md:flex-1'>
+            <div className='h-[200px] w-[200px]'>
               <MonochromeLogo />
             </div>
           </Card>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-black'>
-            <div className='w-[200px] h-[200px]'>
+          <Card className='flex h-[200px] items-center justify-center bg-black text-white md:h-[300px] md:flex-1'>
+            <div className='h-[200px] w-[200px]'>
               <MonochromeLogo />
             </div>
           </Card>
@@ -120,22 +120,22 @@ export default function BrandPage() {
       </section>
       <section>
         <H2>Brand Palette</H2>
-        <div className='flex flex-col md:flex-row gap-4'>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-primary-500'>
+        <div className='flex flex-col gap-4 md:flex-row'>
+          <Card className='flex h-[200px] items-center justify-center bg-primary-500 text-white md:h-[300px] md:flex-1'>
             <div className='flex flex-col items-start'>
               <span className='font-medium'>Violet</span>
               <span>#8b5cf6</span>
               <span>violet-500</span>
             </div>
           </Card>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-secondary-400'>
+          <Card className='flex h-[200px] items-center justify-center bg-secondary-400 text-white md:h-[300px] md:flex-1'>
             <div className='flex flex-col items-start'>
               <span className='font-medium'>Cyan</span>
               <span>#22d3ee</span>
               <span>cyan-400</span>
             </div>
           </Card>
-          <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white bg-black'>
+          <Card className='flex h-[200px] items-center justify-center bg-black text-white md:h-[300px] md:flex-1'>
             <div className='flex flex-col items-start'>
               <span className='font-medium'>Black</span>
               <span>#000000</span>
@@ -152,8 +152,8 @@ export default function BrandPage() {
           required, it is acceptable to use this stylized icon with an
           appropriate corner radius.
         </Paragraph>
-        <Card className='flex items-center justify-center h-[200px] md:h-[300px] md:flex-1 text-white border'>
-          <div className='flex flex-col items-start w-[128px] md:h-[128px] md:w-[256px] md:h-[256px] bg-gradient-to-b from-slate-50 to-slate-100'>
+        <Card className='flex h-[200px] items-center justify-center border text-white md:h-[300px] md:flex-1'>
+          <div className='flex w-[128px] flex-col items-start bg-gradient-to-b from-slate-50 to-slate-100 md:h-[128px] md:h-[256px] md:w-[256px]'>
             <Logo />
           </div>
         </Card>

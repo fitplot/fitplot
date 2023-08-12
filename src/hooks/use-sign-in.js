@@ -11,6 +11,6 @@ export default function useSignIn(options) {
         },
         body: JSON.stringify({ email }),
       }),
-    options
+    options,
   );
 }

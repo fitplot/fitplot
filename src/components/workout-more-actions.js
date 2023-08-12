@@ -69,7 +69,7 @@ export default function WorkoutMoreActions({ workout = {} }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost'>
-            <EllipsisHorizontalIcon className='w-4 h-4' />
+            <EllipsisHorizontalIcon className='h-4 w-4' />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-56'>
@@ -95,7 +95,7 @@ export default function WorkoutMoreActions({ workout = {} }) {
               <CheckCircleIcon
                 className={clsx(
                   { 'text-green-500': Boolean(completedAt) },
-                  'h-4 w-4'
+                  'h-4 w-4',
                 )}
               />
             )}

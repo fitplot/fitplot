@@ -11,6 +11,6 @@ export default function useMagicLink() {
       onSuccess: () => {
         router.replace('/dashboard');
       },
-    }
+    },
   );
 }

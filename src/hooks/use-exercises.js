@@ -5,7 +5,7 @@ export function useExercises(options = {}) {
   return useQuery(
     ['exercises'],
     () => fetch('/api/exercises').then((res) => res.json()),
-    options
+    options,
   );
 }
 
@@ -20,6 +20,6 @@ export function useNormalizedExercises(options = {}) {
           .fromPairs()
           .value(),
       ...options,
-    }
+    },
   );
 }

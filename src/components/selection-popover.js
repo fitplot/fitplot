@@ -17,7 +17,7 @@ export default function SelectionPopover({ type }) {
 
   return (
     <Popover open={selection.length > 0}>
-      <PopoverContent className='flex flex-col gap-4 w-72 items-center'>
+      <PopoverContent className='flex w-72 flex-col items-center gap-4'>
         <div>
           <span className='text-sm text-slate-400'>
             {selection.length} {type || 'item'}(s) selected.
@@ -28,7 +28,7 @@ export default function SelectionPopover({ type }) {
           className='flex w-full gap-2'
           onClick={() => globalCommand.show({ type, data: selection })}
         >
-          <PencilIcon className='w-4 h-4' />
+          <PencilIcon className='h-4 w-4' />
           <span>Edit</span>
         </Button>
       </PopoverContent>

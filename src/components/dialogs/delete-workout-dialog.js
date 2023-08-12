@@ -59,7 +59,7 @@ export default function DeleteWorkoutDialog() {
           {mutation.isLoading ? (
             <LoadingIcon />
           ) : (
-            <TrashIcon className='w-4 h-4' />
+            <TrashIcon className='h-4 w-4' />
           )}
         </Button>
       </DialogContent>
