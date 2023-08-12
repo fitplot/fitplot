@@ -3,47 +3,53 @@ import { CheckIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 
 import LoadingIcon from '@/components/loading-icon';
-import Overlay from '@/components/overlay';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useOpenableModel } from '@/hooks/openable';
 import { useCreateWorkout } from '@/hooks/use-workout';
 
-export default function AddWorkout({ open, onClose }) {
+export const modalId = 'AddWorkoutDialog';
+
+export default function AddWorkoutDialog() {
   const inputRef = React.useRef(null);
   const router = useRouter();
   const mutation = useCreateWorkout({
     onSuccess: (workout) => router.push(`/workout/${workout.id}`),
   });
 
+  const model = useOpenableModel(modalId);
+
   const submit = async () => {
     const rawInput = inputRef.current.value;
-    const workoutName = rawInput.trim();
-    if (workoutName) {
-      await mutation.mutateAsync({ name: workoutName });
-      onClose();
+    const name = rawInput.trim();
+    if (name) {
+      await mutation.mutateAsync({ name });
+
+      model.toggle(false);
     }
   };
 
   return (
-    <Overlay open={open} onClose={onClose} title='Add Workout'>
-      <div className='flex flex-col space-y-4 p-4'>
+    <Dialog open={model.open} onOpenChange={model.toggle}>
+      <DialogContent className='flex flex-col gap-4 p-4'>
         <div className='flex flex-wrap'>
           <Label htmlFor='workout-name'>Name this workout</Label>
         </div>
         <Input ref={inputRef} type='text' id='workout-name' required />
         <Button
-          className='flex justify-center'
+          variant='primary'
           disabled={mutation.isLoading}
           onClick={() => submit()}
         >
           {mutation.isLoading ? (
-            <LoadingIcon className='inline-block h-6 w-6' />
+            <LoadingIcon />
           ) : (
-            <CheckIcon className='inline-block h-6 w-6' />
+            <CheckIcon className='h-4 w-4' />
           )}
         </Button>
-      </div>
-    </Overlay>
+      </DialogContent>
+    </Dialog>
   );
 }

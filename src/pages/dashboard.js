@@ -3,17 +3,16 @@ import { CheckCircleIcon, PlayCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import _ from 'lodash';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useIntersection } from 'react-use';
 
-import { usePageContext } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';
+import Navbar from '@/components/navbar';
 import useWorkouts from '@/hooks/use-workouts';
 import withUser from '@/lib/with-user';
 
 export default function Timeline() {
-  usePageContext({ title: 'Timeline' });
-
   const {
     data: workouts,
     isLoading,
@@ -65,21 +64,33 @@ export default function Timeline() {
   }, [isLoading, isFetchingNextPage, hasNextPage, intersection, fetchNextPage]);
 
   return (
-    <div className='flex flex-1 flex-col'>
-      {groups.map((group) => (
-        <Week key={group.week} group={group} />
-      ))}
-      {/* Watch bottom of list for infinite scroll */}
-      <div
-        ref={ref}
-        className={clsx({
-          'border-b border-red-500': process.env.NODE_ENV !== 'production',
-        })}
-      />
-      {isFetchingNextPage && (
-        <LoadingIcon className='mt-2 h-6 w-6 self-center' />
-      )}
-    </div>
+    <>
+      <Head>
+        <title>Dashboard</title>
+      </Head>
+      <Navbar.Title>
+        <span>Dashboard</span>
+      </Navbar.Title>
+      <div className='flex flex-col flex-1'>
+        {isLoading && <LoadingIcon className='place-self-center' />}
+        {!isLoading && (
+          <>
+            {groups.map((group) => (
+              <Week key={group.week} group={group} />
+            ))}
+            {/* Watch bottom of list for infinite scroll */}
+            <div
+              ref={ref}
+              className={clsx({
+                'border-b border-red-500':
+                  process.env.NODE_ENV !== 'production',
+              })}
+            />
+            {isFetchingNextPage && <LoadingIcon className='mt-2 self-center' />}
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

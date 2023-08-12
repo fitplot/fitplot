@@ -19,7 +19,12 @@ function Title({ variant = 'primary', size, as, className, ...props }) {
   const Tag = as ?? size;
   return (
     <Tag
-      className={clsx(FONT_SIZES[size], TITLE_COLORS[variant], className)}
+      className={clsx(
+        'pb-2',
+        FONT_SIZES[size],
+        TITLE_COLORS[variant],
+        className
+      )}
       {...props}
     />
   );
@@ -55,7 +60,7 @@ function Paragraph({ className, as = 'p', variant = 'default', ...props }) {
     prose: 'text-gray-500',
   };
   return React.createElement(as, {
-    className: clsx('max-w-full text-lg', variants[variant], className),
+    className: clsx('pb-2 max-w-full text-lg', variants[variant], className),
     ...props,
   });
 }

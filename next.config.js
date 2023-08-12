@@ -32,11 +32,14 @@ const sentryWebpackOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
-  // Suppresses source map uploading logs during build
-  silent: true,
+  // Don't supress output for source map uploading
+  silent: false,
 
   org: 'fitplot',
   project: 'fitplot',
+
+  // Only create releases and upload source maps for deploys on Fly.io
+  dryRun: !process.env.FLY,
 };
 
 const sentryNextjsOptions = {
@@ -46,8 +49,8 @@ const sentryNextjsOptions = {
   // Upload a larger set of source maps for prettier stack traces (increases build time)
   widenClientFileUpload: true,
 
-  // Transpiles SDK to be compatible with IE11 (increases bundle size)
-  transpileClientSDK: true,
+  // Don't transpile SDK to be compatible with IE11 (which increases bundle size)
+  transpileClientSDK: false,
 
   // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
   tunnelRoute: '/monitoring',

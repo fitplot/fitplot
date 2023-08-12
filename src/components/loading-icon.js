@@ -1,9 +1,14 @@
-import clsx from 'clsx';
+import { Logo } from '@/components/logo';
+import { cn } from '@/lib/utils';
 
 export default function LoadingIcon({ className }) {
+  return <Logo className={cn('animate-pulse w-[2em] h-[2em]', className)} />;
+}
+
+export function Ring() {
   return (
     <svg
-      className={clsx('animate-spin', className)}
+      className={cn('', className)}
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 24 24'

@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/calendar';
 import calendar from 'dayjs/plugin/relativeTime';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+import { DevTools as JotaiDevTools } from 'jotai-devtools';
 import Head from 'next/head';
 
 import { InAppLayout } from '@/components/layouts';
@@ -34,10 +35,11 @@ function App({ Component, pageProps }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta property='og:image' content='/favicon.ico' />
       </Head>
-      <Layout {...pageProps}>
+      <Layout user={pageProps.user}>
         <Component {...pageProps} />
       </Layout>
       <ReactQueryDevtools initialIsOpen={false} />
+      <JotaiDevTools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-
-import queryClient from '../lib/query-client';
+import { useQuery } from '@tanstack/react-query';
+import _ from 'lodash';
 
 export function useExercises(options = {}) {
   return useQuery(
@@ -10,20 +9,17 @@ export function useExercises(options = {}) {
   );
 }
 
-export function useCreateExercise() {
-  return useMutation(
-    (exercise) =>
-      fetch('/api/exercise', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(exercise),
-      }).then((res) => res.json()),
+export function useNormalizedExercises(options = {}) {
+  return useQuery(
+    ['exercises'],
+    () => fetch('/api/exercises').then((res) => res.json()),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries('exercises');
-      },
+      select: (data) =>
+        _(data)
+          .map((x) => [x.id, x])
+          .fromPairs()
+          .value(),
+      ...options,
     }
   );
 }

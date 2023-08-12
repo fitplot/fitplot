@@ -1,5 +1,4 @@
 import LoadingIcon from '@/components/loading-icon';
-import { H1 } from '@/components/typography';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,8 +13,7 @@ export default function Me({ user }) {
   });
 
   return (
-    <div className='flex flex-1 flex-col space-y-4'>
-      <H1>{user.firstName}</H1>
+    <div className='flex flex-1 flex-col gap-4 py-4'>
       <Label htmlFor='email'>Email</Label>
       <Input type='text' id='email' readOnly disabled value={user.email} />
       <Button

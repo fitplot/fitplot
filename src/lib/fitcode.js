@@ -28,7 +28,6 @@ function fitcode(rawInput = '', base = {}) {
       sets.push({
         volume: volume || null,
         amount: (isMultiAmount ? amounts[count] : amount) || null,
-        unit: 'lbs',
         ...base,
       });
       count += 1;
@@ -56,6 +55,7 @@ function fitcode(rawInput = '', base = {}) {
 }
 
 function from(sets = []) {
+  if (!Array.isArray(sets) && typeof sets === 'object') sets = [sets];
   if (sets.length === 0) return null;
 
   const volumes = sets.map(({ volume }) => volume);

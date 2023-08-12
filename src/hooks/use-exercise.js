@@ -52,3 +52,22 @@ export function useDeleteExercise(options) {
     }
   );
 }
+
+export function useCreateExercise(options = {}) {
+  return useMutation(
+    (exercise) =>
+      fetch('/api/exercise', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(exercise),
+      }).then((res) => res.json()),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('exercises');
+      },
+      ...options,
+    }
+  );
+}

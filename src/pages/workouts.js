@@ -1,19 +1,33 @@
 import React from 'react';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import {
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getGroupedRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import clsx from 'clsx';
+import _ from 'lodash';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useIntersection, useToggle } from 'react-use';
+import { useIntersection } from 'react-use';
 
-import AddWorkout from '@/components/add-workout';
-import { usePageContext } from '@/components/layouts';
+import { modalId as AddWorkoutDialogId } from '@/components/dialogs/add-workout-dialog';
 import LoadingIcon from '@/components/loading-icon';
-import WorkoutList from '@/components/workout-list';
-import WorkoutsMoreActions from '@/components/workouts-more-actions';
+import Navbar from '@/components/navbar';
+import SelectionPopover from '@/components/selection-popover';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { List, ListGroupLabel, ListItem } from '@/components/ui/list';
+import { useOpenable } from '@/hooks/openable';
+import { useSelection } from '@/hooks/selection';
 import useWorkouts from '@/hooks/use-workouts';
+import relative from '@/lib/date';
 import withUser from '@/lib/with-user';
 
 export default function WorkoutsPage() {
-  const { query } = useRouter();
+  const defaultData = React.useMemo(() => [], []);
+
   const {
     data: workouts,
     isLoading,
@@ -22,24 +36,81 @@ export default function WorkoutsPage() {
     fetchNextPage,
   } = useWorkouts();
 
-  const ref = React.useRef(null);
-  const intersection = useIntersection(ref, {
+  const columns = React.useMemo(
+    () => [
+      {
+        id: 'selection',
+        cell: ({ row }) =>
+          row.getCanSelect() ? (
+            <div className='inline-flex' onClick={(e) => e.preventDefault()}>
+              <Checkbox
+                {...{
+                  checked: row.getIsSelected(),
+                  disabled: !row.getCanSelect(),
+                  onCheckedChange: row.getToggleSelectedHandler(),
+                }}
+              />
+            </div>
+          ) : null,
+      },
+      {
+        id: 'status',
+        accessorFn: (original) =>
+          Boolean(original.completedAt) ? 'Completed' : 'In Progress',
+        cell: ({ row, getValue }) => (
+          <span>{row.depth === 0 ? getValue() : null}</span>
+        ),
+      },
+      {
+        accessorKey: 'name',
+        cell: ({ getValue }) => <span className='flex-1'>{getValue()}</span>,
+      },
+      {
+        accessorKey: 'createdAt',
+        cell: ({ row, getValue }) => (
+          <span>{row.depth === 0 ? null : relative(getValue())}</span>
+        ),
+      },
+    ],
+    []
+  );
+
+  const grouping = React.useMemo(() => ['status'], []);
+
+  const [, setSelection] = useSelection();
+  const [rowSelection, setRowSelection] = React.useState([]);
+
+  const data = React.useMemo(() => workouts, [workouts]);
+
+  const table = useReactTable({
+    data: data ?? defaultData,
+    columns,
+    enableRowSelection: (row) => row.depth > 0,
+    getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
+    onRowSelectionChange: setRowSelection,
+    state: {
+      rowSelection,
+      grouping,
+      expanded: true,
+      columnOrder: ['selection', 'status', 'name', 'createdAt'],
+    },
+    debugAll: process.env.NODE_ENV === 'development',
+  });
+
+  React.useEffect(() => {
+    if (table) {
+      setSelection(table.getSelectedRowModel().flatRows.map((x) => x.original));
+    }
+    return () => setSelection([]);
+  }, [rowSelection, setSelection, table]);
+
+  const bottomOfListRef = React.useRef(null);
+  const intersection = useIntersection(bottomOfListRef, {
     root: null,
     rootMargin: '0px',
     threshold: 1,
-  });
-
-  const [showAddWorkout, toggleAddWorkout] = useToggle(query.new !== undefined);
-  const [showMoreActions, toggleMoreActions] = useToggle(false);
-
-  const onMoreAction = React.useCallback(
-    () => toggleMoreActions(true),
-    [toggleMoreActions]
-  );
-
-  usePageContext({
-    title: 'All Workouts',
-    onMoreAction,
   });
 
   React.useEffect(() => {
@@ -54,37 +125,72 @@ export default function WorkoutsPage() {
     }
   }, [isLoading, isFetchingNextPage, hasNextPage, intersection, fetchNextPage]);
 
+  const addWorkoutDialog = useOpenable(AddWorkoutDialogId);
+
+  if (isLoading) {
+    return (
+      <div className='h-full flex items-center justify-center'>
+        <LoadingIcon className='w-6 h-6' />
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
         <title>Workouts</title>
       </Head>
-      <div className='flex flex-1 flex-col'>
-        <WorkoutList
-          className='mb-2'
-          workouts={workouts}
-          onCreate={() => toggleAddWorkout(true)}
-        />
+      <Navbar.Title>
+        <span>Workouts</span>
+      </Navbar.Title>
+      <Navbar.RightContent>
+        <Button
+          size='sm'
+          variant='primary'
+          className='items-center gap-2'
+          onClick={() => addWorkoutDialog.show()}
+        >
+          <PencilSquareIcon className='w-4 h-4' />
+          <span>Workout</span>
+        </Button>
+      </Navbar.RightContent>
+      <div className='flex flex-1 flex-col mb-4 -mx-4'>
+        <List>
+          {table.getRowModel().rows.map((row) => {
+            const Component = row.depth === 0 ? ListGroupLabel : ListItem;
+            const props = {};
+            if (row.depth > 0) {
+              props.href = `/workout/${row.original.id}`;
+            }
+
+            return (
+              <Component key={row.id} {...props}>
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <React.Fragment key={cell.key}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </Component>
+            );
+          })}
+        </List>
         {/* Watch bottom of list for infinite scroll */}
         <div
-          ref={ref}
+          ref={bottomOfListRef}
           className={clsx({
             'border-b border-red-500': process.env.NODE_ENV !== 'production',
           })}
         />
         {isFetchingNextPage && (
-          <LoadingIcon className='mt-2 h-6 w-6 self-center' />
+          <LoadingIcon className='mt-2 h-4 w-4 self-center' />
         )}
       </div>
-      <AddWorkout
-        open={showAddWorkout}
-        onClose={() => toggleAddWorkout(false)}
-      />
-      <WorkoutsMoreActions
-        open={showMoreActions}
-        onClose={() => toggleMoreActions(false)}
-        totalWorkouts={workouts ? workouts.length : undefined}
-      />
+      <SelectionPopover type='workouts' />
     </>
   );
 }

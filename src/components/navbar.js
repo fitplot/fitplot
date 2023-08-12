@@ -1,83 +1,108 @@
+import React from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import { Bars3Icon, EllipsisHorizontalIcon } from '@heroicons/react/24/solid';
-import clsx from 'clsx';
+import { Bars3Icon } from '@heroicons/react/24/solid';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { atomWithReset, useResetAtom } from 'jotai/utils';
+import { useWindowSize } from 'react-use';
 
-import { usePageContextValues } from '@/components/layouts';
+import { Lockup } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { SheetTrigger } from '@/components/ui/sheet';
 
+const contentAtom = atomWithReset(null);
+const titleAtom = atomWithReset(null);
+
 export function MarketingNavbar({ user }) {
   return (
-    <nav className='fixed flex h-[48px] w-full items-center justify-between px-8 backdrop-blur-md'>
-      <Button variant='link' href='/' className='font-medium'>
-        FitPlot
-      </Button>
-      <div className='flex'>
-        <ul className='inline flex gap-4 rounded-full border bg-white px-6 md:gap-6'>
-          <Button variant='link' href='/'>
-            Home
-          </Button>
-          <Button variant='link' href='/#features'>
-            Features
-          </Button>
-          {!user && (
-            <Button variant='link' href='/waitlist'>
-              Waitlist
+    <header className='fixed top-0 left-0 right-0 md:[--header-height:48px]'>
+      <div className='after:absolute after:inset-x-0 after:top-[-1px] after:-bottom-1/2 after:[mask-image:linear-gradient(to_bottom,black_var(--header-height),transparent)] after:backdrop-blur-md' />
+      <nav>
+        <div className='md:hidden'></div>
+        <div className='[height:var(--header-height)] relative hidden md:flex container mx-auto items-center border-b'>
+          <Lockup href='/' className='text-xl' />
+          {Boolean(user) && (
+            <Button
+              href='/dashboard'
+              variant='outline'
+              size='sm'
+              className='ml-auto'
+            >
+              Open App <ArrowRightIcon className='ml-2 inline-block h-4 w-4' />
             </Button>
           )}
-        </ul>
-      </div>
-      <div className='flex'>
-        {user ? (
-          <Button href='/dashboard' variant='outline' size='sm'>
-            Open App <ArrowRightIcon className='ml-2 inline-block h-4 w-4' />
-          </Button>
-        ) : (
-          <Button href='/waitlist' variant='outline' size='sm'>
-            Waitlist
-            <ArrowRightIcon className='ml-2 inline-block h-4 w-4' />
-          </Button>
-        )}
-      </div>
-    </nav>
-  );
-}
-
-export function InAppNavbar({ noop }) {
-  const { title, onMoreAction } = usePageContextValues();
-
-  return (
-    <header className='flex min-h-[57px] items-center justify-between border-b bg-slate-50 px-1'>
-      {!noop && (
-        <SheetTrigger asChild>
-          <TopBarButton Icon={Bars3Icon} className='shrink-0' />
-        </SheetTrigger>
-      )}
-      <div className='flex grow items-center px-2'>
-        <span>{title}</span>
-      </div>
-      {!noop && onMoreAction && (
-        <TopBarButton
-          Icon={EllipsisHorizontalIcon}
-          className='shrink-0'
-          onClick={() => onMoreAction()}
-        />
-      )}
+          {!Boolean(user) && (
+            <Button
+              href='/waitlist'
+              variant='outline'
+              size='sm'
+              className='ml-auto'
+            >
+              Waitlist
+              <ArrowRightIcon className='ml-2 inline-block h-4 w-4' />
+            </Button>
+          )}
+        </div>
+      </nav>
     </header>
   );
 }
 
-function TopBarButton({ className, Icon, ...props }) {
+export function InAppNavbar() {
+  const content = useAtomValue(contentAtom);
+  const title = useAtomValue(titleAtom);
+
+  const { width } = useWindowSize();
+  const isCollapsed = React.useMemo(() => width < 768, [width]);
+
   return (
-    <button
-      {...props}
-      className={clsx(
-        'flex h-full w-10 items-center justify-center',
-        className
+    <header className='flex min-h-[57px] items-center justify-between border-b bg-slate-50 px-2 gap-2'>
+      {isCollapsed && (
+        <SheetTrigger asChild>
+          <Button variant='ghost'>
+            <Bars3Icon className='w-4 h-4' />
+          </Button>
+        </SheetTrigger>
       )}
-      type='button'
-    >
-      <Icon className='h-6 w-6' />
-    </button>
+      <div className='flex flex-1 overflow-hidden items-center text-sm'>
+        {title}
+      </div>
+      {content}
+    </header>
   );
 }
+
+function RightContent({ children }) {
+  const set = useSetAtom(contentAtom);
+  const reset = useResetAtom(contentAtom);
+
+  React.useEffect(() => {
+    set(children);
+
+    return () => reset();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [children]);
+
+  return null;
+}
+
+function Title({ children }) {
+  const set = useSetAtom(titleAtom);
+  const reset = useResetAtom(titleAtom);
+
+  React.useEffect(() => {
+    set(children);
+
+    return () => reset();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [children]);
+
+  return null;
+}
+
+const Navbar = {
+  RightContent,
+  Title,
+};
+export default Navbar;

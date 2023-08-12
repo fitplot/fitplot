@@ -2,13 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
-import { usePageContext } from '@/components/layouts';
 import { H3, Paragraph } from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
 export default function Welcome() {
-  usePageContext({ title: 'Welcome' });
-
   const router = useRouter();
   const [theme, setTheme] = React.useState('light');
 

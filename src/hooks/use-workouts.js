@@ -1,7 +1,8 @@
+import React from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 export default function useWorkouts() {
-  const { data: paginated, ...result } = useInfiniteQuery(
+  const query = useInfiniteQuery(
     ['workouts'],
     ({ pageParam: cursor }) => {
       const search = new URLSearchParams();
@@ -10,20 +11,11 @@ export default function useWorkouts() {
         res.json()
       );
     },
-    { getNextPageParam: (lastPage) => lastPage.cursor }
+    {
+      getNextPageParam: (lastPage) => lastPage.cursor,
+      select: (data) => _.flatMap(data.pages, 'workouts'),
+    }
   );
 
-  const data =
-    paginated &&
-    paginated.pages &&
-    // eslint-disable-next-line unicorn/no-array-reduce
-    paginated.pages.reduce(
-      (accumulator, page) => [...accumulator, ...page.workouts],
-      []
-    );
-
-  return {
-    data,
-    ...result,
-  };
+  return query;
 }

@@ -7,10 +7,10 @@ import {
 import { useToggle } from 'react-use';
 import Balancer from 'react-wrap-balancer';
 
-import InfoCard from '@/components/info-card';
 import { MarketingLayout } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';
 import { H1, Paragraph } from '@/components/typography';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -57,18 +57,22 @@ export default function Waitlist() {
           we launch and receive early access.
         </Paragraph>
         {isComplete && (
-          <InfoCard variant='success'>
+          <Alert variant='success'>
             <SparklesIcon className='h-6 w-6 pr-2' />
-            <span>
-              We sent you a magic link. Please check your email inbox.
-            </span>
-          </InfoCard>
+            <AlertDescription>
+              <span>
+                We sent you a magic link. Please check your email inbox.
+              </span>
+            </AlertDescription>
+          </Alert>
         )}
         {isRateLimited && (
-          <InfoCard variant='warn'>
+          <Alert variant='warn'>
             <HandRaisedIcon className='h-6 w-6 pr-2' />
-            <span>Whoa, hold your horses there. Please slow down.</span>
-          </InfoCard>
+            <AlertDescription>
+              <span>Whoa, there. Please slow down.</span>
+            </AlertDescription>
+          </Alert>
         )}
         <div className='flex w-full max-w-lg flex-col gap-4 text-left'>
           <Label htmlFor='email'>Email</Label>
