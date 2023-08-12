@@ -27,9 +27,9 @@ function App({ Component, pageProps }) {
   return (
     <QueryClientProvider client={queryClient}>
       <Head>
-        <meta name='description' content='Nexus Fitness' />
+        <meta name='description' content='FitPlot' />
         <link rel='icon' href='/favicon.ico' />
-        <meta name='author' content='Nexus Fitness' />
+        <meta name='author' content='FitPlot' />
         {/* slate-50 */}
         <meta name='theme-color' content='rgb(241 245 249)' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />

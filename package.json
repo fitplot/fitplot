@@ -1,5 +1,5 @@
 {
-  "name": "nexus",
+  "name": "fitplot",
   "private": true,
   "scripts": {
     "dev": "next dev",
