@@ -79,6 +79,7 @@ jobs:
             deploy --remote-only \
             --build-arg GITHUB_SHA=${{ github.sha }} \
             --build-arg SERVICE_URL=${{ steps.service_url.outputs.value }} \
+            --build-arg CI=$CI
             --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

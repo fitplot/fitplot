@@ -2,6 +2,9 @@
 FROM node:18-bookworm-slim as base
 
 # set for base and all layer that inherit from it
+ARG CI
+ENV CI=$CI
+
 ENV NODE_ENV production
 
 # Install openssl and certs for Sentry CLI
