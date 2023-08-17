@@ -1,7 +1,7 @@
-import React from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import _ from 'lodash';
 
-export default function useWorkouts() {
+export default function useWorkouts(options = {}) {
   const query = useInfiniteQuery(
     ['workouts'],
     ({ pageParam: cursor }) => {
@@ -12,6 +12,7 @@ export default function useWorkouts() {
       );
     },
     {
+      ...options,
       getNextPageParam: (lastPage) => lastPage.cursor,
       select: (data) => _.flatMap(data.pages, 'workouts'),
     },

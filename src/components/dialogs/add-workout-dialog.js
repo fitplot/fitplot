@@ -13,16 +13,16 @@ import { useCreateWorkout } from '@/hooks/use-workout';
 export const modalId = 'AddWorkoutDialog';
 
 export default function AddWorkoutDialog() {
-  const inputRef = React.useRef(null);
+  const model = useOpenableModel(modalId);
+
+  const nameRef = React.useRef(null);
   const router = useRouter();
   const mutation = useCreateWorkout({
     onSuccess: (workout) => router.push(`/workout/${workout.id}`),
   });
 
-  const model = useOpenableModel(modalId);
-
   const submit = async () => {
-    const rawInput = inputRef.current.value;
+    const rawInput = nameRef.current.value;
     const name = rawInput.trim();
     if (name) {
       await mutation.mutateAsync({ name });
@@ -37,7 +37,7 @@ export default function AddWorkoutDialog() {
         <div className='flex flex-wrap'>
           <Label htmlFor='workout-name'>Name this workout</Label>
         </div>
-        <Input ref={inputRef} type='text' id='workout-name' required />
+        <Input ref={nameRef} type='text' id='workout-name' required />
         <Button
           variant='primary'
           disabled={mutation.isLoading}

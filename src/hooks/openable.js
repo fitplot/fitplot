@@ -14,10 +14,7 @@ export function useOpenable(key) {
   const registry = useAtomValue(registryAtom);
 
   const openableAtom = React.useMemo(
-    () =>
-      console.log('looking up openable', key) ||
-      registry[key] ||
-      (registry[key] = createOpenableAtom(key)),
+    () => registry[key] || (registry[key] = createOpenableAtom(key)),
     [registry, key],
   );
 
@@ -41,10 +38,7 @@ export function useOpenableModel(key) {
   const registry = useAtomValue(registryAtom);
 
   const openableAtom = React.useMemo(
-    () =>
-      console.log('looking up openable model', key) ||
-      registry[key] ||
-      (registry[key] = createOpenableAtom(key)),
+    () => registry[key] || (registry[key] = createOpenableAtom(key)),
     [registry, key],
   );
 

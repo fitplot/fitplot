@@ -2,26 +2,34 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import queryClient from '../lib/query-client';
 
-export function useSets(workoutId) {
+export function useSets(workoutId, options = {}) {
   return useQuery(
     ['set', workoutId],
     () => fetch(`/api/workout/${workoutId}/sets`).then((res) => res.json()),
-    { enabled: Boolean(workoutId) },
+    { ...options, enabled: Boolean(workoutId) && (options.enabled ?? true) },
   );
 }
 
-export function usePreviousSetsForExercise(exerciseId, workoutId) {
+export function usePreviousSetsForExercise(
+  exerciseId,
+  workoutId,
+  options = {},
+) {
   return useQuery(
     ['set', 'previous', exerciseId, workoutId],
     () =>
       fetch(
         `/api/exercise/${exerciseId}/sets/previous?workoutId=${workoutId}`,
       ).then((res) => res.json()),
-    { enabled: Boolean(exerciseId) && Boolean(workoutId) },
+    {
+      ...options,
+      enabled:
+        Boolean(exerciseId) && Boolean(workoutId) && (options.enabled ?? true),
+    },
   );
 }
 
-export function useCreateSets() {
+export function useCreateSets(options = {}) {
   return useMutation(
     (sets) =>
       fetch(`/api/sets`, {
@@ -32,14 +40,19 @@ export function useCreateSets() {
         body: JSON.stringify(sets),
       }).then((res) => res.json()),
     {
-      onSuccess: () => {
+      ...options,
+      onSuccess: (sets) => {
         queryClient.invalidateQueries(['set']);
+
+        if (options.onSuccess) {
+          options.onSuccess(sets);
+        }
       },
     },
   );
 }
 
-export function useUpdateSet() {
+export function useUpdateSet(options = {}) {
   return useMutation(
     (set) =>
       fetch(`/api/workout/set/${set.id}`, {
@@ -50,22 +63,32 @@ export function useUpdateSet() {
         body: JSON.stringify(set),
       }).then((res) => res.json()),
     {
-      onSuccess: (set) => {
+      ...options,
+      onSuccess: async (set) => {
         queryClient.invalidateQueries(['set', set.workoutId]);
+
+        if (options.onSuccess) {
+          await options.onSuccess(set);
+        }
       },
     },
   );
 }
 
-export function useDeleteSet() {
+export function useDeleteSet(options = {}) {
   return useMutation(
     (set) =>
       fetch(`/api/workout/set/${set.id}`, {
         method: 'DELETE',
       }).then((res) => res.json()),
     {
-      onSuccess: () => {
+      ...options,
+      onSuccess: async (set) => {
         queryClient.invalidateQueries(['set']);
+
+        if (options.onSuccess) {
+          await options.onSuccess(set);
+        }
       },
     },
   );

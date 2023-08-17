@@ -10,7 +10,9 @@ import { Button } from '@/components/ui/button';
 import { SheetTrigger } from '@/components/ui/sheet';
 
 const contentAtom = atomWithReset(null);
+contentAtom.debugLabel = 'NavbarContentAtom';
 const titleAtom = atomWithReset(null);
+titleAtom.debugLabel = 'NavbarTitleAtom';
 
 export function MarketingNavbar({ user }) {
   return (
@@ -55,7 +57,7 @@ export function InAppNavbar() {
   const isCollapsed = React.useMemo(() => width < 768, [width]);
 
   return (
-    <header className='flex min-h-[57px] items-center justify-between gap-2 border-b bg-slate-50 px-2'>
+    <header className='flex min-h-[57px] items-center justify-between gap-2 border-b bg-slate-50 px-4'>
       {isCollapsed && (
         <SheetTrigger asChild>
           <Button variant='ghost'>
@@ -63,10 +65,8 @@ export function InAppNavbar() {
           </Button>
         </SheetTrigger>
       )}
-      <div className='flex flex-1 items-center overflow-hidden text-sm'>
-        {title}
-      </div>
-      {content}
+      <div className='flex items-center overflow-hidden text-sm'>{title}</div>
+      <div className='ml-auto flex items-center'>{content}</div>
     </header>
   );
 }

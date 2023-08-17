@@ -1,25 +1,37 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import _ from 'lodash';
 
-export function useExercises(options = {}) {
+export function useSearchExercises(query = '', options = {}) {
   return useQuery(
-    ['exercises'],
-    () => fetch('/api/exercises').then((res) => res.json()),
-    options,
+    ['exercises', query],
+    () => {
+      const search = new URLSearchParams();
+      if (query) search.set('query', query);
+      return fetch(`/api/exercises?${search.toString()}`).then((res) =>
+        res.json(),
+      );
+    },
+    {
+      ...options,
+      select: (response) => response.exercises,
+    },
   );
 }
 
-export function useNormalizedExercises(options = {}) {
-  return useQuery(
+export function useExercises(options = {}) {
+  return useInfiniteQuery(
     ['exercises'],
-    () => fetch('/api/exercises').then((res) => res.json()),
+    ({ pageParam: cursor }) => {
+      const search = new URLSearchParams();
+      if (cursor) search.set('cursor', cursor);
+      return fetch(`/api/exercises?${search.toString()}`).then((res) =>
+        res.json(),
+      );
+    },
     {
-      select: (data) =>
-        _(data)
-          .map((x) => [x.id, x])
-          .fromPairs()
-          .value(),
       ...options,
+      getNextPageParam: (lastPage) => lastPage.cursor,
+      select: (data) => _.flatMap(data.pages, 'exercises'),
     },
   );
 }

@@ -27,7 +27,6 @@ export default function GlobalCommand() {
   const router = useRouter();
 
   const model = useOpenableModel(modalId);
-
   const { type = 'item', data } = model.data || {};
 
   const [search, setSearch] = React.useState('');
@@ -71,7 +70,7 @@ export default function GlobalCommand() {
   );
 }
 
-function SetCommandList({ model, context: { type, data } = {} }) {
+function SetCommandList({ model, type, data }) {
   const search = useCommandState((state) => state.search);
   const [action, setAction] = React.useState('');
 
@@ -98,7 +97,7 @@ function SetCommandList({ model, context: { type, data } = {} }) {
   );
 
   const remove = React.useCallback(() => {
-    deleteDialog.show({ data });
+    deleteDialog.show(data);
     model.toggle(false);
   }, [deleteDialog, data, model]);
 
@@ -135,7 +134,7 @@ function SetCommandList({ model, context: { type, data } = {} }) {
     ];
   }, [setAction, remove]);
 
-  if (type !== 'sets') return null;
+  if (type !== 'set') return null;
 
   return (
     <>

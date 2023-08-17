@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const SET_DELIM = ',';
 const MULTI_SET_DELIM = 'x';
 const AMOUNT_DELIM = '@';
@@ -45,7 +47,6 @@ function fitcode(rawInput = '', base = {}) {
       sets.push({
         volume,
         amount,
-        unit: 'lbs',
         ...base,
       });
     }
@@ -70,7 +71,9 @@ function from(sets = []) {
     ? amounts.join(MULTI_AMOUNT_DELIM)
     : amounts[0];
 
-  const volumeAndAmount = [volume, amount].join(AMOUNT_DELIM);
+  const volumeAndAmount = [volume, amount]
+    .filter((x) => !_.isNil(x))
+    .join(AMOUNT_DELIM);
 
   if (sets.length < 2) return volumeAndAmount;
 

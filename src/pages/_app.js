@@ -39,7 +39,7 @@ function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
       <ReactQueryDevtools initialIsOpen={false} />
-      <JotaiDevTools initialIsOpen={false} />
+      {/*<JotaiDevTools initialIsOpen={false} />*/}
     </QueryClientProvider>
   );
 }

@@ -12,10 +12,14 @@ export default function useUser(options = {}) {
         throw response;
       }),
     {
-      onError: (error) => {
-        if (error.status === 401) router.push('/sign-in');
-      },
       ...options,
+      onError: async (error) => {
+        if (error.status === 401) router.push('/sign-in');
+
+        if (options.onError) {
+          await options.onError(error);
+        }
+      },
     },
   );
 }

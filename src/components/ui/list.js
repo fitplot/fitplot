@@ -5,13 +5,14 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 const List = React.forwardRef(({ className, ...props }, ref) => (
-  <div className='flex w-full flex-col overflow-auto'>
-    <div
-      ref={ref}
-      className={cn('w-full divide-y divide-slate-100 text-sm', className)}
-      {...props}
-    />
-  </div>
+  <div
+    ref={ref}
+    className={cn(
+      'flex w-full flex-col divide-y divide-slate-100 overflow-auto text-sm',
+      className,
+    )}
+    {...props}
+  />
 ));
 List.displayName = 'List';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useToggle } from 'react-use';
 
+import AddSetsDialog from '@/components/dialogs/add-sets-dialog';
 import AddWorkoutDialog from '@/components/dialogs/add-workout-dialog';
 import DeleteSetsDialog from '@/components/dialogs/delete-sets-dialog';
 import DeleteWorkoutDialog from '@/components/dialogs/delete-workout-dialog';
@@ -28,6 +29,7 @@ export function InAppLayout({ children, user }) {
       <InAppPage user={user}>{children}</InAppPage>
       <GlobalCommand />
       <AddWorkoutDialog />
+      <AddSetsDialog />
       <DeleteSetsDialog />
       <DeleteWorkoutDialog />
     </>

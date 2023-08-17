@@ -26,8 +26,6 @@ import relative from '@/lib/date';
 import withUser from '@/lib/with-user';
 
 export default function WorkoutsPage() {
-  const defaultData = React.useMemo(() => [], []);
-
   const {
     data: workouts,
     isLoading,
@@ -75,17 +73,16 @@ export default function WorkoutsPage() {
     [],
   );
 
-  const grouping = React.useMemo(() => ['status'], []);
-
   const [, setSelection] = useSelection();
   const [rowSelection, setRowSelection] = React.useState([]);
 
+  const grouping = React.useMemo(() => ['status'], []);
   const data = React.useMemo(() => workouts, [workouts]);
+  const defaultData = React.useMemo(() => [], []);
 
   const table = useReactTable({
     data: data ?? defaultData,
     columns,
-    enableRowSelection: (row) => row.depth > 0,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
@@ -94,8 +91,9 @@ export default function WorkoutsPage() {
       rowSelection,
       grouping,
       expanded: true,
-      columnOrder: ['selection', 'status', 'name', 'createdAt'],
     },
+    enableRowSelection: (row) => row.depth > 0,
+    groupedColumnMode: false,
     debugAll: process.env.NODE_ENV === 'development',
   });
 

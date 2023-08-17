@@ -7,9 +7,9 @@ import {
 } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-import { useRouter } from 'next/router';
 import { useToggle } from 'react-use';
 
+import { modalId as DeleteWorkoutDialogId } from '@/components/dialogs/delete-workout-dialog';
 import LoadingIcon from '@/components/loading-icon';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -23,20 +23,23 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useDeleteWorkout, useUpdateWorkout } from '@/hooks/use-workout';
+import { useOpenable } from '@/hooks/openable';
+import { useUpdateWorkout } from '@/hooks/use-workout';
 
 export default function WorkoutMoreActions({ workout = {} }) {
-  const router = useRouter();
-
   const { name, completedAt } = workout;
 
   const inputRef = React.useRef(null);
-
+  const [open, toggle] = useToggle(false);
   const [showRenameWorkout, toggleRenameWorkout] = useToggle(false);
-  const [showDeleteWorkout, toggleDeleteWorkout] = useToggle(false);
 
+  const deleteDialog = useOpenable(DeleteWorkoutDialogId);
   const updateMutation = useUpdateWorkout();
-  const deleteMutation = useDeleteWorkout();
+
+  const remove = () => {
+    deleteDialog.show(workout);
+    toggle(false);
+  };
 
   const submitRename = async () => {
     const rawInput = inputRef.current.value;
@@ -50,13 +53,6 @@ export default function WorkoutMoreActions({ workout = {} }) {
     }
   };
 
-  const submitDelete = async () => {
-    await deleteMutation.mutateAsync(workout);
-    toggleDeleteWorkout(false);
-    setIsOpen(false);
-    router.push('/workouts');
-  };
-
   const submitToggleCompleted = async () => {
     await updateMutation.mutateAsync({
       ...workout,
@@ -66,7 +62,7 @@ export default function WorkoutMoreActions({ workout = {} }) {
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={toggle}>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost'>
             <EllipsisHorizontalIcon className='h-4 w-4' />
@@ -103,7 +99,7 @@ export default function WorkoutMoreActions({ workout = {} }) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={() => toggleDeleteWorkout(true)}
+            onClick={() => remove()}
             className='gap-2 text-destructive-500'
           >
             <TrashIcon className='h-4 w-4' />
@@ -133,28 +129,6 @@ export default function WorkoutMoreActions({ workout = {} }) {
                 <LoadingIcon className='h-5 w-5' />
               ) : (
                 <CheckIcon className='inline-block h-6 w-6' />
-              )}
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-      <Dialog open={showDeleteWorkout} onOpenChange={toggleDeleteWorkout}>
-        <DialogContent>
-          <div className='flex flex-col space-y-4 p-4'>
-            <div className='flex flex-wrap'>
-              <Label htmlFor='workout-name'>
-                Are you sure you want to delete this workout?
-              </Label>
-            </div>
-            <Button
-              className='flex items-center justify-center bg-red-500 text-white'
-              disabled={deleteMutation.isLoading}
-              onClick={() => submitDelete()}
-            >
-              {deleteMutation.isLoading ? (
-                <LoadingIcon className='h-6 w-6' />
-              ) : (
-                <TrashIcon className='h-6 w-6' />
               )}
             </Button>
           </div>

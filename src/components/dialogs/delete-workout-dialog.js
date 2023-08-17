@@ -16,17 +16,15 @@ import LoadingIcon from '../loading-icon';
 export const modalId = 'DeleteWorkoutDialog';
 
 export default function DeleteWorkoutDialog() {
-  const mutation = useDeleteWorkout();
-
   const model = useOpenableModel(modalId);
+  const data = model.data;
 
-  const { data } = model.data || {};
+  const mutation = useDeleteWorkout();
 
   const remove = React.useCallback(async () => {
     const removals = [];
 
     for (const workout of data) {
-      console.log(workout);
       removals.push(mutation.mutateAsync(workout));
     }
 
@@ -35,13 +33,7 @@ export default function DeleteWorkoutDialog() {
     model.toggle(false);
   }, [data, mutation, model]);
 
-  React.useEffect(() => {
-    if (!model.data) model.toggle(false);
-
-    /* model refference changes when we toggle it (render loop) */
-    /* eslint-disable-next-line react-hooks/exhaustive-deps  */
-  }, [model.data]);
-
+  // nothing to delete
   if (!data) return null;
 
   return (

@@ -17,6 +17,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { AddSetsDialogId } from '@/components/dialogs/add-sets-dialog';
+import { modalId as DeleteSetsModalId } from '@/components/dialogs/delete-sets-dialog';
 import LoadingIcon from '@/components/loading-icon';
 import Navbar from '@/components/navbar';
 import SelectionPopover from '@/components/selection-popover';
@@ -43,10 +44,10 @@ export default function WorkoutPage() {
   const router = useRouter();
   const { workoutId } = router.query;
 
-  const defaultData = React.useMemo(() => [], []);
-
   const { data: workout, isLoading: isLoadingWorkout } = useWorkout(workoutId);
   const { data: sets, isLoading: isLoadingSets } = useSets(workoutId);
+
+  const deleteSetsModal = useOpenable(DeleteSetsModalId);
 
   const columns = React.useMemo(
     () => [
@@ -121,7 +122,10 @@ export default function WorkoutPage() {
                     Copy FitCode&trade;
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className='text-destructive-500'>
+                  <DropdownMenuItem
+                    className='text-destructive-500'
+                    onSelect={() => deleteSetsModal.show([row.original])}
+                  >
                     <TrashIcon className='mr-2 h-4 w-4' />
                     Delete this set
                   </DropdownMenuItem>
@@ -132,21 +136,20 @@ export default function WorkoutPage() {
         },
       },
     ],
-    [],
+    [deleteSetsModal],
   );
-
-  const grouping = React.useMemo(() => ['exercise'], []);
 
   const [, setSelection] = useSelection();
   const [rowSelection, setRowSelection] = React.useState([]);
 
+  const grouping = React.useMemo(() => ['exercise'], []);
   const data = React.useMemo(() => sets, [sets]);
+  const defaultData = React.useMemo(() => [], []);
 
   const table = useReactTable({
     data: data ?? defaultData,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    enableSubRowSelection: true,
     getExpandedRowModel: getExpandedRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
     onRowSelectionChange: setRowSelection,
@@ -155,6 +158,7 @@ export default function WorkoutPage() {
       grouping,
       expanded: true,
     },
+    enableSubRowSelection: true,
     groupedColumnMode: false,
     debugAll: process.env.NODE_ENV === 'development',
   });
@@ -164,15 +168,15 @@ export default function WorkoutPage() {
       setSelection(table.getSelectedRowModel().flatRows.map((x) => x.original));
     }
     return () => setSelection([]);
-  }, [rowSelection, setSelection, table]);
+  }, [rowSelection, setSelection, table, data]);
 
   const name = workout && workout.name;
   const completedAt = workout && workout.completedAt;
   const isCompleted = Boolean(completedAt);
 
-  const isLoading = isLoadingWorkout || isLoadingSets;
-
   const addSetsDialog = useOpenable(AddSetsDialogId);
+
+  const isLoading = isLoadingWorkout || isLoadingSets;
 
   if (isLoading) {
     return (
@@ -208,24 +212,25 @@ export default function WorkoutPage() {
       </Navbar.RightContent>
       <div className='-mx-4 mb-4 flex flex-1 flex-col'>
         <List>
-          {table.getRowModel().rows.map((row) => {
-            const Component = row.depth === 0 ? ListGroupLabel : ListItem;
+          {table.getRowModel() &&
+            table.getRowModel().rows.map((row) => {
+              const Component = row.depth === 0 ? ListGroupLabel : ListItem;
 
-            return (
-              <Component key={row.id}>
-                {row.getAllCells().map((cell) => {
-                  return (
-                    <React.Fragment key={cell.key}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-              </Component>
-            );
-          })}
+              return (
+                <Component key={row.id}>
+                  {row.getAllCells().map((cell) => {
+                    return (
+                      <React.Fragment key={cell.key}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </Component>
+              );
+            })}
         </List>
       </div>
       <SelectionPopover type='set' />

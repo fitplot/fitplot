@@ -9,7 +9,9 @@ import { useIntersection } from 'react-use';
 
 import LoadingIcon from '@/components/loading-icon';
 import Navbar from '@/components/navbar';
+import { List, ListItem } from '@/components/ui/list';
 import useWorkouts from '@/hooks/use-workouts';
+import { cn } from '@/lib/utils';
 import withUser from '@/lib/with-user';
 
 export default function Timeline() {
@@ -71,23 +73,27 @@ export default function Timeline() {
       <Navbar.Title>
         <span>Dashboard</span>
       </Navbar.Title>
-      <div className='flex flex-1 flex-col'>
-        {isLoading && <LoadingIcon className='place-self-center' />}
+      <div className='-mx-4 flex flex-1 flex-col items-center justify-center'>
+        {isLoading && <LoadingIcon />}
         {!isLoading && (
-          <>
-            {groups.map((group) => (
-              <Week key={group.week} group={group} />
-            ))}
-            {/* Watch bottom of list for infinite scroll */}
-            <div
-              ref={ref}
-              className={clsx({
-                'border-b border-red-500':
-                  process.env.NODE_ENV !== 'production',
-              })}
-            />
-            {isFetchingNextPage && <LoadingIcon className='mt-2 self-center' />}
-          </>
+          <List className='flex-1 divide-y-0'>
+            <>
+              {groups.map((group) => (
+                <Week key={group.week} group={group} />
+              ))}
+              {/* Watch bottom of list for infinite scroll */}
+              <div
+                ref={ref}
+                className={clsx({
+                  'border-b border-red-500':
+                    process.env.NODE_ENV !== 'production',
+                })}
+              />
+              {isFetchingNextPage && (
+                <LoadingIcon className='mt-2 self-center' />
+              )}
+            </>
+          </List>
         )}
       </div>
     </>
@@ -96,12 +102,16 @@ export default function Timeline() {
 
 function Week({ group }) {
   return (
-    <Link href='/workouts' className='flex hover:bg-white'>
-      <div className='flex flex-1'>
-        <CalendarBlock group={group} />
-        <Summary group={group} />
-      </div>
-    </Link>
+    <ListItem
+      href='/workouts'
+      className={cn('flex', {
+        'h-[70px]': !group.active,
+        'h-[280px]': group.active,
+      })}
+    >
+      <CalendarBlock group={group} />
+      <Summary group={group} />
+    </ListItem>
   );
 }
 

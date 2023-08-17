@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-export default function useSignUp(options) {
+export default function useSignUp(options = {}) {
   return useMutation(
     ['sign-up'],
     ({ email, firstName }) =>

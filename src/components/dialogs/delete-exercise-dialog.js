@@ -13,15 +13,19 @@ import { useDeleteExercise } from '@/hooks/use-exercise';
 
 export const modalId = 'DeleteWorkoutDialog';
 
-export default function DeleteWorkoutDialog({ data }) {
-  const mutation = useDeleteExercise();
-
+export default function DeleteWorkoutDialog() {
   const model = useOpenableModel(modalId);
+  const data = model.data;
+
+  const mutation = useDeleteExercise();
 
   const remove = React.useCallback(async () => {
     await mutation.mutateAsync(data);
     model.toggle(false);
   }, [data, mutation, model]);
+
+  // nothing to delete
+  if (!data) return null;
 
   return (
     <Dialog open={model.open} onOpenChange={model.toggle}>
