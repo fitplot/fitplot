@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "echo \"No test suite.\" && exit 0",
+    "test": "vitest run",
     "lint": "eslint --cache .",
     "format": "prettier --check .",
     "prepare": "lefthook install"
@@ -59,7 +59,8 @@
     "jotai-devtools": "^0.6.1",
     "postcss": "^8.3.11",
     "prettier": "^3.0.1",
-    "prettier-plugin-tailwindcss": "^0.5.2"
+    "prettier-plugin-tailwindcss": "^0.5.2",
+    "vitest": "^0.34.2"
   },
   "volta": {
     "node": "18.14.0"
