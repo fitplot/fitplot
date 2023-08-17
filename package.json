@@ -39,7 +39,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-use": "^17.4.0",
-    "react-window": "^1.8.9",
     "react-wrap-balancer": "^1.0.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "^3.3.3",
@@ -73,7 +72,6 @@
       "es2022": true
     },
     "extends": [
-      "plugin:import/recommended",
       "plugin:lodash/canonical",
       "plugin:unicorn/recommended",
       "next",
@@ -148,16 +146,14 @@
     "singleQuote": true,
     "jsxSingleQuote": true,
     "plugins": [
-      "prettier-plugin-tailwindcss"
+      "prettier-plugin-tailwindcss",
+      "@ianvs/prettier-plugin-sort-imports"
     ],
     "importOrder": [
       "^(react/(.*)$)|^(react$)",
       "<THIRD_PARTY_MODULES>",
       "",
-      "^@/components/(.*)$",
-      "^@/hooks/(.*)$",
-      "^@/lib/(.*)$",
-      "^@/pages/(.*)$",
+      "^@/(.*)$",
       "",
       "^[./]"
     ]
