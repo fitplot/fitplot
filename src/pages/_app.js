@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/calendar';
 import calendar from 'dayjs/plugin/relativeTime';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import { DevTools as JotaiDevTools } from 'jotai-devtools';
 import Head from 'next/head';
 
 import { InAppLayout } from '@/components/layouts';
@@ -39,7 +38,6 @@ function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
       <ReactQueryDevtools initialIsOpen={false} />
-      {/*<JotaiDevTools initialIsOpen={false} />*/}
     </QueryClientProvider>
   );
 }
