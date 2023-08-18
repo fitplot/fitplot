@@ -21,7 +21,7 @@ export default function Me({ user }) {
         <title>Profile</title>
       </Head>
       <Navbar.Title>Profile</Navbar.Title>
-      <div className='flex flex-1 flex-col gap-4 py-4'>
+      <div className='mx-4 flex flex-1 flex-col gap-4 py-4'>
         <Label htmlFor='email'>Email</Label>
         <Input type='text' id='email' readOnly disabled value={user.email} />
         <Button

@@ -152,7 +152,7 @@ export default function WorkoutsPage() {
           <span>Workout</span>
         </Button>
       </Navbar.RightContent>
-      <div className='-mx-4 mb-4 flex flex-1 flex-col'>
+      <div className='mb-4 flex flex-1 flex-col'>
         <List>
           {table.getRowModel().rows.map((row) => {
             const Component = row.depth === 0 ? ListGroupLabel : ListItem;

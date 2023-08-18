@@ -168,7 +168,7 @@ export default function Home({ user }) {
           </AccordionItem>
         </Accordion>
       </section>
-      <section className='-mx-4  bg-secondary-500 px-4 py-28 text-white'>
+      <section className='bg-secondary-500 px-4 py-28 text-white'>
         <div className='container mx-auto flex flex-col gap-6'>
           <H1 className='text-5xl font-extrabold tracking-tighter text-white md:text-6xl'>
             <Balancer>Waitlist</Balancer>

@@ -18,7 +18,7 @@ function MarketingPage({ children, user }) {
   return (
     <>
       <MarketingNavbar user={user} />
-      <main className='h-full w-full overflow-y-auto'>{children}</main>
+      <main className='px-4'>{children}</main>
     </>
   );
 }
@@ -45,7 +45,7 @@ function InAppPage({ children, user }) {
         <SideBar user={user} close={() => setOpen(false)} />
         <div className='flex flex-1 flex-col overflow-hidden overscroll-none break-words bg-white'>
           <InAppNavbar />
-          <main className='flex flex-1 flex-col overflow-y-auto overscroll-none px-4'>
+          <main className='flex flex-1 flex-col overflow-auto overscroll-none'>
             {children}
           </main>
         </div>

@@ -73,7 +73,7 @@ export default function Timeline() {
       <Navbar.Title>
         <span>Dashboard</span>
       </Navbar.Title>
-      <div className='-mx-4 flex flex-1 flex-col items-center justify-center'>
+      <div className='flex flex-1 flex-col items-center justify-center'>
         {isLoading && <LoadingIcon />}
         {!isLoading && (
           <List className='flex-1 divide-y-0'>

@@ -31,7 +31,10 @@ function App({ Component, pageProps }) {
         <meta name='author' content='FitPlot' />
         {/* slate-50 */}
         <meta name='theme-color' content='rgb(241 245 249)' />
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <meta
+          name='viewport'
+          content='width=device-width, height=device-height, initial-scale=1'
+        />
         <meta property='og:image' content='/favicon.ico' />
       </Head>
       <Layout user={pageProps.user}>

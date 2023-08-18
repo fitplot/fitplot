@@ -210,7 +210,7 @@ export default function WorkoutPage() {
           )}
         </div>
       </Navbar.RightContent>
-      <div className='-mx-4 mb-4 flex flex-1 flex-col'>
+      <div className='mb-4 flex flex-1 flex-col'>
         <List>
           {table.getRowModel() &&
             table.getRowModel().rows.map((row) => {
