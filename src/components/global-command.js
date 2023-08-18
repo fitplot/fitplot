@@ -194,7 +194,7 @@ function WorkoutCommandList({ model, type, data }) {
   );
 
   const remove = React.useCallback(async () => {
-    deleteDialog.show({ data });
+    deleteDialog.show(data);
     model.toggle(false);
   }, [deleteDialog, model, data]);
 
