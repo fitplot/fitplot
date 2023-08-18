@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-export default function useSignIn(options) {
+export default function useSignIn(options = {}) {
   return useMutation(
     ['sign-in'],
     ({ email }) =>
@@ -11,6 +11,6 @@ export default function useSignIn(options) {
         },
         body: JSON.stringify({ email }),
       }),
-    options
+    options,
   );
 }

@@ -1,5 +1,7 @@
+import Head from 'next/head';
+
 import LoadingIcon from '@/components/loading-icon';
-import { H1 } from '@/components/typography';
+import Navbar from '@/components/navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,18 +16,24 @@ export default function Me({ user }) {
   });
 
   return (
-    <div className='flex flex-1 flex-col space-y-4'>
-      <H1>{user.firstName}</H1>
-      <Label htmlFor='email'>Email</Label>
-      <Input type='text' id='email' readOnly disabled value={user.email} />
-      <Button
-        className='flex items-center justify-center'
-        disabled={mutation.isLoading}
-        onClick={() => mutation.mutate()}
-      >
-        {mutation.isLoading ? <LoadingIcon className='h-6 w-6' /> : 'Sign Out'}
-      </Button>
-    </div>
+    <>
+      <Head>
+        <title>Profile</title>
+      </Head>
+      <Navbar.Title>Profile</Navbar.Title>
+      <div className='flex flex-1 flex-col gap-4 py-4'>
+        <Label htmlFor='email'>Email</Label>
+        <Input type='text' id='email' readOnly disabled value={user.email} />
+        <Button
+          className='flex items-center justify-center'
+          disabled={mutation.isLoading}
+          onClick={() => mutation.mutate()}
+        >
+          {mutation.isLoading && <LoadingIcon />}
+          {!mutation.isLoading && 'Sign Out'}
+        </Button>
+      </div>
+    </>
   );
 }
 

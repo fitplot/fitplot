@@ -16,7 +16,7 @@ export default function Magic() {
   }, [router.query.dust]);
 
   return (
-    <div className='flex flex-1 items-center justify-center'>
+    <div className='flex h-8 h-full flex-1 items-center justify-center'>
       <SparklesIcon className='h-6 w-6 animate-pulse' />
     </div>
   );

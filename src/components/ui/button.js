@@ -15,7 +15,7 @@ const buttonVariants = cva(
         primary:
           'bg-primary-500 text-primary-50 hover:bg-primary-900/90 dark:bg-primary-50 dark:text-primary-900 dark:hover:bg-primary-50/90',
         secondary:
-          'bg-primary-100 text-primary-900 hover:bg-primary-100/80 dark:bg-primary-800 dark:text-primary-50 dark:hover:bg-primary-800/80',
+          'bg-secondary-100 text-secondary-900 hover:bg-secondary-100/80 dark:bg-secondary-800 dark:text-secondary-50 dark:hover:bg-secondary-800/80',
         destructive:
           'bg-destructive-500 text-destructive-50 hover:bg-destructive-500/90 dark:bg-destructive-900 dark:text-destructive-50 dark:hover:bg-destructive-900/90',
         outline:
@@ -26,6 +26,7 @@ const buttonVariants = cva(
       },
       size: {
         default: 'h-10 px-4 py-2',
+        xs: 'h-6 rounded px-2 text-xs',
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
@@ -35,7 +36,7 @@ const buttonVariants = cva(
       variant: 'default',
       size: 'default',
     },
-  }
+  },
 );
 
 const Button = React.forwardRef(
@@ -48,7 +49,7 @@ const Button = React.forwardRef(
         {...props}
       />
     );
-  }
+  },
 );
 Button.displayName = 'Button';
 

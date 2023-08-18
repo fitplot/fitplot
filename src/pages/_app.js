@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/calendar';
 import calendar from 'dayjs/plugin/relativeTime';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+import { DevTools as JotaiDevTools } from 'jotai-devtools';
 import Head from 'next/head';
 
 import { InAppLayout } from '@/components/layouts';
@@ -26,18 +27,19 @@ function App({ Component, pageProps }) {
   return (
     <QueryClientProvider client={queryClient}>
       <Head>
-        <meta name='description' content='Nexus Fitness' />
+        <meta name='description' content='FitPlot' />
         <link rel='icon' href='/favicon.ico' />
-        <meta name='author' content='Nexus Fitness' />
+        <meta name='author' content='FitPlot' />
         {/* slate-50 */}
         <meta name='theme-color' content='rgb(241 245 249)' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta property='og:image' content='/favicon.ico' />
       </Head>
-      <Layout {...pageProps}>
+      <Layout user={pageProps.user}>
         <Component {...pageProps} />
       </Layout>
       <ReactQueryDevtools initialIsOpen={false} />
+      {/*<JotaiDevTools initialIsOpen={false} />*/}
     </QueryClientProvider>
   );
 }

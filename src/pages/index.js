@@ -54,7 +54,7 @@ export default function Home({ user }) {
       <header className='flex flex-col items-center justify-center gap-6 pt-28 text-center'>
         <Button
           variant='outline'
-          href='https://github.com/nexus-fitness/nexus'
+          href='https://github.com/fitplot/fitplot'
           className='rounded-full leading-loose'
         >
           Star us on GitHub

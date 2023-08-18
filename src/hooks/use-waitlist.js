@@ -10,6 +10,6 @@ export default function useAddToWaitlist(options = {}) {
         },
         body: JSON.stringify(item),
       }).then((res) => res.json()),
-    options
+    options,
   );
 }

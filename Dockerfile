@@ -3,15 +3,16 @@ FROM node:18-bookworm-slim as base
 
 # set for base and all layer that inherit from it
 ENV NODE_ENV production
+ENV CI=true
+ENV LEFTHOOK=0
 
-# Install openssl and certs for Sentry CLI
+# Install open ssl and certs for Sentry CLI
 RUN apt-get update && apt-get install -y openssl ca-certificates
 
 # install all node_modules, including dev
 FROM base as deps
 
-RUN mkdir /app/
-WORKDIR /app/
+WORKDIR /app
 
 ADD package.json package-lock.json ./
 RUN npm install --include=dev
@@ -19,14 +20,13 @@ RUN npm install --include=dev
 # setup production node_modules
 FROM base as production-deps
 
-RUN mkdir /app/
-WORKDIR /app/
+WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules
-ADD package.json package-lock.json /app/
-RUN npm prune --production
+ADD package.json package-lock.json ./
+RUN npm prune --omit=dev
 
-# build app
+# build the app
 FROM base as build
 
 ARG GITHUB_SHA
@@ -35,8 +35,9 @@ ENV GITHUB_SHA=$GITHUB_SHA
 ARG SERVICE_URL
 ENV SERVICE_URL=$SERVICE_URL
 
-RUN mkdir /app/
-WORKDIR /app/
+ENV PORT 3000
+
+WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules
 
@@ -49,8 +50,7 @@ RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
 # build smaller image for running
 FROM base
 
-RUN mkdir /app/
-WORKDIR /app/
+WORKDIR /app
 
 COPY --from=production-deps /app/node_modules /app/node_modules
 COPY --from=build /app/.next /app/.next
@@ -63,6 +63,4 @@ ADD . .
 
 EXPOSE 3000
 
-ENV PORT 3000
-
-CMD ["node_modules/.bin/next", "start"]
+CMD [ "npm", "run", "start" ]

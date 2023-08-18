@@ -1,31 +1,45 @@
 import React from 'react';
-import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
-import { CheckIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { CheckCircleIcon, PencilIcon } from '@heroicons/react/24/outline';
+import {
+  CheckIcon,
+  EllipsisHorizontalIcon,
+  TrashIcon,
+} from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-import { useRouter } from 'next/router';
 import { useToggle } from 'react-use';
 
-import { ListMenu, ListMenuGroup, ListMenuItem } from '@/components/list-menu';
+import { modalId as DeleteWorkoutDialogId } from '@/components/dialogs/delete-workout-dialog';
 import LoadingIcon from '@/components/loading-icon';
-import Overlay from '@/components/overlay';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useDeleteWorkout, useUpdateWorkout } from '@/hooks/use-workout';
+import { useOpenable } from '@/hooks/openable';
+import { useUpdateWorkout } from '@/hooks/use-workout';
 
-export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
-  const router = useRouter();
-
-  const { name, createdAt, updatedAt, completedAt } = workout;
+export default function WorkoutMoreActions({ workout = {} }) {
+  const { name, completedAt } = workout;
 
   const inputRef = React.useRef(null);
-
+  const [open, toggle] = useToggle(false);
   const [showRenameWorkout, toggleRenameWorkout] = useToggle(false);
-  const [showDeleteWorkout, toggleDeleteWorkout] = useToggle(false);
 
+  const deleteDialog = useOpenable(DeleteWorkoutDialogId);
   const updateMutation = useUpdateWorkout();
-  const deleteMutation = useDeleteWorkout();
+
+  const remove = () => {
+    deleteDialog.show(workout);
+    toggle(false);
+  };
 
   const submitRename = async () => {
     const rawInput = inputRef.current.value;
@@ -39,13 +53,6 @@ export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
     }
   };
 
-  const submitDelete = async () => {
-    await deleteMutation.mutateAsync(workout);
-    toggleDeleteWorkout(false);
-    onClose();
-    router.push('/workouts');
-  };
-
   const submitToggleCompleted = async () => {
     await updateMutation.mutateAsync({
       ...workout,
@@ -55,132 +62,78 @@ export default function WorkoutMoreActions({ workout = {}, open, onClose }) {
 
   return (
     <>
-      <Overlay open={open} onClose={onClose} title='More Actions'>
-        <div className='flex flex-col'>
-          <ListMenu>
-            <ListMenuGroup>
-              <ListMenuItem
-                onClick={() => toggleRenameWorkout(true)}
-                className='font-medium'
-              >
-                Rename Workout
-              </ListMenuItem>
-              <ListMenuItem
-                onClick={() => submitToggleCompleted()}
-                disabled={updateMutation.isLoading}
-              >
-                <div className='flex flex-1 space-x-2'>
-                  {updateMutation.isLoading ? (
-                    <LoadingIcon className='h-5 w-5' />
-                  ) : (
-                    <CheckCircleIcon
-                      className={clsx(
-                        { 'text-green-500': Boolean(completedAt) },
-                        'inline-block h-6 w-6'
-                      )}
-                    />
-                  )}
-                  <span>Mark as {completedAt ? 'Incomplete' : 'Complete'}</span>
-                </div>
-              </ListMenuItem>
-            </ListMenuGroup>
-            <ListMenuGroup>
-              <ListMenuItem className='text-slate-500'>
-                <div className='flex flex-1 space-x-2'>
-                  <ClockIcon className='h-6 w-6' />
-                  <span>Started on</span>
-                </div>
-                <div className='mt-auto'>
-                  {dayjs(createdAt).format('MMM DD, YYYY h:mm a')}
-                </div>
-              </ListMenuItem>
-              <ListMenuItem className='text-slate-500'>
-                <div className='flex flex-1 space-x-2'>
-                  <ClockIcon className='inline-block h-6 w-6' />
-                  <span>Last updated on</span>
-                </div>
-                <div className='mt-auto'>
-                  {dayjs(updatedAt).format('MMM DD, YYYY h:mm a')}
-                </div>
-              </ListMenuItem>
-              {Boolean(completedAt) && (
-                <ListMenuItem className='text-slate-500'>
-                  <div className='flex flex-1 space-x-2'>
-                    <ClockIcon className='inline-block h-6 w-6' />
-                    <span>Completed on</span>
-                  </div>
-                  <div className='mt-auto'>
-                    {dayjs(completedAt).format('MMM DD, YYYY h:mm a')}
-                  </div>
-                </ListMenuItem>
-              )}
-            </ListMenuGroup>
-            <ListMenuGroup>
-              <ListMenuItem
-                onClick={() => toggleDeleteWorkout(true)}
-                className='text-red-500'
-              >
-                <div className='flex flex-1 items-center space-x-2'>
-                  <TrashIcon className='h-6 w-6' />
-                  <span>Delete</span>
-                </div>
-              </ListMenuItem>
-            </ListMenuGroup>
-          </ListMenu>
-        </div>
-      </Overlay>
-      <Overlay
-        open={showRenameWorkout}
-        onClose={() => toggleRenameWorkout(false)}
-        initialFocus={inputRef}
-      >
-        <div className='flex flex-col space-y-4 p-4'>
-          <div className='flex flex-wrap'>
-            <Label htmlFor='workout-name'>Rename this workout</Label>
-          </div>
-          <Input
-            ref={inputRef}
-            type='text'
-            id='workout-name'
-            defaultValue={name}
-            required
-          />
-          <Button
-            className='flex justify-center'
+      <DropdownMenu open={open} onOpenChange={toggle}>
+        <DropdownMenuTrigger asChild>
+          <Button variant='ghost'>
+            <EllipsisHorizontalIcon className='h-4 w-4' />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className='w-56'>
+          <DropdownMenuLabel>
+            <span>Workout</span>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => toggleRenameWorkout(true)}
+            className='gap-2'
+          >
+            <PencilIcon className='h-4 w-4' />
+            <span>Rename Workout</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => submitToggleCompleted()}
             disabled={updateMutation.isLoading}
-            onClick={() => submitRename()}
+            className='gap-2'
           >
             {updateMutation.isLoading ? (
-              <LoadingIcon className='h-5 w-5' />
+              <LoadingIcon className='h-4 w-4' />
             ) : (
-              <CheckIcon className='inline-block h-6 w-6' />
+              <CheckCircleIcon
+                className={clsx(
+                  { 'text-green-500': Boolean(completedAt) },
+                  'h-4 w-4',
+                )}
+              />
             )}
-          </Button>
-        </div>
-      </Overlay>
-      <Overlay
-        open={showDeleteWorkout}
-        onClose={() => toggleDeleteWorkout(false)}
-      >
-        <div className='flex flex-col space-y-4 p-4'>
-          <div className='flex flex-wrap'>
-            <Label htmlFor='workout-name'>
-              Are you sure you want to delete this workout?
-            </Label>
-          </div>
-          <Button
-            className='flex items-center justify-center bg-red-500 text-white'
-            disabled={deleteMutation.isLoading}
-            onClick={() => submitDelete()}
+            <span>Mark as {completedAt ? 'Incomplete' : 'Complete'}</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => remove()}
+            className='gap-2 text-destructive-500'
           >
-            {deleteMutation.isLoading ? (
-              <LoadingIcon className='h-6 w-6' />
-            ) : (
-              <TrashIcon className='h-6 w-6' />
-            )}
-          </Button>
-        </div>
-      </Overlay>
+            <TrashIcon className='h-4 w-4' />
+            <span>Delete</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <Dialog open={showRenameWorkout} onOpenChange={toggleRenameWorkout}>
+        <DialogContent>
+          <div className='flex flex-col space-y-4 p-4'>
+            <div className='flex flex-wrap'>
+              <Label htmlFor='workout-name'>Rename this workout</Label>
+            </div>
+            <Input
+              ref={inputRef}
+              type='text'
+              id='workout-name'
+              defaultValue={name}
+              required
+            />
+            <Button
+              className='flex justify-center'
+              disabled={updateMutation.isLoading}
+              onClick={() => submitRename()}
+            >
+              {updateMutation.isLoading ? (
+                <LoadingIcon className='h-5 w-5' />
+              ) : (
+                <CheckIcon className='inline-block h-6 w-6' />
+              )}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-export default function useSignOut(options) {
+export default function useSignOut(options = {}) {
   return useMutation(
     ['sign-out'],
     () =>
@@ -12,6 +12,6 @@ export default function useSignOut(options) {
 
         return response;
       }),
-    options
+    options,
   );
 }

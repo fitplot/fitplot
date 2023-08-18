@@ -3,17 +3,18 @@ import { CheckCircleIcon, PlayCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import _ from 'lodash';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useIntersection } from 'react-use';
 
-import { usePageContext } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';
+import Navbar from '@/components/navbar';
+import { List, ListItem } from '@/components/ui/list';
 import useWorkouts from '@/hooks/use-workouts';
+import { cn } from '@/lib/utils';
 import withUser from '@/lib/with-user';
 
 export default function Timeline() {
-  usePageContext({ title: 'Timeline' });
-
   const {
     data: workouts,
     isLoading,
@@ -33,7 +34,7 @@ export default function Timeline() {
     if (!workouts) return [];
 
     const workoutsByWeek = _.groupBy(workouts, ({ createdAt }) =>
-      dayjs(createdAt).week()
+      dayjs(createdAt).week(),
     );
 
     return Object.entries(workoutsByWeek)
@@ -65,32 +66,52 @@ export default function Timeline() {
   }, [isLoading, isFetchingNextPage, hasNextPage, intersection, fetchNextPage]);
 
   return (
-    <div className='flex flex-1 flex-col'>
-      {groups.map((group) => (
-        <Week key={group.week} group={group} />
-      ))}
-      {/* Watch bottom of list for infinite scroll */}
-      <div
-        ref={ref}
-        className={clsx({
-          'border-b border-red-500': process.env.NODE_ENV !== 'production',
-        })}
-      />
-      {isFetchingNextPage && (
-        <LoadingIcon className='mt-2 h-6 w-6 self-center' />
-      )}
-    </div>
+    <>
+      <Head>
+        <title>Dashboard</title>
+      </Head>
+      <Navbar.Title>
+        <span>Dashboard</span>
+      </Navbar.Title>
+      <div className='-mx-4 flex flex-1 flex-col items-center justify-center'>
+        {isLoading && <LoadingIcon />}
+        {!isLoading && (
+          <List className='flex-1 divide-y-0'>
+            <>
+              {groups.map((group) => (
+                <Week key={group.week} group={group} />
+              ))}
+              {/* Watch bottom of list for infinite scroll */}
+              <div
+                ref={ref}
+                className={clsx({
+                  'border-b border-red-500':
+                    process.env.NODE_ENV !== 'production',
+                })}
+              />
+              {isFetchingNextPage && (
+                <LoadingIcon className='mt-2 self-center' />
+              )}
+            </>
+          </List>
+        )}
+      </div>
+    </>
   );
 }
 
 function Week({ group }) {
   return (
-    <Link href='/workouts' className='flex hover:bg-white'>
-      <div className='flex flex-1'>
-        <CalendarBlock group={group} />
-        <Summary group={group} />
-      </div>
-    </Link>
+    <ListItem
+      href='/workouts'
+      className={cn('flex', {
+        'h-[70px]': !group.active,
+        'h-[280px]': group.active,
+      })}
+    >
+      <CalendarBlock group={group} />
+      <Summary group={group} />
+    </ListItem>
   );
 }
 
@@ -132,7 +153,7 @@ function Summary({ group }) {
 
   const started = group.workouts.length;
   const completed = group.workouts.filter(({ completedAt }) =>
-    Boolean(completedAt)
+    Boolean(completedAt),
   ).length;
   return (
     <div className='mb-[1px] ml-6 flex flex-1 flex-col border-b'>

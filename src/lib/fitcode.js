@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const SET_DELIM = ',';
 const MULTI_SET_DELIM = 'x';
 const AMOUNT_DELIM = '@';
@@ -12,25 +14,37 @@ function fitcode(rawInput = '', base = {}) {
 
   const isMultiSet = input.includes(MULTI_SET_DELIM);
   if (isMultiSet) {
-    const split = input.split(MULTI_SET_DELIM);
-    const numberOfSets = split[0];
-    const volumeAndAmount = split[1];
-    const [volume, amount] = volumeAndAmount.split(AMOUNT_DELIM);
+    const [numberOfSets, volumeAndAmount] = input.split(MULTI_SET_DELIM);
+    const [singleOrMultiVolume, singleOrMultiAmount] =
+      volumeAndAmount.split(AMOUNT_DELIM);
 
-    const isMultiAmount = amount?.includes(MULTI_AMOUNT_DELIM);
+    const isMultiAmount =
+      Boolean(singleOrMultiAmount) &&
+      singleOrMultiAmount.includes(MULTI_AMOUNT_DELIM);
     let amounts = [];
     if (isMultiAmount) {
-      amounts = amount.split(MULTI_AMOUNT_DELIM);
+      amounts = singleOrMultiAmount.split(MULTI_AMOUNT_DELIM);
+    }
+
+    const isMultiVolume =
+      Boolean(singleOrMultiVolume) &&
+      singleOrMultiVolume.includes(MULTI_AMOUNT_DELIM);
+    let volumes = [];
+    if (isMultiVolume) {
+      volumes = singleOrMultiVolume.split(MULTI_AMOUNT_DELIM);
     }
 
     let count = 0;
     while (count < numberOfSets) {
+      const amount = isMultiAmount ? amounts[count] : singleOrMultiAmount;
+      const volume = isMultiVolume ? volumes[count] : singleOrMultiVolume;
+
       sets.push({
-        volume: volume || null,
-        amount: (isMultiAmount ? amounts[count] : amount) || null,
-        unit: 'lbs',
+        amount: amount ? Number.parseInt(amount, 10) : null,
+        volume: volume ? Number.parseInt(volume, 10) : null,
         ...base,
       });
+
       count += 1;
     }
   } else {
@@ -44,9 +58,8 @@ function fitcode(rawInput = '', base = {}) {
       }
 
       sets.push({
-        volume,
-        amount,
-        unit: 'lbs',
+        amount: amount ? Number.parseInt(amount, 10) : null,
+        volume: volume ? Number.parseInt(volume, 10) : 1,
         ...base,
       });
     }
@@ -56,6 +69,7 @@ function fitcode(rawInput = '', base = {}) {
 }
 
 function from(sets = []) {
+  if (!Array.isArray(sets) && typeof sets === 'object') sets = [sets];
   if (sets.length === 0) return null;
 
   const volumes = sets.map(({ volume }) => volume);
@@ -70,7 +84,9 @@ function from(sets = []) {
     ? amounts.join(MULTI_AMOUNT_DELIM)
     : amounts[0];
 
-  const volumeAndAmount = [volume, amount].join(AMOUNT_DELIM);
+  const volumeAndAmount = [volume, amount]
+    .filter((x) => !_.isNil(x))
+    .join(AMOUNT_DELIM);
 
   if (sets.length < 2) return volumeAndAmount;
 

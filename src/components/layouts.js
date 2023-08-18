@@ -1,107 +1,55 @@
 import React from 'react';
 import { useToggle } from 'react-use';
 
+import AddSetsDialog from '@/components/dialogs/add-sets-dialog';
+import AddWorkoutDialog from '@/components/dialogs/add-workout-dialog';
+import DeleteSetsDialog from '@/components/dialogs/delete-sets-dialog';
+import DeleteWorkoutDialog from '@/components/dialogs/delete-workout-dialog';
+import GlobalCommand from '@/components/global-command';
 import { InAppNavbar, MarketingNavbar } from '@/components/navbar';
 import SideBar from '@/components/sidebar';
 import { Sheet } from '@/components/ui/sheet';
 
-export function MarketingLayout({ children, ...pageProps }) {
-  return <MarketingPage {...pageProps}>{children}</MarketingPage>;
+export function MarketingLayout({ children, user }) {
+  return <MarketingPage user={user}>{children}</MarketingPage>;
 }
 
 function MarketingPage({ children, user }) {
   return (
-    <div className='flex h-full flex-col overflow-hidden overscroll-none break-words bg-white'>
+    <>
       <MarketingNavbar user={user} />
-      <main className='flex flex-1 flex-col overflow-y-auto overscroll-none p-4'>
-        {children}
-      </main>
-    </div>
+      <main className='h-full w-full overflow-y-auto'>{children}</main>
+    </>
   );
 }
 
-export function InAppLayout({ children, ...pageProps }) {
+export function InAppLayout({ children, user }) {
   return (
-    <PageContextProvider>
-      <InAppPage {...pageProps}>{children}</InAppPage>
-    </PageContextProvider>
+    <>
+      <InAppPage user={user}>{children}</InAppPage>
+      <GlobalCommand />
+      <AddWorkoutDialog />
+      <AddSetsDialog />
+      <DeleteSetsDialog />
+      <DeleteWorkoutDialog />
+    </>
   );
 }
 
 function InAppPage({ children, user }) {
-  const [isOpen, setOpen] = useToggle(false);
+  const [open, setOpen] = useToggle(false);
 
   return (
-    <Sheet open={isOpen} onOpenChange={setOpen}>
-      {Boolean(user) && <SideBar user={user} close={() => setOpen(false)} />}
-      <div className='flex h-full flex-col overflow-hidden overscroll-none break-words bg-white'>
-        <InAppNavbar noop={Boolean(!user)} />
-        <main className='flex flex-1 flex-col overflow-y-auto overscroll-none px-4'>
-          {children}
-        </main>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <div className='flex h-full flex-col overflow-hidden overscroll-none md:flex-row'>
+        <SideBar user={user} close={() => setOpen(false)} />
+        <div className='flex flex-1 flex-col overflow-hidden overscroll-none break-words bg-white'>
+          <InAppNavbar />
+          <main className='flex flex-1 flex-col overflow-y-auto overscroll-none px-4'>
+            {children}
+          </main>
+        </div>
       </div>
     </Sheet>
   );
 }
-
-const INITIAL_PAGE_CONTEXT = {
-  title: null,
-  onMoreAction: null,
-  withPageContext: null,
-  resetPageContext: null,
-};
-
-const PageContext = React.createContext(INITIAL_PAGE_CONTEXT);
-
-function PageContextProvider({ children }) {
-  const [value, setValue] = React.useState(INITIAL_PAGE_CONTEXT);
-
-  const set = React.useCallback(
-    ({ title = null, onMoreAction = null } = {}) => {
-      setValue({
-        title,
-        onMoreAction,
-      });
-    },
-    [setValue]
-  );
-
-  const reset = React.useCallback(() => {
-    set({
-      title: null,
-      onMoreAction: null,
-    });
-  }, [set]);
-
-  const context = React.useMemo(
-    () => ({
-      title: value.title,
-      onMoreAction: value.onMoreAction,
-      set,
-      reset,
-    }),
-    [set, reset, value]
-  );
-
-  return (
-    <PageContext.Provider value={context}>{children}</PageContext.Provider>
-  );
-}
-
-export const usePageContext = ({ title, onMoreAction }) => {
-  const { set, reset } = React.useContext(PageContext);
-
-  React.useEffect(() => {
-    set({ title, onMoreAction });
-
-    return () => {
-      reset();
-    };
-  }, [set, reset, title, onMoreAction]);
-};
-
-export const usePageContextValues = () => {
-  const { setPageContext, resetPageContext, ...context } =
-    React.useContext(PageContext);
-  return context;
-};

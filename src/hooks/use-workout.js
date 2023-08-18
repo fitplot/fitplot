@@ -2,15 +2,15 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import queryClient from '../lib/query-client';
 
-export function useWorkout(workoutId) {
+export function useWorkout(workoutId, options = {}) {
   return useQuery(
     ['workout', workoutId],
     () => fetch(`/api/workout/${workoutId}`).then((res) => res.json()),
-    { enabled: !!workoutId }
+    { ...options, enabled: Boolean(workoutId) && (options.enabled ?? true) },
   );
 }
 
-export function useCreateWorkout({ onSuccess }) {
+export function useCreateWorkout(options = {}) {
   return useMutation(
     (workout) =>
       fetch('/api/workout', {
@@ -21,16 +21,20 @@ export function useCreateWorkout({ onSuccess }) {
         body: JSON.stringify(workout),
       }).then((res) => res.json()),
     {
+      ...options,
       onSuccess: async (workout) => {
         queryClient.invalidateQueries('workouts');
         queryClient.invalidateQueries(['workout', workout.id]);
-        await onSuccess(workout);
+
+        if (options.onSuccess) {
+          await options.onSuccess(workout);
+        }
       },
-    }
+    },
   );
 }
 
-export function useUpdateWorkout() {
+export function useUpdateWorkout(options = {}) {
   return useMutation(
     (workout) =>
       fetch(`/api/workout/${workout.id}`, {
@@ -41,25 +45,35 @@ export function useUpdateWorkout() {
         body: JSON.stringify(workout),
       }).then((res) => res.json()),
     {
-      onSuccess: (workout) => {
+      ...options,
+      onSuccess: async (workout) => {
         queryClient.invalidateQueries('workouts');
         queryClient.invalidateQueries(['workout', workout.id]);
+
+        if (options.onSuccess) {
+          await options.onSuccess(workout);
+        }
       },
-    }
+    },
   );
 }
 
-export function useDeleteWorkout() {
+export function useDeleteWorkout(options = {}) {
   return useMutation(
     (workout) =>
       fetch(`/api/workout/${workout.id}`, {
         method: 'DELETE',
       }).then((res) => res.json()),
     {
-      onSuccess: (workout) => {
+      ...options,
+      onSuccess: async (workout) => {
         queryClient.invalidateQueries('workouts');
         queryClient.invalidateQueries(['workout', workout.id]);
+
+        if (options.onSuccess) {
+          await options.onSuccess(workout);
+        }
       },
-    }
+    },
   );
 }

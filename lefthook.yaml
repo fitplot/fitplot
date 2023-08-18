@@ -1,0 +1,12 @@
+# Lefthook Documentation
+# https://github.com/evilmartians/lefthook/tree/HEAD/docs
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: '*.{js,json}'
+      run: 'npm exec prettier --write {staged_files} && git add {staged_files}'
+    lint:
+      glob: '*.js'
+      run: 'npm exec eslint --cache --fix {staged_files} && git add {staged_files}'

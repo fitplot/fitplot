@@ -5,9 +5,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useToggle } from 'react-use';
 
-import InfoCard from '@/components/info-card';
-import { usePageContext } from '@/components/layouts';
+import { MarketingLayout } from '@/components/layouts';
 import LoadingIcon from '@/components/loading-icon';
+import { H1 } from '@/components/typography';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -50,10 +51,6 @@ export default function SignIn() {
     },
   });
 
-  usePageContext({
-    title: isNewUser ? 'Sign-Up' : 'Sign-In',
-  });
-
   const submit = () => {
     const email = emailRef.current.value.trim();
     if (email) {
@@ -76,56 +73,65 @@ export default function SignIn() {
       <Head>
         <title>Sign-In</title>
       </Head>
-      <div className='flex flex-col space-y-4'>
-        {isComplete && (
-          <InfoCard variant='success'>
-            <SparklesIcon className='h-6 w-6 pr-2' />
-            <span>
-              We sent you a magic link. Please check your email inbox.
-            </span>
-          </InfoCard>
-        )}
-        {isRateLimited && (
-          <InfoCard variant='warn'>
-            <HandRaisedIcon className='h-6 w-6 pr-2' />
-            <span>Whoa, hold your horses there. Please slow down.</span>
-          </InfoCard>
-        )}
-        <Label htmlFor='email'>Email</Label>
-        <Input
-          id='email'
-          type='email'
-          name='email'
-          ref={emailRef}
-          disabled={disabled}
-          readOnly={disabled}
-        />
-        {isNewUser && (
-          <>
-            <Label htmlFor='name'>Name</Label>
-            <Input
-              id='name'
-              type='text'
-              name='name'
-              ref={nameRef}
-              disabled={disabled}
-              readOnly={disabled}
-            />
-          </>
-        )}
-        <Button
-          className='flex items-center justify-center'
-          variant='primary'
-          disabled={disabled}
-          onClick={() => submit()}
-        >
-          {isLoading ? (
-            <LoadingIcon className='h-6 w-6' />
-          ) : (
-            <CheckIcon className='h-6 w-6' />
+      <div className='container mx-auto flex h-full flex-col items-center pt-24'>
+        <section className='flex w-full flex-col gap-4 md:w-96'>
+          <H1 className='font-extrabold'>Sign-In</H1>
+          {isComplete && (
+            <Alert>
+              <SparklesIcon className='h-6 w-6 pr-2' />
+              <AlertDescription>
+                <span>
+                  We sent you a magic link. Please check your email inbox.
+                </span>
+              </AlertDescription>
+            </Alert>
           )}
-        </Button>
+          {isRateLimited && (
+            <Alert>
+              <HandRaisedIcon className='h-6 w-6 pr-2' />
+              <AlertDescription>
+                <span>Whoa, there. Please slow down.</span>
+              </AlertDescription>
+            </Alert>
+          )}
+          <Label htmlFor='email'>Email</Label>
+          <Input
+            id='email'
+            type='email'
+            name='email'
+            ref={emailRef}
+            disabled={disabled}
+            readOnly={disabled}
+          />
+          {isNewUser && (
+            <>
+              <Label htmlFor='name'>Name</Label>
+              <Input
+                id='name'
+                type='text'
+                name='name'
+                ref={nameRef}
+                disabled={disabled}
+                readOnly={disabled}
+              />
+            </>
+          )}
+          <Button
+            className='flex items-center justify-center'
+            variant='primary'
+            disabled={disabled}
+            onClick={() => submit()}
+          >
+            {isLoading ? (
+              <LoadingIcon className='h-6 w-6' />
+            ) : (
+              <CheckIcon className='h-6 w-6' />
+            )}
+          </Button>
+        </section>
       </div>
     </>
   );
 }
+
+SignIn.getLayout = () => MarketingLayout;
