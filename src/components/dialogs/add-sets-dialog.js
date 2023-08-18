@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCreateExercise } from '@/hooks/use-exercise';
-import { useSearchExercises } from '@/hooks/use-exercises';
+import { useExercises } from '@/hooks/use-exercises';
 import { useCreateSets, usePreviousSetsForExercise } from '@/hooks/use-sets';
 import { useUnits } from '@/hooks/use-units';
 import fitcode from '@/lib/fitcode';
@@ -99,7 +99,7 @@ export default function AddSetsDialog() {
     [model.toggle, reset],
   );
 
-  const { data: exercises = [] } = useSearchExercises(search);
+  const { data: exercises = [] } = useExercises({ take: 999 });
   const { data: units } = useUnits();
   const { data: previousSets } = usePreviousSetsForExercise(
     exercise && exercise.id,
@@ -172,6 +172,11 @@ export default function AddSetsDialog() {
   }, [createSetsMutation, sets, toggleWithReset]);
 
   const disabled = !Boolean(sets && sets.length > 0 && exercise && unit);
+  const hasExactMatch = Boolean(
+    search &&
+      exercises &&
+      exercises.some((x) => x.name.toLowerCase() === search.toLowerCase()),
+  );
 
   return (
     <Dialog open={model.open} onOpenChange={toggleWithReset}>
@@ -190,14 +195,14 @@ export default function AddSetsDialog() {
             </Button>
           </PopoverTrigger>
           <PopoverContent>
-            <Command shouldFilter={false}>
+            <Command>
               <CommandInput
                 placeholder='Select an exercise...'
                 value={search}
                 onValueChange={_.debounce(setSearch, 50, { maxWait: 50 })}
               />
               <CommandList className='max-h-56'>
-                {Boolean(search) && (
+                {Boolean(search) && !hasExactMatch && (
                   <>
                     <CommandGroup heading='Create new'>
                       <CommandItem onSelect={() => onAddExercise(search)}>

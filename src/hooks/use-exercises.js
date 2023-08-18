@@ -18,12 +18,13 @@ export function useSearchExercises(query = '', options = {}) {
   );
 }
 
-export function useExercises(options = {}) {
+export function useExercises({ take } = {}, options = {}) {
   return useInfiniteQuery(
     ['exercises'],
     ({ pageParam: cursor }) => {
       const search = new URLSearchParams();
       if (cursor) search.set('cursor', cursor);
+      if (take) search.set('take', take);
       return fetch(`/api/exercises?${search.toString()}`).then((res) =>
         res.json(),
       );

@@ -27,7 +27,7 @@ export function useCreateWorkout(options = {}) {
         queryClient.invalidateQueries(['workout', workout.id]);
 
         if (options.onSuccess) {
-          await onSuccess(workout);
+          await options.onSuccess(workout);
         }
       },
     },
@@ -51,7 +51,7 @@ export function useUpdateWorkout(options = {}) {
         queryClient.invalidateQueries(['workout', workout.id]);
 
         if (options.onSuccess) {
-          await onSuccess(workout);
+          await options.onSuccess(workout);
         }
       },
     },
@@ -71,7 +71,7 @@ export function useDeleteWorkout(options = {}) {
         queryClient.invalidateQueries(['workout', workout.id]);
 
         if (options.onSuccess) {
-          await onSuccess(workout);
+          await options.onSuccess(workout);
         }
       },
     },

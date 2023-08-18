@@ -127,7 +127,7 @@ function SetCommandList({ model, type, data }) {
       },
       {
         value: 'delete',
-        label: 'Delete workout(s)',
+        label: 'Delete Set(s)',
         icon: <TrashIcon className='h-4 w-4' />,
         onSelect: () => remove(),
       },
@@ -162,7 +162,6 @@ function SetCommandList({ model, type, data }) {
 }
 
 function WorkoutCommandList({ model, type, data }) {
-  // const search = useCommandState((state) => state.search);
   const [action, setAction] = React.useState(null);
 
   const updateMutation = useUpdateWorkout();

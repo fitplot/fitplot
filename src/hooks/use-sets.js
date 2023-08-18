@@ -41,11 +41,11 @@ export function useCreateSets(options = {}) {
       }).then((res) => res.json()),
     {
       ...options,
-      onSuccess: (sets) => {
+      onSuccess: async (sets) => {
         queryClient.invalidateQueries(['set']);
 
         if (options.onSuccess) {
-          options.onSuccess(sets);
+          await options.onSuccess(sets);
         }
       },
     },
