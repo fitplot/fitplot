@@ -94,9 +94,9 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@v1.4
 
       - name: 🚀 Deploy
-        run: flyctl deploy --remote-only \
-            --build-arg GITHUB_SHA=${{ github.sha }} \
-            --build-arg SERVICE_URL=${{ steps.service_url.outputs.value }} \
+        run: flyctl deploy --remote-only
+            --build-arg GITHUB_SHA=${{ github.sha }}
+            --build-arg SERVICE_URL=${{ steps.service_url.outputs.value }}
             --build-arg CI=$CI
             --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
         env:
