@@ -320,7 +320,7 @@ export default function AddSetsDialog() {
             </ScrollArea>
           )}
         </div>
-        <Button variant='primary' disabled={disabled} onClick={submit}>
+        <Button disabled={disabled} onClick={submit}>
           <CheckIcon className='h-4 w-4' />
         </Button>
       </DialogContent>

@@ -4,6 +4,7 @@ import {
   HandRaisedIcon,
   SparklesIcon,
 } from '@heroicons/react/24/outline';
+import Head from 'next/head';
 import { useToggle } from 'react-use';
 import Balancer from 'react-wrap-balancer';
 
@@ -45,72 +46,76 @@ export default function Waitlist() {
   const disabled = isLoading;
 
   return (
-    <div className='container mx-auto flex flex-1 flex-col items-center'>
-      <section className='flex flex-1 flex-col items-center space-y-8 pt-28 text-center'>
-        <H1 className='font-extrabold tracking-tighter'>
-          <Balancer>
-            Join the waitlist and transform your fitness productivity.
-          </Balancer>
-        </H1>
-        <Paragraph>
-          By signing up to our waitlist, you will be first in line to know when
-          we launch and receive early access.
-        </Paragraph>
-        {isComplete && (
-          <Alert variant='success'>
-            <SparklesIcon className='h-6 w-6 pr-2' />
-            <AlertDescription>
-              <span>
-                We sent you a magic link. Please check your email inbox.
-              </span>
-            </AlertDescription>
-          </Alert>
-        )}
-        {isRateLimited && (
-          <Alert variant='warn'>
-            <HandRaisedIcon className='h-6 w-6 pr-2' />
-            <AlertDescription>
-              <span>Whoa, there. Please slow down.</span>
-            </AlertDescription>
-          </Alert>
-        )}
-        <div className='flex w-full max-w-lg flex-col gap-4 text-left'>
-          <Label htmlFor='email'>Email</Label>
-          <Input
-            id='email'
-            type='email'
-            name='email'
-            ref={emailRef}
-            disabled={disabled}
-            readOnly={disabled}
-          />
-          <Label htmlFor='name'>Name</Label>
-          <Input
-            id='name'
-            type='text'
-            name='name'
-            ref={nameRef}
-            disabled={disabled}
-            readOnly={disabled}
-          />
-          <Button
-            onClick={submit}
-            className='block flex justify-center'
-            variant='primary'
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <LoadingIcon className='w-6' />
-            ) : (
-              <span>
-                Secure Your Spot
-                <ArrowRightIcon className='inline-block h-6 pl-2' />
-              </span>
-            )}
-          </Button>
-        </div>
-      </section>
-    </div>
+    <>
+      <Head>
+        <title>Early Access | FitPlot</title>
+      </Head>
+      <div className='container mx-auto flex flex-1 flex-col items-center'>
+        <section className='flex flex-1 flex-col items-center space-y-8 pt-28 text-center'>
+          <H1 className='font-extrabold tracking-tighter max-w-lg'>
+            <Balancer>
+              Join the waitlist and transform your fitness productivity.
+            </Balancer>
+          </H1>
+          <Paragraph>
+            By signing up to our waitlist, you will be first in line to know
+            when we launch and receive early access.
+          </Paragraph>
+          {isComplete && (
+            <Alert>
+              <SparklesIcon className='h-6 w-6 pr-2' />
+              <AlertDescription>
+                <span>
+                  We sent you a magic link. Please check your email inbox.
+                </span>
+              </AlertDescription>
+            </Alert>
+          )}
+          {isRateLimited && (
+            <Alert>
+              <HandRaisedIcon className='h-6 w-6 pr-2' />
+              <AlertDescription>
+                <span>Whoa, there. Please slow down.</span>
+              </AlertDescription>
+            </Alert>
+          )}
+          <div className='flex w-full max-w-lg flex-col gap-4 text-left'>
+            <Label htmlFor='email'>Email</Label>
+            <Input
+              id='email'
+              type='email'
+              name='email'
+              ref={emailRef}
+              disabled={disabled}
+              readOnly={disabled}
+            />
+            <Label htmlFor='name'>Name</Label>
+            <Input
+              id='name'
+              type='text'
+              name='name'
+              ref={nameRef}
+              disabled={disabled}
+              readOnly={disabled}
+            />
+            <Button
+              onClick={submit}
+              className='block flex justify-center'
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <LoadingIcon className='w-6' />
+              ) : (
+                <span>
+                  Secure Your Spot
+                  <ArrowRightIcon className='inline-block h-6 pl-2' />
+                </span>
+              )}
+            </Button>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
 

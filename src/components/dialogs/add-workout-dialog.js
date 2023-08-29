@@ -38,11 +38,7 @@ export default function AddWorkoutDialog() {
           <Label htmlFor='workout-name'>Name this workout</Label>
         </div>
         <Input ref={nameRef} type='text' id='workout-name' required />
-        <Button
-          variant='primary'
-          disabled={mutation.isLoading}
-          onClick={() => submit()}
-        >
+        <Button disabled={mutation.isLoading} onClick={() => submit()}>
           {mutation.isLoading ? (
             <LoadingIcon />
           ) : (

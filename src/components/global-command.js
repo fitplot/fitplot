@@ -1,10 +1,13 @@
 import React from 'react';
 import {
   ArrowRightCircleIcon,
+  CheckCircleIcon,
+  MinusCircleIcon,
   PencilIcon,
   TrashIcon,
 } from '@heroicons/react/24/solid';
 import { useCommandState } from 'cmdk';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 
 import { modalId as DeleteSetsDialoglId } from '@/components/dialogs/delete-sets-dialog';
@@ -229,11 +232,11 @@ function WorkoutCommandList({ model, type, data }) {
       {action === 'status' && (
         <>
           <CommandItem onSelect={() => updateStatus(dayjs())}>
-            <PencilIcon className='h-4 w-4' />
+            <CheckCircleIcon className='h-4 w-4 text-success' />
             <span>Completed</span>
           </CommandItem>
           <CommandItem onSelect={() => updateStatus(null)}>
-            <PencilIcon className='h-4 w-4' />
+            <MinusCircleIcon className='h-4 w-4 text-warning' />
             <span>In Progress</span>
           </CommandItem>
         </>

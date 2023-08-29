@@ -29,8 +29,8 @@ function App({ Component, pageProps }) {
         <meta name='description' content='FitPlot' />
         <link rel='icon' href='/favicon.ico' />
         <meta name='author' content='FitPlot' />
-        {/* slate-50 */}
-        <meta name='theme-color' content='rgb(241 245 249)' />
+        {/* --primary */}
+        <meta name='theme-color' content='hsl(262.1 83.3% 57.8%)' />
         <meta
           name='viewport'
           content='width=device-width, height=device-height, initial-scale=1'

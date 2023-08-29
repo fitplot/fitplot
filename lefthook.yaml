@@ -5,8 +5,8 @@ pre-commit:
   parallel: true
   commands:
     format:
-      glob: '*.{js,json}'
+      glob: '*.{js,jsx,json}'
       run: 'npm exec prettier --write {staged_files} && git add {staged_files}'
     lint:
-      glob: '*.js'
-      run: 'npm exec eslint --cache --fix {staged_files} && git add {staged_files}'
+      glob: '*.{js,jsx}'
+      run: 'npm exec eslint --fix {staged_files} && git add {staged_files}'

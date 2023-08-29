@@ -35,7 +35,7 @@ export default function Welcome() {
             bgColor='bg-slate-800'
           />
         </fieldset>
-        <Button variant='primary' onClick={() => router.replace('/dashboard')}>
+        <Button onClick={() => router.replace('/dashboard')}>
           Open FitPlot
         </Button>
       </div>

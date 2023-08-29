@@ -8,8 +8,8 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { useWindowSize } from 'react-use';
 
+import { Lockup } from '@/components/brand';
 import { modalId as AddWorkoutDialogId } from '@/components/dialogs/add-workout-dialog';
-import { Lockup } from '@/components/logo';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { SheetContent } from '@/components/ui/sheet';
@@ -43,7 +43,7 @@ export default function SideBar({ user, close }) {
       <nav className='flex h-full flex-col pb-16 pt-8'>
         <SidebarTopControls user={user} close={close} />
         <MainMenu close={close} />
-        <div className='flex items-center gap-2 px-4 text-sm text-slate-400'>
+        <div className='flex items-center gap-2 px-4 text-sm text-muted-foreground'>
           <Cog8ToothIcon className='h-4 w-4' />
           <span>Build {getBuildId()}</span>
         </div>
@@ -61,7 +61,6 @@ function SidebarTopControls({ user, close }) {
       <ActiveUser user={user} close={close} />
       <Button
         size='sm'
-        variant='primary'
         className='justify-start gap-2'
         onClick={() => {
           addWorkoutModal.show();
@@ -88,12 +87,12 @@ function ActiveUser({ user, close }) {
       size='sm'
       variant='ghost'
       className={clsx('justify-start gap-2', {
-        'bg-slate-100 dark:bg-slate-800': active,
+        'bg-primary-foreground': active,
       })}
       onClick={close}
     >
       <Avatar className='h-6 w-6'>
-        <AvatarFallback className='bg-primary-500 text-xs text-white'>
+        <AvatarFallback className='bg-primary text-xs text-white'>
           {initial}
         </AvatarFallback>
       </Avatar>
@@ -137,7 +136,7 @@ function MainMenu({ close }) {
               close();
             }}
             className={clsx('justify-start gap-2', {
-              'bg-slate-100 dark:bg-slate-800': active,
+              'bg-accent': active,
             })}
           >
             {Icon && (

@@ -1,4 +1,4 @@
-import { Logo } from '@/components/logo';
+import { Logo } from '@/components/brand';
 import { cn } from '@/lib/utils';
 
 export default function LoadingIcon({ className }) {

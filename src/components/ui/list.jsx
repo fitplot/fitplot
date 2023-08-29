@@ -8,7 +8,7 @@ const List = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      'flex w-full flex-col divide-y divide-slate-100 overflow-auto text-sm',
+      'flex w-full flex-col divide-y divide-border overflow-auto text-sm',
       className,
     )}
     {...props}
@@ -20,7 +20,7 @@ const ListGroupLabel = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      'flex h-[44px] items-center gap-2 bg-slate-50 px-4 transition-colors dark:bg-slate-700',
+      'flex h-[44px] items-center gap-2 bg-accent px-4 transition-colors',
       className,
     )}
     {...props}
@@ -35,7 +35,7 @@ const ListItem = React.forwardRef(
       <Comp
         ref={ref}
         className={cn(
-          'flex h-[44px] items-center gap-2 px-4 transition-colors hover:bg-slate-100/50 focus:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-400 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800',
+          'flex h-[44px] items-center gap-2 px-4 transition-colors hover:bg-accent focus:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring data-[state=selected]:bg-accent',
           className,
         )}
         {...props}

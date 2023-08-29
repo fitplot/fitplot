@@ -1,5 +1,9 @@
 import React from 'react';
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import {
+  CheckCircleIcon,
+  MinusCircleIcon,
+  PencilSquareIcon,
+} from '@heroicons/react/24/outline';
 import {
   flexRender,
   getCoreRowModel,
@@ -56,7 +60,14 @@ export default function WorkoutsPage() {
         accessorFn: (original) =>
           Boolean(original.completedAt) ? 'Completed' : 'In Progress',
         cell: ({ row, getValue }) => (
-          <span>{row.depth === 0 ? getValue() : null}</span>
+          <>
+            {Boolean(row.original.completedAt) ? (
+              <CheckCircleIcon className='h-4 w-4 text-success' />
+            ) : (
+              <MinusCircleIcon className='h-4 w-4 text-warning' />
+            )}
+            {row.depth === 0 && <span>{getValue()}</span>}
+          </>
         ),
       },
       {
@@ -144,7 +155,6 @@ export default function WorkoutsPage() {
       <Navbar.RightContent>
         <Button
           size='sm'
-          variant='primary'
           className='items-center gap-2'
           onClick={() => addWorkoutDialog.show()}
         >

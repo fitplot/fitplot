@@ -1,68 +1,125 @@
 import React from 'react';
-import clsx from 'clsx';
+import { Slot } from '@radix-ui/react-slot';
+import { cva } from 'class-variance-authority';
 
-const FONT_SIZES = {
-  h1: 'text-4xl md:text-5xl',
-  h2: 'text-3xl md:text-4xl',
-  h3: 'text-2xl font-medium md:text-3xl',
-  h4: 'text-xl font-medium md:text-2xl',
-  h5: 'text-lg font-medium md:text-xl',
-  h6: 'text-lg font-medium',
+import { cn } from '@/lib/utils';
+
+const typographyVariants = cva('', {
+  variants: {
+    variant: {
+      default: '',
+      h1: 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl',
+      h2: 'mt-10 scroll-m-20 [article_>_&]:border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0',
+      h3: 'mt-8 scroll-m-20 text-2xl font-semibold tracking-tight',
+      h4: 'scroll-m-20 text-xl font-semibold tracking-tight',
+      p: 'leading-7 [&:not(:first-child)]:mt-6',
+      a: 'font-medium text-primary underline underline-offset-4',
+      blockquote: 'mt-6 border-l-2 pl-6 italic',
+      code: 'relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold',
+      lead: 'text-xl text-muted-foreground',
+      ul: 'my-6 ml-6 list-disc [&>li]:mt-2',
+      large: 'text-lg font-semibold',
+      small: 'text-sm font-medium leading-none',
+      muted: 'text-sm text-muted-foreground',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+const Typography = React.forwardRef(
+  ({ className, variant, as = 'span', asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : as;
+    return (
+      <Comp
+        className={cn(typographyVariants({ variant, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+Typography.displayName = 'Typography';
+
+const H1 = React.forwardRef((props, ref) => (
+  <Typography variant='h1' as='h1' {...props} ref={ref} />
+));
+H1.displayName = 'H1';
+
+const H2 = React.forwardRef((props, ref) => (
+  <Typography variant='h2' as='h2' {...props} ref={ref} />
+));
+H2.displayName = 'H2';
+
+const H3 = React.forwardRef((props, ref) => (
+  <Typography variant='h3' as='h3' {...props} ref={ref} />
+));
+H3.displayName = 'H3';
+
+const H4 = React.forwardRef((props, ref) => (
+  <Typography variant='h4' as='h4' {...props} ref={ref} />
+));
+H4.displayName = 'H4';
+
+const Paragraph = React.forwardRef((props, ref) => (
+  <Typography variant='p' as='p' {...props} ref={ref} />
+));
+Paragraph.displayName = 'Paragraph';
+
+const A = React.forwardRef((props, ref) => (
+  <Typography variant='a' as='a' {...props} ref={ref} />
+));
+A.displayName = 'A';
+
+const Blockquote = React.forwardRef((props, ref) => (
+  <Typography variant='blockquote' as='blockquote' {...props} ref={ref} />
+));
+Blockquote.displayName = 'Blockquote';
+
+const Code = React.forwardRef((props, ref) => (
+  <Typography variant='code' as='code' {...props} ref={ref} />
+));
+Code.displayName = 'Code';
+
+const Lead = React.forwardRef((props, ref) => (
+  <Typography variant='lead' as='p' {...props} ref={ref} />
+));
+Lead.displayName = 'Lead';
+
+const UL = React.forwardRef((props, ref) => (
+  <Typography variant='ul' as='ul' {...props} ref={ref} />
+));
+UL.displayName = 'UL';
+
+const Large = React.forwardRef((props, ref) => (
+  <Typography variant='large' {...props} ref={ref} />
+));
+Large.displayName = 'Large';
+
+const Small = React.forwardRef((props, ref) => (
+  <Typography variant='small' {...props} ref={ref} />
+));
+Small.displayName = 'Small';
+
+const Muted = React.forwardRef((props, ref) => (
+  <Typography variant='muted' {...props} ref={ref} />
+));
+Muted.displayName = 'Muted';
+
+export {
+  Typography,
+  H1,
+  H2,
+  H3,
+  H4,
+  Paragraph,
+  A,
+  Blockquote,
+  Code,
+  Lead,
+  UL,
+  Large,
+  Small,
+  Muted,
 };
-
-const TITLE_COLORS = {
-  primary: 'text-slate-800',
-  secondary: 'text-slate-400',
-};
-
-function Title({ variant = 'primary', size, as, className, ...props }) {
-  const Tag = as ?? size;
-  return (
-    <Tag
-      className={clsx(
-        'pb-2',
-        FONT_SIZES[size],
-        TITLE_COLORS[variant],
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-
-function H1(props) {
-  return <Title {...props} size='h1' />;
-}
-
-function H2(props) {
-  return <Title {...props} size='h2' />;
-}
-
-function H3(props) {
-  return <Title {...props} size='h3' />;
-}
-
-function H4(props) {
-  return <Title {...props} size='h4' />;
-}
-
-function H5(props) {
-  return <Title {...props} size='h5' />;
-}
-
-function H6(props) {
-  return <Title {...props} size='h6' />;
-}
-
-function Paragraph({ className, as = 'p', variant = 'default', ...props }) {
-  const variants = {
-    default: '',
-    prose: 'text-gray-500',
-  };
-  return React.createElement(as, {
-    className: clsx('pb-2 max-w-full text-lg', variants[variant], className),
-    ...props,
-  });
-}
-
-export { H1, H2, H3, H4, H5, H6, Paragraph };

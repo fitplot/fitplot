@@ -200,7 +200,6 @@ export default function WorkoutPage() {
           {!isCompleted && (
             <Button
               size='sm'
-              variant='primary'
               className='items-center gap-2'
               onClick={() => addSetsDialog.show({ workout })}
             >

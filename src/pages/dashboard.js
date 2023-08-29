@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import _ from 'lodash';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useIntersection } from 'react-use';
 
 import LoadingIcon from '@/components/loading-icon';
@@ -120,13 +119,13 @@ function CalendarBlock({ group }) {
     <div className='relative h-full w-10 shrink-0 md:w-16'>
       <div
         className={clsx('absolute bottom-[4px] right-0 top-[5px] w-px', {
-          'bg-gray-200': !group.active,
-          'bg-primary-500': group.active,
+          'bg-border': !group.active,
+          'bg-primary': group.active,
         })}
       />
       <div className='absolute bottom-[-20px] right-[-4px] flex h-[40px] items-center justify-end'>
         {group.date && (
-          <span className='text-right text-xs text-slate-500'>
+          <span className='text-right text-xs text-muted-foreground'>
             {dayjs(group.date).format('MMM')}
             <br />
             {dayjs(group.date).format('D')}
@@ -142,7 +141,7 @@ function TimelinePoint({ active }) {
   return (
     <div
       className={clsx('ml-2 h-[9px] w-[9px] rounded-full border md:ml-8', {
-        'border-primary-500 bg-primary-500': active,
+        'border-primary bg-primary': active,
       })}
     />
   );
@@ -160,8 +159,8 @@ function Summary({ group }) {
       <div className='flex items-center gap-2 py-6 md:ml-10'>
         <Icon
           className={clsx('inline-block h-6 w-6', {
-            'text-slate-300': !group.active,
-            'text-primary-500': group.active,
+            'text-muted-foreground': !group.active,
+            'text-primary': group.active,
           })}
         />
         <span className='flex-1 font-medium'>Week {group.week}</span>
@@ -213,8 +212,8 @@ function WeekdayDot({ count }) {
   return (
     <div
       className={clsx('rounded-full', {
-        'h-[6px] w-[6px] bg-slate-200': count === 0,
-        'h-[9px] w-[9px] bg-emerald-500': count > 0,
+        'h-[6px] w-[6px] bg-muted-foreground/20': count === 0,
+        'h-[9px] w-[9px] bg-success': count > 0,
       })}
     />
   );

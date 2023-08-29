@@ -118,7 +118,6 @@ export default function SignIn() {
           )}
           <Button
             className='flex items-center justify-center'
-            variant='primary'
             disabled={disabled}
             onClick={() => submit()}
           >

@@ -19,7 +19,7 @@ export default function SelectionPopover({ type }) {
     <Popover open={selection.length > 0}>
       <PopoverContent className='flex w-72 flex-col items-center gap-4'>
         <div>
-          <span className='text-sm text-slate-400'>
+          <span className='text-sm text-muted-foreground'>
             {selection.length} {type || 'item'}(s) selected.
           </span>
         </div>
