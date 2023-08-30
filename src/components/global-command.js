@@ -34,6 +34,19 @@ export default function GlobalCommand() {
 
   const [search, setSearch] = React.useState('');
 
+  // Toggle the menu when ⌘K is pressed
+  React.useEffect(() => {
+    const keydown = (e) => {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        model.toggle();
+      }
+    };
+
+    document.addEventListener('keydown', keydown);
+    return () => document.removeEventListener('keydown', keydown);
+  }, [model]);
+
   return (
     <>
       <CommandDialog
@@ -45,7 +58,7 @@ export default function GlobalCommand() {
       >
         {data && Array.isArray(data) && (
           <div className='p-2'>
-            <Badge variant='secondary'>
+            <Badge variant='outline'>
               {data.length} {type}(s)
             </Badge>
           </div>
