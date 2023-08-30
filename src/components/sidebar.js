@@ -13,7 +13,7 @@ import { modalId as AddWorkoutDialogId } from '@/components/dialogs/add-workout-
 import { modalId as GlobalCommandId } from '@/components/global-command';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import Kbd from '@/components/ui/kbd';
+import { Kbd } from '@/components/ui/kbd';
 import { SheetContent } from '@/components/ui/sheet';
 import { useOpenable } from '@/hooks/openable';
 import { getBuildId } from '@/lib/server';

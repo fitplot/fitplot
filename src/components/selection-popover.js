@@ -24,7 +24,7 @@ export default function SelectionPopover({ type }) {
           </span>
         </div>
         <Button
-          variant='secondary'
+          variant='outline'
           className='flex w-full gap-2'
           onClick={() => globalCommand.show({ type, data: selection })}
         >

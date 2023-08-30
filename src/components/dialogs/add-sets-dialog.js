@@ -36,9 +36,11 @@ import { useOpenableModel } from '../../hooks/openable';
 
 export const AddSetsDialogId = 'AddSetsDialog';
 
+// todo: how much of this can be derived state instead of tracked state?
 const stateAtom = atomWithReset({
   search: '',
   exercise: null,
+  fitcode: '',
   unit: null,
   sets: null,
   isExercisePopoverOpen: false,
@@ -51,6 +53,10 @@ const searchAtom = atom(
 const exerciseAtom = atom(
   (get) => get(stateAtom).exercise,
   (get, set, exercise) => set(stateAtom, (state) => ({ ...state, exercise })),
+);
+const fitcodeAtom = atom(
+  (get) => get(stateAtom).fitcode,
+  (get, set, fitcode) => set(stateAtom, (state) => ({ ...state, fitcode })),
 );
 const unitAtom = atom(
   (get) => get(stateAtom).unit,
@@ -73,12 +79,15 @@ const unitPopoverAtom = atom(
 
 export default function AddSetsDialog() {
   const model = useOpenableModel(AddSetsDialogId);
-  const data = model.data;
 
-  const workout = React.useMemo(() => data && data.workout, [data]);
+  const workout = React.useMemo(
+    () => model.data && model.data.workout,
+    [model.data],
+  );
 
   const [search, setSearch] = useAtom(searchAtom);
   const [exercise, setExercise] = useAtom(exerciseAtom);
+  const [rawFitcode, setRawFitcode] = useAtom(fitcodeAtom);
   const [unit, setUnit] = useAtom(unitAtom);
   const [sets, setSets] = useAtom(setsAtom);
   const [isExercisePopoverOpen, setIsExercisePopoverOpen] =
@@ -86,14 +95,15 @@ export default function AddSetsDialog() {
   const [isUnitPopoverOpen, setIsUnitPopoverOpen] = useAtom(unitPopoverAtom);
   const reset = useResetAtom(stateAtom);
 
-  const fitcodeInputRef = React.useRef(null);
+  const fitcodeRef = React.useRef();
 
   const toggleWithReset = React.useCallback(
     (value = false) => {
       if (!value) {
-        model.toggle(false);
         reset();
       }
+
+      model.toggle(value);
     },
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
     [model.toggle, reset],
@@ -109,13 +119,17 @@ export default function AddSetsDialog() {
   const createSetsMutation = useCreateSets();
 
   React.useEffect(() => {
-    if (units && units.length > 0)
+    if (units && units.length > 0 && model.open) {
       setUnit(units.find(({ delimiter }) => delimiter === 'lbs') || units[0]);
-  }, [setUnit, units]);
+    }
+  }, [setUnit, units, model.open]);
 
   React.useEffect(() => {
-    if (data && data.exercise) setExercise(data.exercise);
-  }, [setExercise, data]);
+    if (model.open && model.data && model.data.exercise) {
+      setExercise(model.data.exercise);
+      console.log('selected default model exercise:', model.data.exercise);
+    }
+  }, [setExercise, model.data, model.open]);
 
   const onAddExercise = async (name) => {
     const exercise = await createExerciseMutation.mutateAsync({
@@ -126,15 +140,15 @@ export default function AddSetsDialog() {
   };
 
   const onSelectExercise = (exercise) => {
+    console.log('selected exercise:', exercise);
     setExercise(exercise);
     setIsExercisePopoverOpen(false);
-    preview();
   };
 
   const onSelectUnit = (unit) => {
+    console.log('selected unit:', unit);
     setUnit(unit);
     setIsUnitPopoverOpen(false);
-    preview();
   };
 
   const previousFitcode = React.useMemo(() => {
@@ -143,28 +157,24 @@ export default function AddSetsDialog() {
     return fitcode.from(previousSets);
   }, [previousSets]);
 
-  const preview = React.useCallback(() => {
-    const rawInput = fitcodeInputRef.current.value;
+  // Live preview
+  React.useEffect(() => {
+    if (!Boolean(workout)) return;
+    if (!Boolean(exercise)) return;
+    if (!Boolean(unit)) return;
+
+    if (!Boolean(rawFitcode)) return;
+    const code = rawFitcode.trim();
+    if (!Boolean(code)) return;
+
     const partial = {
       workoutId: workout && workout.id,
       exerciseId: exercise && exercise.id,
       unitId: unit && unit.id,
     };
-    console.log(partial);
-    setSets(fitcode(rawInput.trim(), partial));
-  }, [setSets, workout, exercise, unit]);
 
-  const onChange = React.useCallback(
-    (e) => _.throttle(preview, 100, { leading: false })(e),
-    [preview],
-  );
-
-  const prefill = React.useCallback(() => {
-    if (fitcodeInputRef.current) {
-      fitcodeInputRef.current.value = previousFitcode;
-      preview();
-    }
-  }, [previousFitcode, preview]);
+    setSets(fitcode(code, partial));
+  }, [setSets, rawFitcode, workout, exercise, unit]);
 
   const submit = React.useCallback(async () => {
     await createSetsMutation.mutateAsync(sets);
@@ -241,11 +251,13 @@ export default function AddSetsDialog() {
         <Label htmlFor='fitcode'>Type your FitCode™</Label>
         <div className='flex gap-2'>
           <Input
-            ref={fitcodeInputRef}
             id='fitcode'
             type='text'
             placeholder={previousFitcode || '2x5@185'}
-            onChange={onChange}
+            ref={fitcodeRef}
+            onChange={_.debounce((e) => setRawFitcode(e.target.value), 50, {
+              maxWait: 50,
+            })}
           />
           <Popover open={isUnitPopoverOpen} onOpenChange={setIsUnitPopoverOpen}>
             <PopoverTrigger asChild>
@@ -293,8 +305,12 @@ export default function AddSetsDialog() {
               </AlertDescription>
               <Button
                 className='flex w-full'
+                variant='outline'
                 size='sm'
-                onClick={() => prefill()}
+                onClick={() =>
+                  fitcodeRef.current &&
+                  (fitcodeRef.current.value = previousFitcode)
+                }
               >
                 <span className='text-sm'>Start from here</span>
               </Button>
@@ -312,7 +328,7 @@ export default function AddSetsDialog() {
                   {sets.map((x, index) => (
                     <ListItem key={index}>
                       <span>{fitcode.from(x)}</span>
-                      {x.amount && unit && <span>{unit.name}</span>}
+                      {x.amount && unit && <span>{unit.delimiter}</span>}
                     </ListItem>
                   ))}
                 </List>

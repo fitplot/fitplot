@@ -160,7 +160,6 @@ export default function WorkoutPage() {
     },
     enableSubRowSelection: true,
     groupedColumnMode: false,
-    debugAll: process.env.NODE_ENV === 'development',
   });
 
   React.useEffect(() => {
