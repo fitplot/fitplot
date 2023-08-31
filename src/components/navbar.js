@@ -224,7 +224,7 @@ export function InAppNavbar() {
       {isCollapsed && (
         <SheetTrigger asChild>
           <Button variant='ghost'>
-            <Bars2Icon className='h-4 w-4' />
+            <Bars2Icon className='h-6 w-6' />
           </Button>
         </SheetTrigger>
       )}

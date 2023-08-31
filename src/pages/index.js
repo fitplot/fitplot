@@ -53,7 +53,7 @@ export default function Home({ user }) {
   return (
     <>
       <Head>
-        <title>FitPlot | Notetaking build for fitness.</title>
+        <title>FitPlot | Notetaking built for fitness.</title>
       </Head>
       <div className='flex flex-1 flex-col gap-20 md:gap-36 [&>*]:pb-28 [&>*]:pt-16'>
         <header className='flex flex-col items-center justify-center gap-6 text-center pt-28'>
