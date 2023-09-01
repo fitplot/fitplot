@@ -1,11 +1,15 @@
+import React from 'react';
 import { ArrowDownIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
 import dayjs from 'dayjs';
 import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useMouseHovered } from 'react-use';
 import Balancer from 'react-wrap-balancer';
 
 import { MarketingLayout } from '@/components/layouts';
-import { H1, H2, Lead, Paragraph } from '@/components/typography';
+import { H1, H2, Lead, Paragraph, Typography } from '@/components/typography';
 import {
   Accordion,
   AccordionContent,
@@ -14,55 +18,23 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import withUser from '@/lib/with-user';
 
 export default function Home({ user }) {
-  const features = [
-    {
-      title: 'Log Your Workouts',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      className: 'md:col-span-2',
-    },
-    {
-      title: 'Data is Progress',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      className: 'md:col-span-3',
-    },
-    {
-      title: 'Progressive Overload',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      className: 'md:col-span-2 md:row-span-2',
-    },
-    {
-      title: 'Open Source',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      className: 'md:col-span-3',
-    },
-    {
-      title: 'Data Driven',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      className: 'md:col-span-2',
-    },
-  ];
-
   return (
     <>
       <Head>
         <title>FitPlot | Notetaking built for fitness.</title>
       </Head>
       <div className='flex flex-1 flex-col gap-20 md:gap-36 [&>*]:pb-28 [&>*]:pt-16'>
-        <header className='flex flex-col items-center justify-center gap-6 text-center pt-28'>
+        <header className='-mx-4 px-4 flex flex-col items-center justify-center gap-6 text-center pt-28 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,_hsl(var(--primary)_/_30%)_0,_transparent_100%)]'>
           <Button
             variant='outline'
             href='https://github.com/fitplot/fitplot'
             className='rounded-full leading-loose gap-2'
           >
-            Star us on GitHub
+            FitPlot is open source. Star us on GitHub
             <StarIcon className='w-4 h-4 text-yellow-400' />
           </Button>
           <H2 className='text-6xl font-extrabold tracking-tighter md:text-7xl'>
@@ -76,7 +48,7 @@ export default function Home({ user }) {
               Never leave progress on the table. Track your fitness journey.
             </Balancer>
           </Lead>
-          <div className='flex w-full flex-col gap-4 md:flex-row md:justify-center'>
+          <div className='flex w-full flex-col gap-4 sm:flex-row sm:justify-center'>
             <Button
               size='lg'
               variant='secondary'
@@ -95,6 +67,32 @@ export default function Home({ user }) {
               <ArrowRightIcon className='w-4' />
             </Button>
           </div>
+          <div className="w-full flex justify-center gap-4 pt-20 px-20 flex-col md:flex-row relative before:content-[''] before:absolute before:top-[-20%] before:bottom-[-20%] before:w-full before:bg-[radial-gradient(ellipse_60%_80%_at_center,_hsl(var(--secondary)_/_30%)_20%,_transparent_60%)] before:overflow-visible before:z-[-1]">
+            <Card className='overflow-hidden shadow-xl'>
+              <Image
+                width='1280'
+                height='720'
+                src='/dashboard-desktop.png'
+                alt='A workout and its exercises.'
+                className='select-none pointer-events-none'
+                quality={100}
+                priority
+              />
+            </Card>
+            <div className='absolute inset-0 grid grid-cols-12'>
+              <Phone className='col-start-8 col-span-4 self-end translate-y-8'>
+                <Image
+                  width='264'
+                  height='533'
+                  src='/workout-mobile.png'
+                  alt='A workout and its exercises.'
+                  className='select-none pointer-events-none'
+                  quality={100}
+                  priority
+                />
+              </Phone>
+            </div>
+          </div>
         </header>
         <section
           id='features'
@@ -106,10 +104,85 @@ export default function Home({ user }) {
           <Lead className='text-center'>
             Log your workouts and keep a pulse on progress.
           </Lead>
-          <div className='grid grid-cols-1 gap-8 lg:grid-cols-7 lg:grid-rows-2'>
-            {features.map((feature) => (
-              <HomeFeature key={feature.title} {...feature} />
-            ))}
+          <div className='grid grid-cols-1 gap-8 lg:grid-cols-2 lg:grid-rows-2'>
+            <HomeFeature title='Track progress' className='relative group'>
+              <Paragraph className='w-3/4'>
+                Taking notes in the gym is a no-brainer. How can you brag about
+                how far you&apos;ve come if
+                <em>you don&apos;t know how far you&apos;ve come</em>? Write
+                that shit down.
+              </Paragraph>
+              <Phone className='absolute top-[50%] right-2 transition-all ease-out duration-300 translate-y-[-50%] translate-x-[50%] group-hover:translate-x-0'>
+                <Image
+                  width='264'
+                  height='533'
+                  src='/workouts-mobile.png'
+                  alt='A workout and its exercises.'
+                  className='select-none pointer-events-none'
+                  quality={100}
+                />
+              </Phone>
+            </HomeFeature>
+            <HomeFeature
+              title='Save time, use FitCode&trade;'
+              className='relative group'
+            >
+              <Paragraph>
+                FitCode&trade; is shorthand; take notes the same way you would
+                with pen and paper and watch your notes autofill. We keep it
+                simple: no table cells, no rows, it doesn&apos;t take a dozen
+                &quot;taps&quot; to jot down the next step of your workout.
+              </Paragraph>
+              <div className='absolute w-[512px] left-[50%] transition-all translate-x-[-50%] bottom-[-50%] group-hover:-bottom-20'>
+                <Image
+                  width='512'
+                  height='512'
+                  src='/add-exercise-desktop.png'
+                  alt='A workout and its exercises.'
+                  className='rounded-lg overflow-hidden select-none pointer-events-none'
+                  quality={100}
+                />
+              </div>
+            </HomeFeature>
+            <HomeFeature title='Progressive Overload'>
+              <div className='flex flex-col gap-12 items-center'>
+                <Paragraph>
+                  FitPlot is designed to help you practice Progressive Overload,
+                  a core axiom of the{' '}
+                  <Typography variant='a' asChild>
+                    <Link href='/method'>FitPlot Method</Link>
+                  </Typography>
+                  . Progressive Overload means you make progress every time you
+                  step into your fitness routine. Another rep, another pound,
+                  another inch, another second off your time.
+                </Paragraph>
+                <Image
+                  width='462'
+                  height='116'
+                  src='/progressive-overload-desktop.png'
+                  alt='A workout and its exercises.'
+                  className='rounded-lg overflow-hidden select-none pointer-events-none'
+                  quality={100}
+                />
+              </div>
+            </HomeFeature>
+            <HomeFeature title='Build momentum' className='group relative'>
+              <Paragraph className='w-3/4'>
+                Visualize your workout routine. Nothing feels better than seeing
+                your progress over time. Weeks, months, even a year in, see just
+                how far you&apos;ve come.
+              </Paragraph>
+              <Phone className='absolute top-[50%] right-2 transition-all ease-out duration-300 translate-y-[-50%] translate-x-[50%] group-hover:translate-x-0'>
+                <Image
+                  width='264'
+                  height='533'
+                  src='/dashboard-mobile.png'
+                  alt='A workout and its exercises.'
+                  className='select-none pointer-events-none'
+                  quality={100}
+                />
+              </Phone>
+            </HomeFeature>
           </div>
         </section>
         <section className='container mx-auto flex flex-col items-center gap-6'>
@@ -159,26 +232,37 @@ export default function Home({ user }) {
           </H1>
           <Accordion className='w-full md:mx-auto md:max-w-xl'>
             <AccordionItem value='item-1'>
-              <AccordionTrigger>FAQ One</AccordionTrigger>
+              <AccordionTrigger>When is Early Access?</AccordionTrigger>
               <AccordionContent>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                FitPlot will be available to Early Access members early 2024.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value='item-2'>
-              <AccordionTrigger>FAQ Two</AccordionTrigger>
+              <AccordionTrigger>How much will FitPlot cost?</AccordionTrigger>
               <AccordionContent>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Get started for free. Play around with it first. Pay for
+                insights, add AI-based progressive overload coaching, and add
+                your team later.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value='item-3'>
-              <AccordionTrigger>FAQ Three</AccordionTrigger>
+              <AccordionTrigger>
+                What does it mean that FitPlot is open source?
+              </AccordionTrigger>
               <AccordionContent>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                We have a passion for technology and really hope to inspire
+                others. Most of the bits and bytes that make up FitPlot is open
+                source - available for the community to explore and learn from.
+                although not open contribution. The web needs more awesome open
+                source examples.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
         </section>
-        <section id='waitlist'>
+        <section
+          id='waitlist'
+          className='-mx-4 px-4 bg-gradient-to-br from-primary/30 to-secondary/30'
+        >
           <div className='container mx-auto flex flex-col gap-6'>
             <H1 className='text-5xl font-extrabold tracking-tighter md:text-6xl'>
               <Balancer>Early Access</Balancer>
@@ -192,18 +276,21 @@ export default function Home({ user }) {
             </Paragraph>
           </div>
         </section>
-        <section>
-          <H1
-            as='h2'
-            className='mt-36 text-center text-4xl font-extrabold tracking-tighter md:text-6xl'
+        <section className='flex flex-col gap-7 items-center'>
+          <Typography
+            as='h3'
+            variant='h1'
+            className='text-center text-4xl font-extrabold tracking-tighter md:text-6xl'
           >
-            {/* TODO: rotate text: `on the court.` `at the track.` `at the finish line.` */}
             See you in the gym.
-            <br />
-            <span role='img' aria-label='face blowing a kiss'>
-              💪
-            </span>
-          </H1>
+          </Typography>
+          <span
+            className='text-4xl md:text-6xl'
+            role='img'
+            aria-label='flexing arm'
+          >
+            💪
+          </span>
         </section>
         <footer className='text-center'>
           <Paragraph>
@@ -223,19 +310,49 @@ export default function Home({ user }) {
   );
 }
 
-function HomeFeature({ title, className, description = '' }) {
+function HomeFeature({ title, className, children }) {
+  const ref = React.useRef(null);
+  const { elX, elY } = useMouseHovered(ref, {
+    whenHovered: true,
+  });
+
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
-      <CardContent></CardContent>
-      {description && (
-        <CardContent>
-          <Paragraph className='text-sm leading-loose'>{description}</Paragraph>
-        </CardContent>
+    <Card
+      className={cn(
+        "aspect-square bg-transparent border-none relative before:pointer-events-none before:select-none before:content-[''] before:z-[-1] before:absolute before:inset-[-1px] before:rounded-lg before:opacity-0 before:hover:opacity-100 transition-opacity duration-300 before:bg-[radial-gradient(1000px_circle_at_var(--x)_var(--y),_hsl(var(--primary)_/_50%)_0%,_hsl(var(--secondary)_/_50%)_25%,_transparent_80%)]",
+        className,
       )}
+      ref={ref}
+      style={{ '--x': `${elX}px`, '--y': `${elY}px` }}
+    >
+      <div className='relative rounded-lg w-full h-full overflow-hidden bg-card/50 border hover:border-transparent'>
+        {title && (
+          <CardHeader>
+            <CardTitle>{title}</CardTitle>
+          </CardHeader>
+        )}
+        <CardContent></CardContent>
+
+        <CardContent>{children}</CardContent>
+      </div>
     </Card>
+  );
+}
+
+function Phone({ className, children }) {
+  return (
+    <div
+      className={cn(
+        'flex [--phone-bezel-thickness:8px] [--phone-border-radius:36px]',
+        className,
+      )}
+    >
+      <div className='[padding:var(--phone-bezel-thickness)] bg-[#f6f9fc] [border-radius:var(--phone-border-radius)] shadow-[inset_0_2px_4px_0_rgb(0_0_0_/_0.05),0_20px_25px_-5px_rgb(0_0_0_/_0.1),_0_8px_10px_-6px_rgb(0_0_0_/_0.1)]'>
+        <Card className='overflow-hidden border-none [border-radius:calc(var(--phone-border-radius)_-_var(--phone-bezel-thickness))]'>
+          {children}
+        </Card>
+      </div>
+    </div>
   );
 }
 

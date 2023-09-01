@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
+  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
@@ -27,10 +28,10 @@ titleAtom.debugLabel = 'NavbarTitleAtom';
 
 export function MarketingNavbar({ user }) {
   return (
-    <header className='fixed left-0 right-0 top-0 [--header-height:48px]'>
+    <header className='z-40 fixed left-0 right-0 top-0 [--header-height:48px]'>
       <div className='after:absolute after:inset-x-0 after:-bottom-1/2 after:top-[-1px] after:backdrop-blur-md after:[mask-image:linear-gradient(to_bottom,black_var(--header-height),transparent)]' />
       <nav>
-        <div className='container px-1 md:px-[2rem] relative flex gap-2 mx-auto items-center border-b [height:var(--header-height)]'>
+        <div className='container px-1 md:px-[2rem] relative flex gap-8 mx-auto items-center border-b [height:var(--header-height)]'>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant='ghost' className='md:hidden'>
@@ -58,7 +59,7 @@ export function MarketingNavbar({ user }) {
           <Link href='/'>
             <Lockup className='h-[1.5em] inline-flex' />
           </Link>
-          <div className='md:flex md:justify-center md:flex-1 hidden'>
+          <div className='md:flex md:flex-1 hidden'>
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -69,12 +70,12 @@ export function MarketingNavbar({ user }) {
                         <NavigationMenuLink asChild>
                           <Link
                             href='/'
-                            className='flex h-full w-full select-none flex-col gap-4 justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md'
+                            className='flex h-full w-full select-none flex-col gap-4 justify-end rounded-md bg-gradient-to-br from-primary/30 to-secondary/30 p-6 no-underline outline-none focus:shadow-md'
                           >
                             <div className='text-lg font-medium'>
                               <VerticalLockup className='inline-flex w-12' />
                             </div>
-                            <p className='text-sm leading-tight text-muted-foreground'>
+                            <p className='text-sm leading-tight'>
                               Notetaking built for fitness. Log your workouts
                               and keep a pulse on progress.
                             </p>
@@ -124,6 +125,8 @@ export function MarketingNavbar({ user }) {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+
+                <NavigationMenuIndicator />
               </NavigationMenuList>
             </NavigationMenu>
           </div>
