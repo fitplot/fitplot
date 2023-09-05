@@ -35,8 +35,6 @@ ENV GITHUB_SHA=$GITHUB_SHA
 ARG SERVICE_URL
 ENV SERVICE_URL=$SERVICE_URL
 
-ENV PORT 3000
-
 WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules
@@ -60,7 +58,5 @@ COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/package-lock.json /app/package-lock.json
 
 ADD . .
-
-EXPOSE 3000
 
 CMD [ "npm", "run", "start" ]
