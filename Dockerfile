@@ -32,6 +32,9 @@ FROM base as build
 ARG GITHUB_SHA
 ENV GITHUB_SHA=$GITHUB_SHA
 
+ARG API_HOST
+ENV API_HOST=$API_HOST
+
 WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules

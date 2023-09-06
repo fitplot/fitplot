@@ -5,10 +5,7 @@ import queryClient from '../lib/query-client';
 export function useWorkout(workoutId, options = {}) {
   return useQuery(
     ['workout', workoutId],
-    () =>
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/workout/${workoutId}`,
-      ).then((res) => res.json()),
+    () => fetch(`/api/workout/${workoutId}`).then((res) => res.json()),
     { ...options, enabled: Boolean(workoutId) && (options.enabled ?? true) },
   );
 }
@@ -16,7 +13,7 @@ export function useWorkout(workoutId, options = {}) {
 export function useCreateWorkout(options = {}) {
   return useMutation(
     (workout) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/workout`, {
+      fetch(`/api/workout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +37,7 @@ export function useCreateWorkout(options = {}) {
 export function useUpdateWorkout(options = {}) {
   return useMutation(
     (workout) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/workout/${workout.id}`, {
+      fetch(`/api/workout/${workout.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +61,7 @@ export function useUpdateWorkout(options = {}) {
 export function useDeleteWorkout(options = {}) {
   return useMutation(
     (workout) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/workout/${workout.id}`, {
+      fetch(`/api/workout/${workout.id}`, {
         method: 'DELETE',
       }).then((res) => res.json()),
     {

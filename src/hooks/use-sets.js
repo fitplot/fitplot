@@ -5,10 +5,7 @@ import queryClient from '../lib/query-client';
 export function useSets(workoutId, options = {}) {
   return useQuery(
     ['set', workoutId],
-    () =>
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/workout/${workoutId}/sets`,
-      ).then((res) => res.json()),
+    () => fetch(`/api/workout/${workoutId}/sets`).then((res) => res.json()),
     { ...options, enabled: Boolean(workoutId) && (options.enabled ?? true) },
   );
 }
@@ -22,7 +19,7 @@ export function usePreviousSetsForExercise(
     ['set', 'previous', exerciseId, workoutId],
     () =>
       fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/exercise/${exerciseId}/sets/previous?workoutId=${workoutId}`,
+        `/api/exercise/${exerciseId}/sets/previous?workoutId=${workoutId}`,
       ).then((res) => res.json()),
     {
       ...options,
@@ -35,7 +32,7 @@ export function usePreviousSetsForExercise(
 export function useCreateSets(options = {}) {
   return useMutation(
     (sets) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/sets`, {
+      fetch(`/api/sets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +55,7 @@ export function useCreateSets(options = {}) {
 export function useUpdateSet(options = {}) {
   return useMutation(
     (set) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/workout/set/${set.id}`, {
+      fetch(`/api/workout/set/${set.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +78,7 @@ export function useUpdateSet(options = {}) {
 export function useDeleteSet(options = {}) {
   return useMutation(
     (set) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/workout/set/${set.id}`, {
+      fetch(`/api/workout/set/${set.id}`, {
         method: 'DELETE',
       }).then((res) => res.json()),
     {

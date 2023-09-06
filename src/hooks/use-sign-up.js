@@ -4,7 +4,7 @@ export default function useSignUp(options = {}) {
   return useMutation(
     ['sign-up'],
     ({ email, firstName }) =>
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/sign-up`, {
+      fetch(`/api/sign-up`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
