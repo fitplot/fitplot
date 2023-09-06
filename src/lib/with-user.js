@@ -15,7 +15,8 @@ export default function withUser({ required = true } = {}) {
       return {
         props: { user },
       };
-    } catch {
+    } catch (error) {
+      console.error(error, `API_HOST=${process.env.API_HOST}`);
       return {
         notFound: true,
       };
