@@ -22,6 +22,18 @@ const nextConfig = {
     process.env.GITHUB_SHA ? process.env.GITHUB_SHA.slice(0, 7) : 'development',
 };
 
+// Allow running the API locally in development without the api gateway.
+if (process.env.NODE_ENV !== 'production') {
+  nextConfig.rewrites = async () => {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `http://localhost:3030/api/:path*`,
+      },
+    ];
+  };
+}
+
 const sentryWebpackOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
