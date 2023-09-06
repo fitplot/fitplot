@@ -6,6 +6,9 @@ ENV NODE_ENV production
 ENV CI=true
 ENV LEFTHOOK=0
 
+ARG API_HOST
+ENV API_HOST=$API_HOST
+
 # Install open ssl and certs for Sentry CLI
 RUN apt-get update && apt-get install -y openssl ca-certificates
 
@@ -31,9 +34,6 @@ FROM base as build
 
 ARG GITHUB_SHA
 ENV GITHUB_SHA=$GITHUB_SHA
-
-ARG API_HOST
-ENV API_HOST=$API_HOST
 
 WORKDIR /app
 
