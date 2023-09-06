@@ -7,9 +7,11 @@ export function useSearchExercises(query = '', options = {}) {
     () => {
       const search = new URLSearchParams();
       if (query) search.set('query', query);
-      return fetch(`/api/exercises?${search.toString()}`).then((res) =>
-        res.json(),
-      );
+      return fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_HOST
+        }/api/exercises?${search.toString()}`,
+      ).then((res) => res.json());
     },
     {
       ...options,
@@ -25,9 +27,11 @@ export function useExercises({ take } = {}, options = {}) {
       const search = new URLSearchParams();
       if (cursor) search.set('cursor', cursor);
       if (take) search.set('take', take);
-      return fetch(`/api/exercises?${search.toString()}`).then((res) =>
-        res.json(),
-      );
+      return fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_HOST
+        }/api/exercises?${search.toString()}`,
+      ).then((res) => res.json());
     },
     {
       ...options,

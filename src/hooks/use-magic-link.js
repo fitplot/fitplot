@@ -6,7 +6,10 @@ export default function useMagicLink(options = {}) {
 
   return useMutation(
     ['magic-link'],
-    ({ dust }) => fetch(`/api/magic?dust=${dust}`, { method: 'POST' }),
+    ({ dust }) =>
+      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/magic?dust=${dust}`, {
+        method: 'POST',
+      }),
     {
       ...options,
       onSuccess: async (magicLink) => {

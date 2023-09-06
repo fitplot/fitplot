@@ -5,7 +5,10 @@ import queryClient from '../lib/query-client';
 export function useExercise(exerciseId, options = {}) {
   return useQuery(
     ['exercise', exerciseId],
-    () => fetch(`/api/exercise/${exerciseId}`).then((res) => res.json()),
+    () =>
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/exercise/${exerciseId}`,
+      ).then((res) => res.json()),
     { ...options, enabled: Boolean(exerciseId) && (options.enabled ?? true) },
   );
 }
@@ -13,7 +16,7 @@ export function useExercise(exerciseId, options = {}) {
 export function useUpdateExercise(options = {}) {
   return useMutation(
     (exercise) =>
-      fetch(`/api/exercise/${exercise.id}`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/exercise/${exercise.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -40,13 +43,18 @@ export function useDeleteExercise(options = {}) {
       const params = new URLSearchParams();
       if (reassignTo) params.append('reassignTo', reassignTo);
 
-      return fetch(`/api/exercise/${exercise.id}?${params.toString()}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
+      return fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/exercise/${
+          exercise.id
+        }?${params.toString()}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(exercise),
         },
-        body: JSON.stringify(exercise),
-      }).then((response) => (response.ok ? response.json() : response));
+      ).then((response) => (response.ok ? response.json() : response));
     },
     {
       ...options,
@@ -65,7 +73,7 @@ export function useDeleteExercise(options = {}) {
 export function useCreateExercise(options = {}) {
   return useMutation(
     (exercise) =>
-      fetch('/api/exercise', {
+      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/exercise`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

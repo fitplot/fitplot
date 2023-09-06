@@ -20,12 +20,6 @@ const nextConfig = {
    */
   generateBuildId: async () =>
     process.env.GITHUB_SHA ? process.env.GITHUB_SHA.slice(0, 7) : 'development',
-  rewrites: async () => [
-    {
-      source: '/api/:path*',
-      destination: `${process.env.SERVICE_URL}/api/:path*`,
-    },
-  ],
 };
 
 const sentryWebpackOptions = {

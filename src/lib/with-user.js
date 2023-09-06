@@ -24,7 +24,7 @@ export default function withUser({ required = true } = {}) {
 }
 
 async function getUser({ req }) {
-  const user = await fetch(`${process.env.SERVICE_URL}/api/me`, {
+  const user = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
     headers: {
       Cookie: req.headers.cookie,
     },

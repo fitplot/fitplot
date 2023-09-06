@@ -7,9 +7,9 @@ export default function useWorkouts(options = {}) {
     ({ pageParam: cursor }) => {
       const search = new URLSearchParams();
       if (cursor) search.set('cursor', cursor);
-      return fetch(`/api/workouts?${search.toString()}`).then((res) =>
-        res.json(),
-      );
+      return fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/workouts?${search.toString()}`,
+      ).then((res) => res.json());
     },
     {
       ...options,

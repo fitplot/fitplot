@@ -7,7 +7,7 @@ export default function useUser(options = {}) {
   return useQuery(
     ['user'],
     () =>
-      fetch('/api/me').then((response) => {
+      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/me`).then((response) => {
         if (response.ok) return response.data;
         throw response;
       }),

@@ -32,15 +32,14 @@ FROM base as build
 ARG GITHUB_SHA
 ENV GITHUB_SHA=$GITHUB_SHA
 
-ARG SERVICE_URL
-ENV SERVICE_URL=$SERVICE_URL
-
 WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules
 
 # app code changes all the time
 ADD . .
+
+# provide Fly.io secrets at build time
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
     SENTRY_AUTH_TOKEN="$(cat /run/secrets/SENTRY_AUTH_TOKEN)" \
     npm run build

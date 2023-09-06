@@ -4,7 +4,7 @@ export default function useSignOut(options = {}) {
   return useMutation(
     ['sign-out'],
     () =>
-      fetch('/api/sign-out', {
+      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/sign-out`, {
         method: 'POST',
       }).then((response) => {
         if (response.ok)

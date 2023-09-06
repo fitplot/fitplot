@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - dev
       - main
   pull_request: {}
 
@@ -72,8 +73,10 @@ jobs:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
     needs: [test, lint, format]
-    # only build/deploy main branch on pushes
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    # only build/deploy on pushes (instead of pull requests)
+    if:
+      ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') &&
+      github.event_name == 'push' }}
 
     steps:
       - name: ⬇️ Checkout repo
@@ -82,20 +85,30 @@ jobs:
           # fetch-depth for Sentry release creation
           fetch-depth: 0
 
-      - name: 👀 Read Api URL
-        uses: SebRollen/toml-action@v1.0.0
-        id: service_url
+      - name: 👀 Read app name
+        uses: SebRollen/toml-action@v1.0.2
+        id: app_name
         with:
           file: 'fly.toml'
-          field: 'env.SERVICE_URL'
+          field: 'app'
 
       - name: 🎈 Setup Fly
         uses: superfly/flyctl-actions/setup-flyctl@v1.4
 
-      - name: 🚀 Deploy
+      - name: 🚀 Deploy Dev Environment
+        if: ${{ github.ref == 'refs/heads/dev' }}
         run: flyctl deploy --remote-only
           --build-arg GITHUB_SHA=${{ github.sha }}
-          --build-arg SERVICE_URL=${{ steps.service_url.outputs.value }}
+          --build-arg CI=$CI
+          --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+          --app ${{ steps.app_name.outputs.value }}-dev
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: 🚀 Deploy Production
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: flyctl deploy --remote-only
+          --build-arg GITHUB_SHA=${{ github.sha }}
           --build-arg CI=$CI
           --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
         env:
