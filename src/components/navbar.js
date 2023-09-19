@@ -31,7 +31,7 @@ export function MarketingNavbar({ user }) {
     <header className='z-40 fixed left-0 right-0 top-0 [--header-height:48px]'>
       <div className='after:absolute after:inset-x-0 after:-bottom-1/2 after:top-[-1px] after:backdrop-blur-md after:[mask-image:linear-gradient(to_bottom,black_var(--header-height),transparent)]' />
       <nav>
-        <div className='container px-1 md:px-[2rem] relative flex gap-8 mx-auto items-center border-b [height:var(--header-height)]'>
+        <div className='container px-1 md:px-[2rem] relative flex gap-2 mx-auto items-center border-b [height:var(--header-height)]'>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant='ghost' className='md:hidden'>

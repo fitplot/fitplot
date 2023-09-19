@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { H3 } from '@/components/typography';
 import { cn } from '@/lib/utils';
 
 const Card = React.forwardRef(({ className, ...props }, ref) => (
@@ -24,14 +25,7 @@ const CardHeader = React.forwardRef(({ className, ...props }, ref) => (
 CardHeader.displayName = 'CardHeader';
 
 const CardTitle = React.forwardRef(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      'text-2xl font-semibold leading-none tracking-tight',
-      className,
-    )}
-    {...props}
-  />
+  <H3 ref={ref} className={cn('m-0', className)} {...props} />
 ));
 CardTitle.displayName = 'CardTitle';
 

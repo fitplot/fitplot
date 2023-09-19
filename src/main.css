@@ -40,6 +40,10 @@
     --success-foreground: 210 20% 98%;
     --warning: 37.7 92.1% 50.2%;
     --warning-foreground: 210 20% 98%;
+
+    /* Graph Paper */
+    --graph-paper-major: var(--accent);
+    --graph-paper-minor: var(--accent);
   }
 
   .dark {
@@ -73,5 +77,29 @@
     --warning-foreground: 210 20% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 20% 98%;
+  }
+
+  .bg-graph-paper {
+    background-image: linear-gradient(
+        hsl(var(--graph-paper-major) / 70%) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        hsl(var(--graph-paper-major) / 70%) 1px,
+        transparent 1px
+      ),
+      linear-gradient(hsl(var(--graph-paper-minor) / 30%) 1px, transparent 1px),
+      linear-gradient(
+        90deg,
+        hsl(var(--graph-paper-minor) / 30%) 1px,
+        transparent 1px
+      );
+    background-size:
+      100px 100px,
+      100px 100px,
+      20px 20px,
+      20px 20px;
+    background-position: 50% 0;
   }
 }

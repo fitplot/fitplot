@@ -9,6 +9,7 @@ import GlobalCommand from '@/components/global-command';
 import { InAppNavbar, MarketingNavbar } from '@/components/navbar';
 import SideBar from '@/components/sidebar';
 import { Sheet } from '@/components/ui/sheet';
+import useInAppLayout from '@/hooks/use-app-layout';
 
 export function MarketingLayout({ children, user }) {
   return <MarketingPage user={user}>{children}</MarketingPage>;
@@ -18,12 +19,14 @@ function MarketingPage({ children, user }) {
   return (
     <>
       <MarketingNavbar user={user} />
-      <main className='px-4'>{children}</main>
+      <main>{children}</main>
     </>
   );
 }
 
 export function InAppLayout({ children, user }) {
+  useInAppLayout();
+
   return (
     <>
       <InAppPage user={user}>{children}</InAppPage>

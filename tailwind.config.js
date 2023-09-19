@@ -50,6 +50,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        heading: ['Cal Sans', ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         'accordion-down': {
@@ -60,9 +61,6 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 },
         },
-      },
-      width: {
-        'half-screen': '50vw',
       },
     },
   },

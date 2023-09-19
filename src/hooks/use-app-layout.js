@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWindowSize } from 'react-use';
 
-export default function useAppLayout() {
+export default function useInAppLayout() {
   const { height } = useWindowSize();
 
   React.useEffect(() => {

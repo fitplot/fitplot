@@ -8,11 +8,11 @@ const typographyVariants = cva('', {
   variants: {
     variant: {
       default: '',
-      h1: 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl',
-      h2: 'mt-10 scroll-m-20 [article_>_&]:border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0',
-      h3: 'mt-8 scroll-m-20 text-2xl font-semibold tracking-tight',
-      h4: 'scroll-m-20 text-xl font-semibold tracking-tight',
-      p: 'leading-7 [&:not(:first-child)]:mt-6',
+      h1: 'scroll-m-20 text-4xl lg:text-5xl font-heading',
+      h2: 'mt-10 scroll-m-20 [article_>_&]:border-b pb-2 text-3xl lg:text-4xl font-heading first:mt-0',
+      h3: 'mt-8 scroll-m-20 text-2xl lg:text-3xl font-heading',
+      h4: 'scroll-m-20 text-xl lg:text-2xl font-heading',
+      p: 'leading-relaxed md:leading-loose [&:not(:first-child)]:mt-6',
       a: 'font-medium text-primary underline underline-offset-4',
       blockquote: 'mt-6 border-l-2 pl-6 italic',
       code: 'relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold',
