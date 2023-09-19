@@ -1,7 +1,6 @@
 import React from 'react';
 import { ArrowDownIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
-import dayjs from 'dayjs';
 import { Binary } from 'lucide-react';
 import Head from 'next/head';
 import Image from 'next/image';

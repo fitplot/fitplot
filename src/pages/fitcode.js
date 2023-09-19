@@ -1,5 +1,6 @@
 import { MarketingLayout } from '@/components/layouts';
 import { H1, H2, Lead, Paragraph } from '@/components/typography';
+import withUser from '@/lib/with-user';
 
 export default function FitCode() {
   return (
