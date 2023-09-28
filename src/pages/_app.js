@@ -27,16 +27,33 @@ function App({ Component, pageProps }) {
   return (
     <QueryClientProvider client={queryClient}>
       <Head>
+        {/* SEO Information */}
         <meta name='description' content='FitPlot' />
-        <link rel='icon' href='/favicon.ico' />
         <meta name='author' content='FitPlot' />
-        {/* --primary */}
+
+        {/* Iconography */}
+        <meta property='og:image' content='/favicon.ico' />
+        <link rel='icon' type='image/png' sizes='32x32' href='/round-32.png' />
+        <link rel='icon' type='image/png' sizes='16x16' href='/round-16.png' />
+        <link rel='apple-touch-icon' sizes='180x180' href='/square-180.png' />
+        <link rel='manifest' href='/site.webmanifest' />
+
+        {/* Theme using the color for --primary */}
+        <link
+          rel='mask-icon'
+          href='/safari-pinned-tab.svg'
+          color='hsl(262.1 83.3% 57.8%)'
+        />
+        <meta name='msapplication-TileColor' content='hsl(262.1 83.3% 57.8%)' />
         <meta name='theme-color' content='hsl(262.1 83.3% 57.8%)' />
+
+        {/* Viewport */}
         <meta
           name='viewport'
           content='width=device-width, height=device-height, initial-scale=1'
         />
-        <meta property='og:image' content='/favicon.ico' />
+
+        {/* Robots */}
         {process.env.FITPLOT_ENV !== 'production' && (
           <>
             <meta name='robots' content='noindex,nofollow' />
