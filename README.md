@@ -3,9 +3,9 @@
 ## Stack
 
 - [Next.js](https://vercel.com/solutions/nextjs) fullstack web client
-- Built on [shadcn/ui](https://ui.shadcn.com/) components styled with [TailwindCSS](https://tailwindcss.com/)
+- Built using [shadcn/ui](https://ui.shadcn.com/) components styled with [TailwindCSS](https://tailwindcss.com/)
 - [Fathom](https://usefathom.com/) ethical analytics
-- [React-Query](https://tanstack.com/query/) api fetching and caching
+- [Tanstack Query](https://tanstack.com/query/)
 - Shipped on [Fly.io](https://fly.io/)
 
 ## Contribution Guide
@@ -16,19 +16,7 @@
 
 This project uses Votla instead of NVM for managing Node versions. Install Volta on your machine with the steps below.
 
-##### Mac
-
-Install Volta as you please according to the Volta documentation. See [Volta > Getting Started](https://docs.volta.sh/guide/getting-started)
-
-##### Windows
-
-Install Volta with Chocolatey via:
-
-```
-choco install volta
-```
-
-Note: this should be done in a shell with admin permissions.
+Install Volta for your system according to the Volta documentation. See [Volta > Getting Started](https://docs.volta.sh/guide/getting-started)
 
 #### Environment Variables
 
@@ -43,8 +31,6 @@ cp .env.example .env.local
 ```
 npm run dev
 ```
-
-Note: you will also need to run the FitPlot API application.
 
 ### Contribution Guides
 
@@ -90,4 +76,4 @@ This application deploys via GitHub Actions for commits into `main`. Shipping a 
 - Build a feature
 - Open a pull request into `main`
 - Complete the review loop with a squash-and-merge
-- Watch your commit build and deploy on Fly.io in GitHub Actions
+- Watch your commit build and deploy on Fly.io via GitHub Actions
