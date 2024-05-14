@@ -1,6 +1,0 @@
-{
-  "rules": {
-    // disabled for Next.js dynamic file-based routing
-    "unicorn/filename-case": "off"
-  }
-}
