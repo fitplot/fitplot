@@ -1,7 +1,5 @@
 app = "fitplot"
 primary_region = "lax"
-kill_signal = "SIGINT"
-kill_timeout = 5
 
 [env]
   PORT = "8080"
@@ -15,17 +13,15 @@ kill_timeout = 5
 # This Fly.io app has no [[services.ports]] because it is not open on public internet.
 # Instead, this api is accessed via private networking with a Fly.io `.internal` address.
 # Additionally, any public IPs allocated can be removed with the CLI via: `fly ips`
-[[services]]
-  protocol = "tcp"
+[http_service]
   internal_port = 8080
+  force_https = false
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
 
-  [services.concurrency]
+  [http_service.concurrency]
     type = "requests"
-    hard_limit = 200
-    soft_limit = 150
+    hard_limit = 250
+    soft_limit = 200
 
-  [[services.tcp_checks]]
-    interval = "15s"
-    timeout = "2s"
-    grace_period = "10s"
-    restart_limit = 6
